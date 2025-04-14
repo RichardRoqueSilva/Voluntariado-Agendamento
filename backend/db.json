@@ -46,14 +46,6 @@
       ]
     },
     {
-      "id": "H102",
-      "nome": "Hospital da Criança",
-      "diasVisita": [
-        "Quarta",
-        "Sábado"
-      ]
-    },
-    {
       "id": "H103",
       "nome": "Santa Casa de Misericórdia",
       "diasVisita": [
@@ -63,7 +55,7 @@
     },
     {
       "id": "H104",
-      "nome": "Hospital Municipal",
+      "nome": "Hospital Municipal Santa Casa",
       "diasVisita": [
         "Domingo"
       ]

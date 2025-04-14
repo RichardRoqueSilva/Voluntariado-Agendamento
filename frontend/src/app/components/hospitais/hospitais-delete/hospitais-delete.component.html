@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-card-title>Excluir Voluntário</mat-card-title>
+<form>
+    <mat-form-field>
+        <input matInput placeholder="Nome" [value]="hospitais.nome" name="nome" disabled="">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Dias de Visita" [value]="hospitais.diasVisita" name="diasVisita" disabled=""> 
+    </mat-form-field>
+</form>
+
+<div>
+<button mat-raised-button (click)="deleteHospitais()" color="warn">
+    Excluir
+</button>
+
+<button mat-raised-button (click)="cancel()">
+    Cancelar
+</button>
+</div>
+</mat-card>
