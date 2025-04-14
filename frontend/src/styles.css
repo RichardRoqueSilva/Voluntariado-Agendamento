@@ -1,0 +1,21 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.red {
+    color: #e35e6b
+}
+
+.v-middle {
+    vertical-align: middle;
+}
+
+.msg-success.mat-snack-bar-container {
+    background-color: green !important;
+    color: white !important;
+  }
+  
+  .msg-error.mat-snack-bar-container {
+    background-color: red !important;
+    color: white !important;
+  }
+  

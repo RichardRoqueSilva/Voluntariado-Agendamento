@@ -1,0 +1,27 @@
+<mat-card>
+    <mat-card-title>Alterar Voluntário</mat-card-title>
+<form>
+    <mat-form-field>
+        <input matInput placeholder="Nome" [(ngModel)]="voluntarios.nome" name="nome" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Celular:" [(ngModel)]="voluntarios.celular" name="celular" > 
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Data de Nascimento:" [(ngModel)]="voluntarios.data_nascimento" name="nascimento" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Cidade:" [(ngModel)]="voluntarios.cidade" name="cidade" > 
+    </mat-form-field>
+</form>
+
+<div>
+<button mat-raised-button (click)="updateVoluntarios()" color="primary">
+    Atualizar
+</button>
+
+<button mat-raised-button (click)="cancel()">
+    Cancelar
+</button>
+</div>
+</mat-card>
