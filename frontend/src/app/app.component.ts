@@ -43,7 +43,7 @@ registerLocaleData(localePt);
   templateUrl: 'app.component.html',
   standalone: true,
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['/src/styles.css'],
+  styleUrls: ['../styles.css'],
   imports: [ HeaderComponent, FooterComponent, MatSortModule, MatPaginatorModule, MatSortModule,
     NavComponent, MatCardModule, MatListModule, MatSidenavModule,  
     MatButtonModule, MatSnackBarModule, FormsModule,   

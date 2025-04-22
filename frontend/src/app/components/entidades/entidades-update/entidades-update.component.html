@@ -1,0 +1,33 @@
+<mat-card>
+    <mat-card-title>Alterar Entidade</mat-card-title>
+<form>
+    <mat-form-field>
+        <input matInput placeholder="nome:" [(ngModel)]="entidades.nome" name="nome" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="endereco:" [(ngModel)]="entidades.endereco" name="endereco" > 
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="responsavel:" [(ngModel)]="entidades.responsavel" name="responsavel" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="telefone:" [(ngModel)]="entidades.telefone" name="telefone" > 
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="horario:" [(ngModel)]="entidades.horarioVisita" name="horario" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="visita:" [(ngModel)]="entidades.diasVisita" name="visita" > 
+    </mat-form-field>
+</form>
+
+<div>
+<button mat-raised-button (click)="updateEntidades()" color="primary">
+    Atualizar
+</button>
+
+<button mat-raised-button (click)="cancel()">
+    Cancelar
+</button>
+</div>
+</mat-card>

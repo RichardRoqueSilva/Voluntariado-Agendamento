@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-title>Nova Entidade</mat-card-title>
+<form>
+    <mat-form-field>
+        <input matInput placeholder="Nome" [(ngModel)]="agendamentos.nome" name="nome" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Dias de Visita" [(ngModel)]="agendamentos.diasVisita" name="visita" > 
+    </mat-form-field>
+
+</form>
+
+<div>
+<button mat-raised-button (click)="createAgendamentos()" color="primary">
+    Salvar
+</button>
+
+<button mat-raised-button (click)="cancel()">
+    Cancelar
+</button>
+</div>
+</mat-card>

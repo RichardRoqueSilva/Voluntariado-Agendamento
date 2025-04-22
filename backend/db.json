@@ -3,68 +3,67 @@
     {
       "id": "2",
       "nome": "Carlos Oliveira",
-      "data_nascimento": "12/10/1988",
       "celular": "(21)99999-8888",
-      "cidade": "Rio de Janeiro"
+      "observacao": "Não posso de sabado",
+      "login": "CarlosOliveira",
+      "senha": "123456"
     },
     {
       "id": "3",
       "nome": "Mariana Costa",
-      "data_nascimento": "2001-07-10",
       "celular": "(31)91234-5678",
-      "cidade": "Belo Horizonte"
+      "observacao": "Não posso de sabado",
+      "login": "MarianaCosta",
+      "senha": "123456"
     },
     {
       "id": "e3e5",
       "nome": "Richard Roque da Silva",
-      "data_nascimento": "24/10/1993",
       "celular": "(16) 99730-7540",
-      "cidade": "Araraquara"
-    },
-    {
-      "id": "6748",
-      "nome": "Richard Roque da Silva",
-      "data_nascimento": "24/10/1993",
-      "celular": "(16) 99730-7540",
-      "cidade": "Americo"
-    },
-    {
-      "id": "ae61",
-      "nome": "Richard Roque da Silva",
-      "data_nascimento": "24/10/1993",
-      "celular": "(16) 99730-7540",
-      "cidade": "Americo"
+      "observacao": "Não posso de sabado",
+      "login": "RichardRoque",
+      "senha": "123456"
     }
   ],
-  "hospitais": [
+  "entidades": [
     {
       "id": "H101",
       "nome": "Hospital Central",
+      "endereco": "Padre duarte, 229",
+      "responsavel": "Francisco",
+      "telefone": "(16)99855-2557",
       "diasVisita": [
         "Terça",
         "Quinta"
-      ]
+      ],
+      "horarioVisita": "12:30 as 18:00"
     },
     {
       "id": "H103",
       "nome": "Santa Casa de Misericórdia",
+      "endereco": "Padre duarte, 229",
+      "responsavel": "Rebeca",
+      "telefone": "(16)99855-2557",
       "diasVisita": [
         "Segunda",
         "Sexta"
-      ]
+      ],
+      "horarioVisita": "12:30 as 18:00"
     },
     {
-      "id": "H104",
-      "nome": "Hospital Municipal Santa Casa",
-      "diasVisita": [
-        "Domingo"
-      ]
+      "id": "74fa",
+      "nome": "Santa Casa",
+      "endereco": "padre duarte, 1555",
+      "responsavel": "beatriz vilela",
+      "telefone": "16996452634",
+      "diasVisita": "segunda a domingo",
+      "horarioVisita": "10:30 as 12:00"
     }
   ],
-  "agenda": [
+  "agendamentos": [
     {
       "id": "A001",
-      "hospitalId": "H101",
+      "entidadeId": "H101",
       "data": "2024-08-20",
       "horario": "14:30",
       "voluntarioIds": [
@@ -74,7 +73,7 @@
     },
     {
       "id": "A002",
-      "hospitalId": "H102",
+      "entidadeId": "H102",
       "data": "2024-08-21",
       "horario": "10:00",
       "voluntarioIds": [
@@ -83,7 +82,7 @@
     },
     {
       "id": "A003",
-      "hospitalId": "H101",
+      "entidadeId": "H101",
       "data": "2024-08-22",
       "horario": "15:00",
       "voluntarioIds": [
@@ -92,7 +91,7 @@
     },
     {
       "id": "A004",
-      "hospitalId": "H103",
+      "entidadeId": "H103",
       "data": "2024-08-23",
       "horario": "09:00",
       "voluntarioIds": [

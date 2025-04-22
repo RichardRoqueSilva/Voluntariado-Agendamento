@@ -1,0 +1,16 @@
+form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+button {
+    margin-right: 15px;
+    margin-top: 05px;
+}
+
+.buttons {
+    display: flex; 
+    justify-content: flex-start; 
+    margin-top: 20px; 
+}

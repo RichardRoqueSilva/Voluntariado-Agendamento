@@ -1,27 +1,34 @@
 <mat-card>
     <mat-card-title>Novo Voluntário</mat-card-title>
-<form>
-    <mat-form-field>
-        <input matInput placeholder="Nome" [(ngModel)]="voluntarios.nome" name="nome" >
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Celular" [(ngModel)]="voluntarios.celular" name="celular" > 
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Data Nascimento" [(ngModel)]="voluntarios.data_nascimento" name="nascimento" > 
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Cidade" [(ngModel)]="voluntarios.cidade" name="cidade" > 
-    </mat-form-field>
-</form>
+    <form>
+        <mat-form-field>
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="Nome" [(ngModel)]="voluntarios.nome" name="nome">
+        </mat-form-field>
 
-<div>
-<button mat-raised-button (click)="createVoluntarios()" color="primary">
-    Salvar
-</button>
+        <mat-form-field>
+            <mat-label>Celular</mat-label>
+            <input
+            matInput
+            placeholder="(XX)XXXXX-XXXX"
+            [(ngModel)]="voluntarios.celular"
+            name="celular"
+            >
+        </mat-form-field>
 
-<button mat-raised-button (click)="cancel()">
-    Cancelar
-</button>
-</div>
+        <mat-form-field>
+            <mat-label>Observação</mat-label>
+            <input matInput placeholder="Observação" [(ngModel)]="voluntarios.observacao" name="observacao">
+        </mat-form-field>
+    </form>
+
+    <div>
+        <button mat-raised-button (click)="createVoluntarios()" color="primary">
+            Salvar
+        </button>
+
+        <button mat-raised-button (click)="cancel()">
+            Cancelar
+        </button>
+    </div>
 </mat-card>

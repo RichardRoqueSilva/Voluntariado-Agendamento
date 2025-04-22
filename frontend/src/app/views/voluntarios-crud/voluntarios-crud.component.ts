@@ -27,8 +27,8 @@ export class VoluntariosCrudComponent implements OnInit {
   constructor(private router: Router, private headerService: HeaderService) {
 
     headerService.headerData = {
-      title: 'Cadastro de Voluntários',
-      icon: 'storefront',
+      title: 'Voluntários',
+      icon: 'volunteer_activism',
       routeUrl: '/voluntarios'
     }  
   }

@@ -1,0 +1,34 @@
+<mat-card>
+    <mat-card-title>Nova Entidade</mat-card-title>
+<form>
+    <mat-form-field>
+        <input matInput placeholder="Nome da Entidade" [(ngModel)]="entidades.nome" name="nome" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Endereco" [(ngModel)]="entidades.endereco" name="endereco" > 
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Responsavel" [(ngModel)]="entidades.responsavel" name="responsavel" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Telefone" [(ngModel)]="entidades.telefone" name="telefone" > 
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Dias de Visita" [(ngModel)]="entidades.diasVisita" name="diasVisita" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Horario de Visita" [(ngModel)]="entidades.horarioVisita" name="horarioVisita" > 
+    </mat-form-field>
+
+</form>
+
+<div>
+<button mat-raised-button (click)="createEntidades()" color="primary">
+    Salvar
+</button>
+
+<button mat-raised-button (click)="cancel()">
+    Cancelar
+</button>
+</div>
+</mat-card>

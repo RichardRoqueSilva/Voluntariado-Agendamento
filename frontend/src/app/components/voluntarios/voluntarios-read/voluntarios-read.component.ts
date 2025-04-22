@@ -28,7 +28,7 @@ import { VoluntariosCreateComponent } from '../voluntarios-create/voluntarios-cr
 export class VoluntariosReadComponent implements OnInit{
 
   voluntarios: Voluntarios[] = []
-  displayedColumns = ['nome', 'celular', 'nascimento', 'cidade', 'action']
+  displayedColumns = ['nome', 'celular', 'observacao', 'action']
 
   constructor(private voluntariosService: VoluntariosService){}
 

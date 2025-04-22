@@ -10,22 +10,26 @@ import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-voluntarios-create',
   imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
-            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule],
+            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, NgxMaskDirective
+          ],
+  providers: [provideNgxMask()],
   templateUrl: './voluntarios-create.component.html',
-  styleUrl: './voluntarios-create.component.css',
+  styleUrls: ['./voluntarios-create.component.css'],
   standalone: true,
 })
 export class VoluntariosCreateComponent implements OnInit{
 
   voluntarios: Voluntarios = {
     nome: '',
-    data_nascimento: "0000-00-00",
     celular: '',
-    cidade: '',
+    observacao: '',
+    login:'',
+    senha:'',
   }
   constructor(private voluntariosService: VoluntariosService,
     private router: Router

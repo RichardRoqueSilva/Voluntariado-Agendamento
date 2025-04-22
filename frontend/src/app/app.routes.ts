@@ -5,10 +5,14 @@ import { VoluntariosCrudComponent } from './views/voluntarios-crud/voluntarios-c
 import { VoluntariosCreateComponent } from './components/voluntarios/voluntarios-create/voluntarios-create.component';
 import { VoluntariosUpdateComponent } from './components/voluntarios/voluntarios-update/voluntarios-update.component';
 import { VoluntariosDeleteComponent } from './components/voluntarios/voluntarios-delete/voluntarios-delete.component';
-import { HospitaisCrudComponent } from './views/hospitais-crud/hospitais-crud.component';
-import { HospitaisCreateComponent } from './components/hospitais/hospitais-create/hospitais-create.component';
-import { HospitaisUpdateComponent } from './components/hospitais/hospitais-update/hospitais-update.component';
-import { HospitaisDeleteComponent } from './components/hospitais/hospitais-delete/hospitais-delete.component';
+import { EntidadesCrudComponent } from './views/entidades-crud/entidades-crud.component';
+import { EntidadesCreateComponent } from './components/entidades/entidades-create/entidades-create.component';
+import { EntidadesUpdateComponent } from './components/entidades/entidades-update/entidades-update.component';
+import { AgendamentosCrudComponent } from './views/agendamentos-crud/agendamentos-crud.component';
+import { AgendamentosCreateComponent } from './components/agendamentos/agendamentos-create/agendamentos-create.component';
+import { AgendamentosUpdateComponent } from './components/agendamentos/agendamentos-update/agendamentos-update.component';
+import { AgendamentosDeleteComponent } from './components/agendamentos/agendamentos-delete/agendamentos-delete.component';
+import { EntidadesDeleteComponent } from './components/entidades/entidades-delete/entidades-delete.component';
 
 export const routes: Routes = [
   {
@@ -32,19 +36,35 @@ export const routes: Routes = [
     component: VoluntariosDeleteComponent
   },
   {
-    path: 'hospitais',
-    component: HospitaisCrudComponent
+    path: 'entidades',
+    component: EntidadesCrudComponent
   },
   {
-    path: 'hospitais/create',
-    component: HospitaisCreateComponent
+    path: 'entidades/create',
+    component: EntidadesCreateComponent
   },
   {
-    path: 'hospitais/update/:id',
-    component: HospitaisUpdateComponent
+    path: 'entidades/update/:id',
+    component: EntidadesUpdateComponent
   },
   {
-    path: 'hospitais/delete/:id',
-    component: HospitaisDeleteComponent
+    path: 'entidades/delete/:id',
+    component: EntidadesDeleteComponent
+  },
+  {
+    path: 'agendamentos',
+    component: AgendamentosCrudComponent
+  },
+  {
+    path: 'agendamentos/create',
+    component: AgendamentosCreateComponent
+  },
+  {
+    path: 'agendamentos/update/:id',
+    component: AgendamentosUpdateComponent
+  },
+  {
+    path: 'agendamentos/delete/:id',
+    component: AgendamentosDeleteComponent
   }
 ];
