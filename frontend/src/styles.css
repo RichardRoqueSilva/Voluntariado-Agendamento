@@ -1,5 +1,7 @@
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0 auto; font-family: Roboto, "Helvetica Neue", sans-serif; 
+max-width: 900px;
+}
 
 .red {
     color: #e35e6b

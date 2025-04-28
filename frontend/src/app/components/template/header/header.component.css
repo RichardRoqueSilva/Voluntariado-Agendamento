@@ -2,6 +2,17 @@
     display: flex;
     align-items: center;
     padding-left: 0;
+
+
+    position: fixed;
+    top: 0;
+    left: 50%; /* Posiciona o cabeçalho no centro */
+    transform: translateX(-50%); /* Corrige a posição centralizada */
+    width: 100%; /* Isso faz com que ocupe toda a largura da tela */
+    max-width: 900px; /* Aplica o max-width do body ao cabeçalho */
+    background-color: white;
+    z-index: 1000;
+    
 }
 
 .header a{

@@ -1,22 +1,42 @@
-.home .title{
-    font-size: 2rem;
-    font-weight: 300;
-    line-height: 1.2;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.home {
+  margin: 20px auto;
+  max-width: 800px;
+  padding: 20px;
+  margin-top: 60px;
 }
 
-.home .subtitle{
-    font-size: 1.1rem;
+.centralizar {  
+  text-align: center;
 }
 
-.home .image{
-   
-    width: 300px;
-    height: auto;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-}   
+.image{
+  height: 260px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  text-align: center;
+  color: #3f51b5;
+}
+
+h4 {
+  font-size: 1.5rem;
+  text-align: center;
+color: #1699cc
+}
+
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-top: 15px;
+}
+
+section {
+  margin-bottom: 15px;
+}
+
+section p {
+  line-height: 1.6;
+  font-weight: 150;
+}
 
