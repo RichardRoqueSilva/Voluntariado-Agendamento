@@ -1,9 +1,22 @@
 .home .title{
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 300;
     line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .home .subtitle{
     font-size: 1.1rem;
 }
+
+.home .image{
+   
+    width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}   
+
