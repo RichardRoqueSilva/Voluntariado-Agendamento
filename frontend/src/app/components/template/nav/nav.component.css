@@ -20,3 +20,40 @@
     background-color: #fff;
 }
 
+::ng-deep mat-sidenav.sidenav { /* Tenta alcançar o pai com a classe */
+    background-color: #3f51b5;
+    width: 200px; /* Sua largura desejada */
+}
+
+
+/* Estilos para a lista de navegação e seus itens */
+.nav-list {
+    /* Se precisar de estilos específicos para a lista */
+}
+
+.nav-list a { /* Estiliza os links dentro da lista */
+   /* Adiciona display flex para alinhar ícone e texto */
+   display: flex;
+   align-items: center;
+   /* Remove sublinhado padrão se houver */
+   text-decoration: none;
+   /* Outros estilos para o link como padding, hover, etc. */
+   padding: 10px 16px; /* Exemplo de espaçamento */
+   transition: background-color 0.2s ease-in-out;
+}
+
+.nav-list a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Efeito hover leve */
+}
+
+.nav-list a i { /* Estiliza os ícones dentro dos links */
+    color: #fff;
+    padding-right: 15px; /* Aumentei um pouco o padding */
+    vertical-align: middle; /* Garante alinhamento vertical */
+}
+
+.nav-list a span { /* Estiliza o texto dentro dos links */
+    color: #fff;
+    vertical-align: middle; /* Garante alinhamento vertical */
+    line-height: normal; /* Garante que o texto fique alinhado com o ícone */
+}

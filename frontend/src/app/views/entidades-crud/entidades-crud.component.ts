@@ -28,7 +28,7 @@ export class EntidadesCrudComponent implements OnInit {
 
     headerService.headerData = {
       title: 'Entidades',
-      icon: 'local_entidades',
+      icon: 'local_hospital',
       routeUrl: '/entidades'
     }  
   }

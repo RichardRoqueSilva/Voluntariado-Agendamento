@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { HomeComponent } from '../../../views/home/home.component';
-import { VoluntariosCrudComponent } from '../../../views/voluntarios-crud/voluntarios-crud.component';
-import { RouterOutlet } from '@angular/router';
-import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { VoluntariosCreateComponent } from '../../voluntarios/voluntarios-create/voluntarios-create.component';
+import { CommonModule } from '@angular/common'; // Boa prática importar
+import { MatListModule } from '@angular/material/list'; // Necessário para mat-nav-list
+import { RouterModule } from '@angular/router';      // Necessário para routerLink
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [ MatCardModule, MatButtonModule, RouterModule, MatSidenavModule, MatListModule, RouterOutlet],
+  imports: [
+    CommonModule,     // Adicionado
+    RouterModule,     // Mantido e necessário
+    MatListModule     // Mantido e necessário
+   // MatCardModule,  // Removido (provavelmente desnecessário)
+   // MatButtonModule, // Removido (provavelmente desnecessário)
+   // MatSidenavModule,// Removido (incorreto aqui)
+   // RouterOutlet    // Removido (incorreto aqui)
+  ],
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css'],
+  styleUrls: ['./nav.component.css'], // Correto
 })
 export class NavComponent implements OnInit {
 

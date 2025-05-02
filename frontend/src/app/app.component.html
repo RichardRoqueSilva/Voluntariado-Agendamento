@@ -1,3 +1,23 @@
-<app-header></app-header>
-<app-footer></app-footer>
-<app-nav></app-nav>
+<!-- app.component.html - Alternativa com [class] -->
+
+<!-- Adiciona a classe 'hide-layout' se isLoginPage for true -->
+<app-header [class.hide-layout]="isLoginPage"></app-header>
+
+<!-- O container precisa estar sempre presente -->
+<mat-sidenav-container class="container" autosize>
+
+  <!-- Adiciona a classe 'hide-layout' ao sidenav se isLoginPage for true -->
+  <mat-sidenav class="sidenav" [class.hide-layout]="isLoginPage" mode="side" opened fixedInViewport="true" fixedTopGap="64">
+    <!-- O app-nav está dentro do sidenav, então será escondido junto -->
+    <app-nav></app-nav>
+  </mat-sidenav>
+
+  <!-- A área de conteúdo está sempre presente -->
+  <mat-sidenav-content class="content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+<!-- Adiciona a classe 'hide-layout' se isLoginPage for true -->
+<app-footer [class.hide-layout]="isLoginPage"></app-footer>
