@@ -16,19 +16,41 @@
       <!-- Celular Column -->
       <ng-container matColumnDef="visita">
         <th mat-header-cell *matHeaderCellDef >Dias de Visita</th>
-        <td mat-cell *matCellDef="let row">{{row.diasVisita}}</td>
+        <td mat-cell *matCellDef="let row">{{row.diasVisita | date:'dd/MM/yyyy'}}</td>
       </ng-container>
+
+      <!-- Celular Column -->
+      <ng-container matColumnDef="horario">
+        <th mat-header-cell *matHeaderCellDef >Horário</th>
+      <td mat-cell *matCellDef="let row">{{row.horario}}</td>
+      </ng-container>
+
+      <!-- Celular Column -->
+      <!-- <ng-container matColumnDef="voluntarios">
+        <th mat-header-cell *matHeaderCellDef >Voluntários</th>
+      <td mat-cell *matCellDef="let row">{{row.listaParticipantes.join(', ')}}</td>
+      </ng-container> -->
+
+      <ng-container matColumnDef="voluntarios">
+        <th mat-header-cell *matHeaderCellDef>Voluntários</th>
+        <td mat-cell *matCellDef="let row">
+          <div *ngFor="let participante of row.listaParticipantes">
+            {{ participante }}
+          </div>
+        </td>
+      </ng-container>
+
 
       <!-- Action Column -->
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef >Ações</th>
         <td mat-cell *matCellDef="let row">
-          <a routerLink="/agendamentos/update/{{ row.id }}" class="edit">
+          <a (click)="editarAgendamento(row.id)" style="cursor: pointer;" class="edit">
             <i class="material-icons">
               edit
             </i>
           </a>
-          <a routerLink="/agendamentos/delete/{{ row.id }}" class="delete">
+          <a  class="delete" style="cursor: pointer;" (click)="deleteAgendamentos(row.id)">
             <i class="material-icons">
               delete
             </i>
@@ -41,3 +63,9 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
+
+<app-modal-agendamento [agendamento]="this.agendamento"
+  *ngIf="mostrarModal"
+  (fechar)="fecharModal()"
+  (salvar)="salvarAgendamento($event)">
+</app-modal-agendamento>  

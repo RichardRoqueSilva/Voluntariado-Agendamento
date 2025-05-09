@@ -1,5 +1,12 @@
-<button mat-raised-button (click)="navigateToAgendamentosCreate()" color="primary">
+<button mat-raised-button (click)="abrirModal()" color="primary">
     Novo Agendamento
 </button>
 
+<app-modal-agendamento
+  *ngIf="mostrarModal"
+  (fechar)="fecharModal()"
+  (salvar)="salvarAgendamento($event)">
+</app-modal-agendamento>
+
 <app-agendamentos-read></app-agendamentos-read>
+

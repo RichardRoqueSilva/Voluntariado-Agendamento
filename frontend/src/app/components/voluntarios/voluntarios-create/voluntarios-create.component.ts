@@ -10,14 +10,14 @@ import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+
 
 @Component({
   selector: 'app-voluntarios-create',
   imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
-            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, NgxMaskDirective
+            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule
           ],
-  providers: [provideNgxMask()],
+  providers: [],
   templateUrl: './voluntarios-create.component.html',
   styleUrls: ['./voluntarios-create.component.css'],
   standalone: true,

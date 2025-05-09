@@ -13,3 +13,7 @@ table{
 .edit {
     margin-right: 15px;
 }
+
+.delete {
+  cursor: pointer;
+}

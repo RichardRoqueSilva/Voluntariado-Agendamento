@@ -11,20 +11,35 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AgendamentosUpdateComponent } from '../../components/agendamentos/agendamentos-update/agendamentos-update.component';
 import { HeaderService } from '../../components/template/header/header.service';
+import { ModalAgendamentoComponent } from '../../components/agendamentos/modal-agendamento/modal-agendamento.component';
+import { CommonModule } from '@angular/common';
+import { AgendamentosService } from '../../components/agendamentos/agendamentos.service';
+import { Agendamentos } from '../../components/agendamentos/agendamentos.model';
 
 
 @Component({
   selector: 'app-agendamentos-crud',
+  standalone: true,
   imports: [MatSidenavModule, MatCardModule, MatListModule, MatButtonModule, RouterModule,
     FormsModule, AgendamentosReadComponent, MatSortModule, MatPaginatorModule,
-    MatSortModule, ],
+    MatSortModule, CommonModule, ModalAgendamentoComponent],
   templateUrl: './agendamentos-crud.component.html',
   styleUrl: './agendamentos-crud.component.css',
-  standalone: true,
 })
 export class AgendamentosCrudComponent implements OnInit {
 
-  constructor(private router: Router, private headerService: HeaderService) {
+  agendamentos: Agendamentos = {
+      nome: '',
+      diasVisita: "00-00-0000",
+      horario: '',
+      listaParticipantes:[]
+    }
+
+  mostrarModal = false;
+
+  constructor(private router: Router, 
+    private headerService: HeaderService,
+    private agendamentosService: AgendamentosService) {
 
     headerService.headerData = {
       title: 'Cadastro de Agendamentos',
@@ -36,9 +51,32 @@ export class AgendamentosCrudComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  navigateToAgendamentosCreate(): void {
-    this.router.navigate(['/agendamentos/create'])
+  // navigateToAgendamentosCreate(): void {
+  //   this.router.navigate(['/agendamentos/create'])
+  // }
+
+  abrirModal() {
+    this.mostrarModal = true;
   }
+
+  fecharModal() {
+    this.mostrarModal = false;
+  }
+
+  salvarAgendamento(dados: any) {
+    this.agendamentos.nome = dados.nome
+    this.agendamentos.diasVisita = dados.data
+    this.agendamentos.horario = dados.horario
+    this.agendamentos.listaParticipantes = dados.participantes
+    console.log('agendamento', this.agendamentos)
+    this.agendamentosService.create(this.agendamentos).subscribe(agendamentos =>{
+      this.agendamentosService.showMessage('Agendamento realizado com sucesso')
+    })
+    this.mostrarModal = false;
+    window.location.reload();
+    
+  }
+
 
 }
 

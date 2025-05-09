@@ -1,0 +1,43 @@
+<div class="modal-backdrop">
+  <div class="modal-container">
+    <h2>Novo Agendamento</h2>
+
+    <form [formGroup]="agendamentoForm">
+      <label>Nome:</label>
+      <select formControlName="nome">
+        <option *ngFor="let nome of nomes" [value]="nome">{{ nome }}</option>
+      </select>
+
+      <label>Data:</label>
+      <input type="date" formControlName="data" />
+
+      <label>Horário:</label>
+      <select formControlName="horario">
+        <option *ngFor="let hora of horarios" [value]="hora">{{ hora }}</option>
+      </select>
+
+      <label>Adicionar Participante:</label>
+      <div>
+        <select formControlName="participanteSelecionado">
+          <option [value]="''" disabled selected>Selecione</option>
+          <option *ngFor="let participante of participantes" [value]="participante">
+            {{ participante }}
+          </option>
+        </select>
+        <button type="button" (click)="adicionarParticipante()">Adicionar</button>
+      </div>
+
+      <div>
+        <h4>Participantes Selecionados:</h4>
+        <ul>
+          <li *ngFor="let p of participantesSelecionados; let i = index">
+            {{ p }} <button type="button" (click)="removerParticipante(i)">Remover</button>
+          </li>
+        </ul>
+      </div>
+
+      <button type="button" (click)="onSalvar()">Salvar</button>
+      <button type="button" (click)="onFechar()">Cancelar</button>
+    </form>
+  </div>
+</div>
