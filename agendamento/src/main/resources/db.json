@@ -6,7 +6,9 @@
       "celular": "(21)99999-8888",
       "observacao": "Não posso de sabado",
       "login": "CarlosOliveira",
-      "senha": "123456"
+      "senha": "123456",
+      "email": "carlos.oliveira@exemplo.com",
+      "role": "USER"
     },
     {
       "id": 2,
@@ -14,7 +16,9 @@
       "celular": "(31)91234-5678",
       "observacao": "Não posso de sabado",
       "login": "MarianaCosta",
-      "senha": "123456"
+      "senha": "123456",
+      "email": "mariana.costa@exemplo.com",
+      "role": "USER"
     },
     {
       "id": 3,
@@ -22,15 +26,19 @@
       "celular": "(16) 99730-7540",
       "observacao": "Não posso de sabado",
       "login": "RichardRoque",
-      "senha": "123456"
+      "senha": "123456",
+      "email": "richard.roque@admin.com",
+      "role": "ADMIN"
     },
     {
       "id": 4,
       "nome": "Paulo",
       "celular": "1699999999",
       "observacao": "dsf dsfdsfdfdsfs",
-      "login": "",
-      "senha": ""
+      "login": "Paulo",
+      "senha": "123456",
+      "email": "paulo@exemplo.com",
+      "role": "USER"
     }
   ],
   "entidades": [

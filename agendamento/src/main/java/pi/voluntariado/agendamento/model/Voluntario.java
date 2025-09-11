@@ -1,13 +1,10 @@
 package pi.voluntariado.agendamento.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator; // <<< Adicione esta importação
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pi.voluntariado.agendamento.enums.UserRole;
 
 @Entity
 @Data
@@ -16,14 +13,16 @@ import lombok.NoArgsConstructor;
 public class Voluntario {
 
     @Id
-    // Define a sequência do banco de dados para gerar os IDs
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "voluntario_seq_generator")
     @SequenceGenerator(name = "voluntario_seq_generator", sequenceName = "voluntario_seq", allocationSize = 1)
     private Long id;
     private String nome;
     private String celular;
     private String observacao;
-    private String login;
+    private String login; // Será o username
     private String senha;
+    private String email; // <<< NOVO CAMPO
 
+    @Enumerated(EnumType.STRING) // Armazena o nome do enum (ADMIN, USER) como String no BD
+    private UserRole role; // <<< NOVO CAMPO
 }

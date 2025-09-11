@@ -3,7 +3,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pi.voluntariado.agendamento.model.Agendamento;
 import pi.voluntariado.agendamento.model.DbJsonData;
@@ -20,22 +22,26 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
+@Profile("!test")
 public class DataLoader implements CommandLineRunner {
 
     private final VoluntarioRepository voluntarioRepository;
     private final EntidadeRepository entidadeRepository;
     private final AgendamentoRepository agendamentoRepository;
     private final ObjectMapper objectMapper;
+    private final PasswordEncoder passwordEncoder; // <<< Injetar PasswordEncoder
 
     public DataLoader(VoluntarioRepository voluntarioRepository,
                       EntidadeRepository entidadeRepository,
-                      AgendamentoRepository agendamentoRepository) {
+                      AgendamentoRepository agendamentoRepository,
+                      PasswordEncoder passwordEncoder) { // <<< Injetar
         this.voluntarioRepository = voluntarioRepository;
         this.entidadeRepository = entidadeRepository;
         this.agendamentoRepository = agendamentoRepository;
         this.objectMapper = new ObjectMapper();
         this.objectMapper.registerModule(new JavaTimeModule());
         this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        this.passwordEncoder = passwordEncoder; // <<< Atribuir
     }
 
     @Override
@@ -45,9 +51,10 @@ public class DataLoader implements CommandLineRunner {
             try (InputStream inputStream = new ClassPathResource("db.json").getInputStream()) {
                 DbJsonData dataToLoad = objectMapper.readValue(inputStream, DbJsonData.class);
 
-                // 1. Salvar Voluntarios
+                // 1. Salvar Voluntarios (criptografando a senha)
                 List<Voluntario> savedVoluntarios = dataToLoad.getVoluntarios().stream().map(v -> {
                     v.setId(null);
+                    v.setSenha(passwordEncoder.encode(v.getSenha())); // <<< Criptografa a senha aqui
                     return voluntarioRepository.save(v);
                 }).collect(Collectors.toList());
                 Map<String, Voluntario> voluntarioMap = savedVoluntarios.stream()

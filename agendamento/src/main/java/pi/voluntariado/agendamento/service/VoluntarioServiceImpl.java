@@ -1,5 +1,6 @@
 package pi.voluntariado.agendamento.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import pi.voluntariado.agendamento.dto.voluntario.VoluntarioRequestDTO;
 import pi.voluntariado.agendamento.dto.voluntario.VoluntarioResponseDTO;
 import pi.voluntariado.agendamento.model.Voluntario;
@@ -15,6 +16,8 @@ public class VoluntarioServiceImpl implements VoluntarioService {
 
     @Autowired
     private VoluntarioRepository voluntarioRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder; // <<< Injetar PasswordEncoder
 
     @Override
     public List<VoluntarioResponseDTO> findAll() {
@@ -33,12 +36,13 @@ public class VoluntarioServiceImpl implements VoluntarioService {
     @Override
     public VoluntarioResponseDTO create(VoluntarioRequestDTO voluntarioDTO) {
         Voluntario voluntario = new Voluntario();
-        // voluntario.setId(voluntarioDTO.getId()); // <<< REMOVA ESTA LINHA
         voluntario.setNome(voluntarioDTO.getNome());
         voluntario.setCelular(voluntarioDTO.getCelular());
         voluntario.setObservacao(voluntarioDTO.getObservacao());
         voluntario.setLogin(voluntarioDTO.getLogin());
-        voluntario.setSenha(voluntarioDTO.getSenha());
+        voluntario.setEmail(voluntarioDTO.getEmail()); // <<< Mapear email
+        voluntario.setRole(voluntarioDTO.getRole());   // <<< Mapear role
+        voluntario.setSenha(passwordEncoder.encode(voluntarioDTO.getSenha())); // <<< Criptografar a senha
 
         Voluntario savedVoluntario = voluntarioRepository.save(voluntario);
         return new VoluntarioResponseDTO(savedVoluntario);
@@ -49,12 +53,18 @@ public class VoluntarioServiceImpl implements VoluntarioService {
         Voluntario voluntario = voluntarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Voluntário não encontrado com ID: " + id));
 
-        voluntario.setId(id); // O ID vem do path, não do DTO de request
+        voluntario.setId(id);
         voluntario.setNome(voluntarioDTO.getNome());
         voluntario.setCelular(voluntarioDTO.getCelular());
         voluntario.setObservacao(voluntarioDTO.getObservacao());
         voluntario.setLogin(voluntarioDTO.getLogin());
-        voluntario.setSenha(voluntarioDTO.getSenha());
+        voluntario.setEmail(voluntarioDTO.getEmail()); // <<< Mapear email
+        voluntario.setRole(voluntarioDTO.getRole());   // <<< Mapear role
+
+        // A senha só deve ser atualizada se for fornecida no DTO (e criptografada novamente)
+        if (voluntarioDTO.getSenha() != null && !voluntarioDTO.getSenha().isEmpty()) {
+            voluntario.setSenha(passwordEncoder.encode(voluntarioDTO.getSenha()));
+        }
 
         Voluntario updatedVoluntario = voluntarioRepository.save(voluntario);
         return new VoluntarioResponseDTO(updatedVoluntario);

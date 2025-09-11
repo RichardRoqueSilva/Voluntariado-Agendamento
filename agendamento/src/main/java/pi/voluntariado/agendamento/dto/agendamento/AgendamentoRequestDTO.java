@@ -1,5 +1,6 @@
 package pi.voluntariado.agendamento.dto.agendamento;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotEmpty; // Para a lista de participantes
@@ -20,7 +21,8 @@ public class AgendamentoRequestDTO {
     @NotNull(message = "A data do agendamento é obrigatória")
     private LocalDate diasVisita;
 
-    @NotNull(message = "O horário do agendamento é obrigatório") // <<< Alterado para NotNull
+    @NotNull(message = "O horário do agendamento é obrigatório")
+    @Schema(type = "string", format = "HH:mm", example = "14:30")
     private LocalTime horario; // <<< ALTERADO PARA LocalTime
 
     @NotEmpty(message = "A lista de participantes não pode ser vazia")
