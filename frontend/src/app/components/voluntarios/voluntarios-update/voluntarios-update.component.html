@@ -1,24 +1,73 @@
 <mat-card>
-    <mat-card-title>Alterar Voluntário</mat-card-title>
-<form>
+  <mat-card-title>Alterar Voluntário</mat-card-title>
+  <form>
     <mat-form-field>
-        <input matInput placeholder="Nome" [(ngModel)]="voluntarios.nome" name="nome" >
+      <input
+        matInput
+        type="text"
+        placeholder="Nome"
+        [(ngModel)]="voluntarios.nome"
+        required
+        name="nome"
+      />
     </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Celular:" [(ngModel)]="voluntarios.celular" name="celular" > 
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Observação:" [(ngModel)]="voluntarios.observacao" name="observacao" >
-    </mat-form-field>
-</form>
 
-<div>
-<button mat-raised-button (click)="updateVoluntarios()" color="primary">
-    Atualizar
-</button>
+    <mat-form-field>
+      <input
+        matInput
+        type="email"
+        placeholder="Email:"
+        [(ngModel)]="voluntarios.email"
+        required
+        name="email"
+      />
+    </mat-form-field>
 
-<button mat-raised-button (click)="cancel()">
-    Cancelar
-</button>
-</div>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Celular:"
+        [(ngModel)]="voluntarios.celular"
+        required
+        name="celular"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Observação:"
+        [(ngModel)]="voluntarios.observacao"
+        required
+        name="observacao"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Login:"
+        [(ngModel)]="voluntarios.login"
+        required
+        name="login"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select [(ngModel)]="voluntarios.role" required name="tipo">
+        <mat-option [value]="roles.ADMIN">Administrador</mat-option>
+        <mat-option [value]="roles.USER">Usuário</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <div>
+    <button mat-raised-button (click)="updateVoluntarios()" color="primary">
+      Atualizar
+    </button>
+
+    <button mat-raised-button (click)="cancel()">Cancelar</button>
+  </div>
 </mat-card>

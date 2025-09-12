@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Voluntarios } from './voluntarios.model';
 import { catchError, EMPTY, map, Observable } from 'rxjs';
-import { url } from 'inspector';
+import { environment } from '../../../environments/environment';
+import { Voluntarios } from './voluntarios.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VoluntariosService {
 
-  baseUrl = "http://localhost:3001/voluntarios"
+  baseUrl = `${environment.baseApiUrl}/api/voluntarios`
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 

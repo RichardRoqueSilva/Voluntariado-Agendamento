@@ -1,18 +1,19 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { FormsModule } from '@angular/forms'; // <<< Importe FormsModule
 import { CommonModule } from '@angular/common'; // <<< Importe CommonModule
-import { Component, OnInit } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms'; // <<< Importe FormsModule
 import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router, RouterModule } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { FooterComponent } from '../../components/template/footer/footer.component';
 import { HeaderComponent } from '../../components/template/header/header.component';
 import { NavComponent } from '../../components/template/nav/nav.component';
-import { FooterComponent } from '../../components/template/footer/footer.component';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,8 @@ export class LoginComponent {
   };
   isLoading = false;
   errorMessage: string | null = null;
-  private apiUrl = 'http://localhost:3001/api/auth/login'; // <<< AJUSTE A URL DA SUA API JAVA
+  
+  private authUrl = `${environment.baseApiUrl}/auth/login`;
 
   constructor(
     private http: HttpClient, // HttpClient agora é injetável globalmente via app.config.ts
@@ -48,7 +50,7 @@ export class LoginComponent {
 
     console.log('Tentando logar com:', this.credentials);
 
-    this.http.post<any>(this.apiUrl, this.credentials).subscribe({
+    this.http.post<any>(this.authUrl, this.credentials).subscribe({
       next: (response) => {
         this.isLoading = false;
         console.log('Login bem-sucedido!', response);

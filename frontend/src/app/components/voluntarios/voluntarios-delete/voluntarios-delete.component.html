@@ -1,24 +1,66 @@
 <mat-card>
-    <mat-card-title>Excluir Voluntário</mat-card-title>
-<form>
+  <mat-card-title>Excluir Voluntário</mat-card-title>
+  <form>
     <mat-form-field>
-        <input matInput placeholder="Nome" [value]="voluntarios.nome" name="nome" disabled="">
+      <input
+        matInput
+        type="text"
+        placeholder="Nome"
+        [value]="voluntarios.nome"
+        name="nome"
+        disabled
+      />
     </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Celular" [value]="voluntarios.celular" name="celular" disabled=""> 
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Observação" [value]="voluntarios.observacao" name="observacao" disabled=""> 
-    </mat-form-field>
-</form>
 
-<div>
-<button mat-raised-button (click)="deleteVoluntarios()" color="warn">
-    Excluir
-</button>
+    <mat-form-field>
+      <input
+        matInput
+        type="email"
+        placeholder="Email"
+        [value]="voluntarios.email"
+        disabled
+        name="email"
+      />
+    </mat-form-field>
 
-<button mat-raised-button (click)="cancel()">
-    Cancelar
-</button>
-</div>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Celular"
+        [value]="voluntarios.celular"
+        name="celular"
+        disabled
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Observação"
+        [value]="voluntarios.observacao"
+        name="observacao"
+        disabled
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Login"
+        [value]="voluntarios.login"
+        disabled
+        name="login"
+      />
+    </mat-form-field>
+
+  </form>
+
+  <div>
+    <button mat-raised-button (click)="deleteVoluntarios()" color="warn">
+      Excluir
+    </button>
+
+    <button mat-raised-button (click)="cancel()">Cancelar</button>
+  </div>
 </mat-card>
