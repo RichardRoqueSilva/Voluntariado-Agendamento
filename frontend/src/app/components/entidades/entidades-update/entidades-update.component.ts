@@ -1,43 +1,60 @@
-import { EntidadesService } from '../entidades.service';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule, Router, ActivatedRoute } from '@angular/router';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Entidades } from '../entidades.model';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTimepickerModule } from '@angular/material/timepicker';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { NgxMaskDirective } from 'ngx-mask';
+import { DiaSemanaType } from '../models/dia-semana-type.model';
+import { EntidadesFormModel } from '../models/entidades-form.model';
+import { EntidadesMapperService } from '../services/entidades-mapper.service';
+import { EntidadesService } from '../services/entidades.service';
 
 @Component({
   selector: 'app-entidades-update',
   imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
-    MatButtonModule, MatSidenavModule, MatListModule, MatCardModule],
+    MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule,
+            MatTimepickerModule, NgxMaskDirective],
   templateUrl: './entidades-update.component.html',
   styleUrl: './entidades-update.component.css',
   standalone: true,
 })
 export class EntidadesUpdateComponent implements OnInit {
 
-  entidades!: Entidades //indica que sera inicializada antes do uso "!"
+  entidades: EntidadesFormModel = {
+    nome: '',
+    endereco: '',
+    responsavel: '',
+    telefone: '',
+    diasVisita: [],
+    horarioInicioVisita: null,
+    horarioFimVisita: null,
+  }
+
+  diasDaSemana = DiaSemanaType.getAllValues()
 
   constructor(
     private entidadesService: EntidadesService,
+    private entidadeMapperService: EntidadesMapperService,
     private router: Router,
     private route: ActivatedRoute
   ){}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') ?? ''//garanti que nunca sera null
-    this.entidadesService.readById(id).subscribe(Entidades => {
-      this.entidades = Entidades
+    this.entidadesService.readById(id).subscribe(entidades => {
+      this.entidades = this.entidadeMapperService.toForm(entidades)
     })
   }
 
   updateEntidades(): void {
-    this.entidadesService.update(this.entidades).subscribe(() =>{
+    this.entidadesService.update(this.entidadeMapperService.toAPI(this.entidades)).subscribe(() =>{
       this.entidadesService.showMessage('Entidade atualizada com sucesso!')
         this.router.navigate(['/entidades']);  
     });

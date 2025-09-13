@@ -1,33 +1,99 @@
 <mat-card>
-    <mat-card-title>Alterar Entidade</mat-card-title>
-<form>
+  <mat-card-title>Alterar Entidade</mat-card-title>
+  <form>
     <mat-form-field>
-        <input matInput placeholder="nome:" [(ngModel)]="entidades.nome" name="nome" >
+      <input
+        matInput
+        type="text"
+        placeholder="Nome da Entidade:"
+        [(ngModel)]="entidades.nome"
+        required
+        name="nome"
+      />
     </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="endereco:" [(ngModel)]="entidades.endereco" name="endereco" > 
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="responsavel:" [(ngModel)]="entidades.responsavel" name="responsavel" >
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="telefone:" [(ngModel)]="entidades.telefone" name="telefone" > 
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="horario:" [(ngModel)]="entidades.horarioVisita" name="horario" >
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="visita:" [(ngModel)]="entidades.diasVisita" name="visita" > 
-    </mat-form-field>
-</form>
 
-<div>
-<button mat-raised-button (click)="updateEntidades()" color="primary">
-    Atualizar
-</button>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Endereço:"
+        [(ngModel)]="entidades.endereco"
+        required
+        name="endereco"
+      />
+    </mat-form-field>
 
-<button mat-raised-button (click)="cancel()">
-    Cancelar
-</button>
-</div>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Responsável:"
+        [(ngModel)]="entidades.responsavel"
+        name="responsavel"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+         mask="(99) 99999-9999"
+        placeholder="Telefone:"
+        [(ngModel)]="entidades.telefone"
+        name="telefone"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select
+        placeholder="Dias de Visita"
+        [(ngModel)]="entidades.diasVisita"
+        required
+        multiple
+        name="diasVisita"
+      >
+        @for (dia of diasDaSemana; track dia) {
+        <mat-option [value]="dia.descricao">{{ dia.descricao }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Horário de início da visita"
+        [(ngModel)]="entidades.horarioInicioVisita"
+        [matTimepicker]="horarioInicioPicker"
+        required
+        readonly
+        name="horarioInicioVisita"
+      />
+      <mat-timepicker-toggle matIconSuffix [for]="horarioInicioPicker" />
+      <mat-timepicker interval="15min" #horarioInicioPicker />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Horario de término da visita"
+        [(ngModel)]="entidades.horarioFimVisita"
+        [matTimepicker]="horarioFimPicker"
+        readonly
+        required
+        name="horarioFimVisita"
+      />
+      <mat-timepicker-toggle matIconSuffix [for]="horarioFimPicker" />
+      <mat-timepicker interval="15min" #horarioFimPicker />
+    </mat-form-field>
+  </form>
+
+  <div>
+    <button mat-raised-button (click)="updateEntidades()" color="primary">
+      Atualizar
+    </button>
+
+    <button mat-raised-button (click)="cancel()">Cancelar</button>
+  </div>
 </mat-card>

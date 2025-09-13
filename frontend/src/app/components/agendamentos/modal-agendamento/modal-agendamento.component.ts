@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EntidadesService } from '../../entidades/entidades.service';
-import { Entidades } from '../../entidades/entidades.model';
-import { VoluntariosService } from '../../voluntarios/voluntarios.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Entidades } from '../../entidades/models/entidades.model';
+import { EntidadesService } from '../../entidades/services/entidades.service';
 import { Voluntarios } from '../../voluntarios/voluntarios.model';
+import { VoluntariosService } from '../../voluntarios/voluntarios.service';
 import { Agendamentos } from '../agendamentos.model';
 
 @Component({

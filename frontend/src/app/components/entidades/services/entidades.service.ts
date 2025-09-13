@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Entidades } from './entidades.model';
 import { catchError, EMPTY, map, Observable } from 'rxjs';
-import { url } from 'inspector';
+import { environment } from '../../../../environments/environment';
+import { Entidades } from '../models/entidades.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EntidadesService {
 
-  baseUrl = "http://localhost:3001/entidades"
+  baseUrl = `${environment.baseApiUrl}/api/entidades`
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
@@ -24,7 +24,6 @@ export class EntidadesService {
     });
   }
   
-
   create(entidades: Entidades): Observable<Entidades>{
     return this.http.post<Entidades>(this.baseUrl, entidades).pipe(map(obj => obj),
     catchError(e => this.errorHandler(e))

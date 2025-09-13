@@ -1,14 +1,25 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 
-import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
-import { provideHttpClient } from '@angular/common/http';
+import { routes } from './app.routes';
+
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), 
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt-BR',
+    },
+    provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes), 
-    provideAnimationsAsync(), provideHttpClient()]
+    provideAnimationsAsync(),
+    provideHttpClient(),
+    provideEnvironmentNgxMask(),
+    provideNativeDateAdapter()
+  ]
 };
