@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { VoluntarioRole, Voluntarios } from '../voluntarios.model';
 import { VoluntariosService } from '../voluntarios.service';
 
@@ -16,9 +17,9 @@ import { VoluntariosService } from '../voluntarios.service';
 @Component({
   selector: 'app-voluntarios-create',
   imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
-            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule
-          ],
-  providers: [],
+            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule,
+            NgxMaskDirective],
+  providers: [provideNgxMask()],
   templateUrl: './voluntarios-create.component.html',
   styleUrls: ['./voluntarios-create.component.css'],
   standalone: true,

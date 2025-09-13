@@ -38,9 +38,8 @@
       <input
         matInput
         type="text"
-        mask="(99) 99999-9999"
         placeholder="Telefone"
-        [value]="entidades.telefone"
+        [value]="entidades.telefone | mask: '(00) 00000-0000'"
         name="telefone"
         disabled
       />

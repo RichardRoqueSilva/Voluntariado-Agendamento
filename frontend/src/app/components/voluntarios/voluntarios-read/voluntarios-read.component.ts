@@ -1,26 +1,25 @@
-import { Voluntarios } from './../voluntarios.model';
-import { VoluntariosService } from '../voluntarios.service';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
-import { VoluntariosDeleteComponent } from '../voluntarios-delete/voluntarios-delete.component';
-import { VoluntariosUpdateComponent } from '../voluntarios-update/voluntarios-update.component';
-import { VoluntariosCreateComponent } from '../voluntarios-create/voluntarios-create.component';
+import { RouterModule } from '@angular/router';
+import { NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { VoluntariosService } from '../voluntarios.service';
+import { Voluntarios } from './../voluntarios.model';
 
 @Component({
   selector: 'app-voluntarios-read',
   imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
     MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, CommonModule,
-    MatTableModule,],
+    MatTableModule, NgxMaskPipe],
+  providers: [provideNgxMask()],
   templateUrl: './voluntarios-read.component.html',
   styleUrls: ['./voluntarios-read.component.css',],
   standalone: true,

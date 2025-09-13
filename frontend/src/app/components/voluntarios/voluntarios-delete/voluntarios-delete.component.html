@@ -15,19 +15,21 @@
     <mat-form-field>
       <input
         matInput
+        type="text"
         type="email"
         placeholder="Email"
         [value]="voluntarios.email"
-        disabled
         name="email"
+        disabled
       />
     </mat-form-field>
 
     <mat-form-field>
       <input
         matInput
+        type="text"
         placeholder="Celular"
-        [value]="voluntarios.celular"
+        [value]="voluntarios.celular | mask: '(00) 00000-0000'"
         name="celular"
         disabled
       />
@@ -36,6 +38,7 @@
     <mat-form-field>
       <input
         matInput
+        type="text"
         placeholder="Observação"
         [value]="voluntarios.observacao"
         name="observacao"
@@ -47,10 +50,11 @@
       <input
         matInput
         type="text"
+        type="text"
         placeholder="Login"
         [value]="voluntarios.login"
-        disabled
         name="login"
+        disabled
       />
     </mat-form-field>
 

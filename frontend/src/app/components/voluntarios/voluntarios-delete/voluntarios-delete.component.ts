@@ -9,20 +9,30 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { VoluntarioRole, Voluntarios } from '../voluntarios.model';
 import { VoluntariosService } from '../voluntarios.service';
 
 @Component({
   selector: 'app-voluntarios-delete',
   imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
-    MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule],
+    MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule, NgxMaskPipe],
+  providers: [provideNgxMask()],
   templateUrl: './voluntarios-delete.component.html',
   styleUrl: './voluntarios-delete.component.css',
   standalone: true,
 })
 export class VoluntariosDeleteComponent implements OnInit{
 
-  voluntarios!: Voluntarios
+  protected voluntarios: Voluntarios = {
+    nome: '',
+    celular: '',
+    email: '',
+    observacao: '',
+    login:'',
+    senha:'',
+    role: VoluntarioRole.USER
+  }
 
   protected roles = VoluntarioRole
 

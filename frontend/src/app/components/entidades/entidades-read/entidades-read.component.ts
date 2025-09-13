@@ -10,6 +10,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
+import { NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { Entidades } from '../models/entidades.model';
 import { EntidadesService } from '../services/entidades.service';
 
@@ -17,7 +18,8 @@ import { EntidadesService } from '../services/entidades.service';
   selector: 'app-entidades-read',
   imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
     MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, CommonModule,
-    MatTableModule,],
+    MatTableModule, NgxMaskPipe],
+  providers: [provideNgxMask()],
   templateUrl: './entidades-read.component.html',
   styleUrls: ['./entidades-read.component.css',],
   standalone: true,

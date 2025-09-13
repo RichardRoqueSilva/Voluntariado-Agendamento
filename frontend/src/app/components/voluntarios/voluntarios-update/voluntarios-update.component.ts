@@ -9,20 +9,30 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { VoluntarioRole, Voluntarios } from '../voluntarios.model';
 import { VoluntariosService } from '../voluntarios.service';
 
 @Component({
   selector: 'app-voluntarios-update',
   imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
-    MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule],
+    MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule, NgxMaskDirective],
+  providers: [provideNgxMask()],
   templateUrl: './voluntarios-update.component.html',
   styleUrl: './voluntarios-update.component.css',
   standalone: true,
 })
 export class VoluntariosUpdateComponent implements OnInit {
 
-  voluntarios!: Voluntarios //indica que sera inicializada antes do uso "!"
+  protected voluntarios: Voluntarios = {
+    nome: '',
+    celular: '',
+    email: '',
+    observacao: '',
+    login:'',
+    senha:'',
+    role: VoluntarioRole.USER
+  }
 
   protected roles = VoluntarioRole
 

@@ -10,7 +10,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { DiaSemanaType } from '../models/dia-semana-type.model';
 import { EntidadesFormModel } from '../models/entidades-form.model';
 import { EntidadesMapperService } from '../services/entidades-mapper.service';
@@ -20,7 +20,7 @@ import { EntidadesService } from '../services/entidades.service';
   selector: 'app-entidades-delete',
   imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
     MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule,
-            MatTimepickerModule, NgxMaskDirective],
+            MatTimepickerModule, NgxMaskPipe],
   providers: [provideNgxMask()],
   templateUrl: './entidades-delete.component.html',
   styleUrl: './entidades-delete.component.css',

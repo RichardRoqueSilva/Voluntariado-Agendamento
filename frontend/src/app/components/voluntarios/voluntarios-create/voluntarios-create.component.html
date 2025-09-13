@@ -30,7 +30,8 @@
       <input
         matInput
         type="text"
-        placeholder="(XX)XXXXX-XXXX"
+        mask="(00) 00000-0000"
+        [showMaskTyped]="true"
         [(ngModel)]="voluntarios.celular"
         required
         name="celular"
