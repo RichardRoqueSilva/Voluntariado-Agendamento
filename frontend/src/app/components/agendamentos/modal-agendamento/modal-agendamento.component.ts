@@ -142,8 +142,8 @@ export class ModalAgendamentoComponent implements OnInit {
     return campo?.hasError(nomeErro) && campo.touched
   }
 
-  public isCampoParticipanteTocado() {
-    return this.agendamentoForm.get('participanteSelecionado')?.touched
+  public isParticipantesInvalidos() {
+    return this.agendamentoForm.get('participanteSelecionado')?.touched && this.participantesSelecionados.length == 0
   }
 
   /**

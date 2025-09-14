@@ -37,7 +37,7 @@
             {{ p.nome }} <button type="button" (click)="removerParticipante(i)">Remover</button>
           </li>
         </ul>
-        <mat-error *ngIf="isCampoParticipanteTocado()">É necessário selecionar os voluntários que irão visitar a entidade.</mat-error>
+        <mat-error *ngIf="isParticipantesInvalidos()">É necessário selecionar os voluntários que irão visitar a entidade.</mat-error>
       </div>
 
       <button style="margin: 5px;" type="button" [disabled]="agendamentoForm.invalid || participantesSelecionados.length == 0" (click)="onSalvar()">Salvar</button>
