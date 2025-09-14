@@ -81,8 +81,10 @@
         [(ngModel)]="voluntarios.senha"
         required
         name="senha"
+        minlength="6"
       />
       <mat-error *ngIf="senha.hasError('required')">É necessário preencher a senha do voluntário.</mat-error>
+      <mat-error *ngIf="senha.hasError('minlength')">A senha deve conter no mínimo 6 caracteres.</mat-error>
     </mat-form-field>
 
     <mat-form-field>
