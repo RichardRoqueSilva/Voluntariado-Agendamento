@@ -46,10 +46,27 @@
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s;
+
+  &:disabled {
+    color: #1a1b1f;
+    background-color: rgba(26, 27, 31, 0.2);
+    cursor: auto;
+  }
 }
 
-.modal-container button:hover {
+.modal-container button:not(:disabled):hover {
   background-color: #1565c0;
+}
+
+.modal-container .date-field {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.modal-container mat-error {
+  display: block;
+  margin-top: 5px;
+  font-size: 1rem;
+  color: #ba1a1a;
 }
 
 ul {

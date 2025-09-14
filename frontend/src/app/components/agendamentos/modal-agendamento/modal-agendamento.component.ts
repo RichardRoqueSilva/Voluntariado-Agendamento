@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { Entidades } from '../../entidades/models/entidades.model';
 import { EntidadesService } from '../../entidades/services/entidades.service';
 import { Voluntarios } from '../../voluntarios/voluntarios.model';
@@ -12,7 +13,7 @@ import { Agendamentos } from '../models/agendamentos.model';
 @Component({
   standalone: true,
   selector: 'app-modal-agendamento',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule],
   templateUrl: './modal-agendamento.component.html',
   styleUrl: './modal-agendamento.component.css'
 })
@@ -56,9 +57,9 @@ export class ModalAgendamentoComponent implements OnInit {
   ) {
     this.agendamentos = {...this.agendamento}
     this.agendamentoForm = this.fb.group({
-      entidadeId: [''],
-      diasVisita: [''],
-      horario: [''],
+      entidadeId: ['', Validators.required],
+      diasVisita: ['', Validators.required],
+      horario: ['', Validators.required],
       participanteSelecionado: [''],
     });
   }
@@ -134,6 +135,15 @@ export class ModalAgendamentoComponent implements OnInit {
 
       this._atualizaHorarioDaEntidade(this.agendamento.entidade)
     }
+  }
+
+  public isCampoComErro(nomeCampo: string, nomeErro: string) {
+    const campo = this.agendamentoForm.get(nomeCampo)
+    return campo?.hasError(nomeErro) && campo.touched
+  }
+
+  public isCampoParticipanteTocado() {
+    return this.agendamentoForm.get('participanteSelecionado')?.touched
   }
 
   /**

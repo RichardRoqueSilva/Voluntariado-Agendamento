@@ -7,14 +7,17 @@
       <select formControlName="entidadeId">
         <option *ngFor="let entidade of entidades" [value]="entidade.id">{{ entidade.nome }}</option>
       </select>
+      <mat-error *ngIf="isCampoComErro('entidadeId', 'required')">É necessário preencher a entidade que receberá a visita.</mat-error>
 
       <label>Data:</label>
-      <input type="date" formControlName="diasVisita" />
+      <input class="date-field" type="date" formControlName="diasVisita" />
+      <mat-error *ngIf="isCampoComErro('diasVisita', 'required')">É necessário preencher a data que a entidade receberá a visita.</mat-error>
 
       <label>Horário:</label>
       <select formControlName="horario">
         <option *ngFor="let hora of horarios" [value]="hora">{{ hora }}</option>
       </select>
+      <mat-error *ngIf="isCampoComErro('horario', 'required')">É necessário preencher o horário que a entidade receberá a visita.</mat-error>
 
       <label>Adicionar Participante:</label>
       <div>
@@ -34,9 +37,10 @@
             {{ p.nome }} <button type="button" (click)="removerParticipante(i)">Remover</button>
           </li>
         </ul>
+        <mat-error *ngIf="isCampoParticipanteTocado()">É necessário selecionar os voluntários que irão visitar a entidade.</mat-error>
       </div>
 
-      <button style="margin: 5px;" type="button" (click)="onSalvar()">Salvar</button>
+      <button style="margin: 5px;" type="button" [disabled]="agendamentoForm.invalid || participantesSelecionados.length == 0" (click)="onSalvar()">Salvar</button>
       <button type="button" (click)="onFechar()">Cancelar</button>
     </form>
   </div>

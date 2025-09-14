@@ -1,8 +1,9 @@
 <mat-card>
   <mat-card-title>Alterar Entidade</mat-card-title>
-  <form>
+  <form #entidadesForm="ngForm">
     <mat-form-field>
       <input
+        #nome="ngModel"
         matInput
         type="text"
         placeholder="Nome da Entidade:"
@@ -10,10 +11,12 @@
         required
         name="nome"
       />
+      <mat-error *ngIf="nome.hasError('required')">É necessário preencher o nome da entidade.</mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <input
+        #endereco="ngModel"
         matInput
         type="text"
         placeholder="Endereço:"
@@ -21,6 +24,7 @@
         required
         name="endereco"
       />
+      <mat-error *ngIf="nome.hasError('required')">É necessário preencher o nome da entidade.</mat-error>
     </mat-form-field>
 
     <mat-form-field>
@@ -47,6 +51,7 @@
 
     <mat-form-field>
       <mat-select
+        #diasVisita="ngModel"
         placeholder="Dias de Visita"
         [(ngModel)]="entidades.diasVisita"
         required
@@ -57,10 +62,12 @@
         <mat-option [value]="dia.descricao">{{ dia.descricao }}</mat-option>
         }
       </mat-select>
+      <mat-error *ngIf="diasVisita.hasError('required')">É necessário preencher os dias de visita da entidade.</mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <input
+        #horarioInicioVisita="ngModel"
         matInput
         type="text"
         placeholder="Horário de início da visita"
@@ -72,10 +79,12 @@
       />
       <mat-timepicker-toggle matIconSuffix [for]="horarioInicioPicker" />
       <mat-timepicker interval="15min" #horarioInicioPicker />
+      <mat-error *ngIf="horarioInicioVisita.hasError('required')">É necessário preencher o horário de início das visitas da entidade.</mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <input
+        #horarioFimVisita="ngModel"
         matInput
         type="text"
         placeholder="Horario de término da visita"
@@ -87,11 +96,12 @@
       />
       <mat-timepicker-toggle matIconSuffix [for]="horarioFimPicker" />
       <mat-timepicker interval="15min" #horarioFimPicker />
+      <mat-error *ngIf="horarioFimVisita.hasError('required')">É necessário preencher o horário de término das visitas da entidade.</mat-error>
     </mat-form-field>
   </form>
 
   <div>
-    <button mat-raised-button (click)="updateEntidades()" color="primary">
+    <button mat-raised-button [disabled]="entidadesForm.invalid" (click)="updateEntidades()" color="primary">
       Atualizar
     </button>
 

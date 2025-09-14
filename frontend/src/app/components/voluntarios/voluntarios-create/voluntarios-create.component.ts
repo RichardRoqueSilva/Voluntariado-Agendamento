@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,7 +17,7 @@ import { VoluntariosService } from '../voluntarios.service';
 
 @Component({
   selector: 'app-voluntarios-create',
-  imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
+  imports: [CommonModule, MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
             MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule,
             NgxMaskDirective],
   providers: [provideNgxMask()],
@@ -43,6 +44,7 @@ export class VoluntariosCreateComponent{
   ){}
 
   createVoluntarios(): void {
+    new FormControl()
     this.voluntariosService.create(this.voluntarios).subscribe(voluntarios =>{
       this.voluntariosService.showMessage('Voluntário Cadastrado')
       this.router.navigate(['/voluntarios'])

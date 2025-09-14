@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,9 +19,9 @@ import { EntidadesService } from '../services/entidades.service';
 
 @Component({
   selector: 'app-entidades-update',
-  imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
-    MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule,
-            MatTimepickerModule, NgxMaskDirective],
+  imports: [CommonModule, MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
+            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule, MatTimepickerModule,
+            NgxMaskDirective],
   templateUrl: './entidades-update.component.html',
   styleUrl: './entidades-update.component.css',
   standalone: true,

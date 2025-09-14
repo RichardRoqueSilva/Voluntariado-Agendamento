@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,7 +16,7 @@ import { VoluntariosService } from '../voluntarios.service';
 
 @Component({
   selector: 'app-voluntarios-update',
-  imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
+  imports: [CommonModule, MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
     MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, MatSelectModule, NgxMaskDirective],
   providers: [provideNgxMask()],
   templateUrl: './voluntarios-update.component.html',
