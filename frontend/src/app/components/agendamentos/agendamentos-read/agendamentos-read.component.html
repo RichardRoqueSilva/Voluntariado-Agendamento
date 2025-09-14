@@ -10,7 +10,7 @@
       <!-- Name Column -->
       <ng-container matColumnDef="nome">
         <th mat-header-cell *matHeaderCellDef >Nome</th>
-        <td mat-cell *matCellDef="let row">{{row.nome}}</td>
+        <td mat-cell *matCellDef="let row">{{row?.entidade?.nome}}</td>
       </ng-container>
 
       <!-- Celular Column -->
@@ -34,8 +34,8 @@
       <ng-container matColumnDef="voluntarios">
         <th mat-header-cell *matHeaderCellDef>Voluntários</th>
         <td mat-cell *matCellDef="let row">
-          <div *ngFor="let participante of row.listaParticipantes">
-            {{ participante }}
+          <div *ngFor="let participante of row?.listaParticipantes">
+            {{ participante.nome }}
           </div>
         </td>
       </ng-container>

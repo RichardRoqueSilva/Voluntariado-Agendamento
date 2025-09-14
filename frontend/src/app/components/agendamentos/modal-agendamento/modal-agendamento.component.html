@@ -4,12 +4,12 @@
 
     <form [formGroup]="agendamentoForm">
       <label>Nome:</label>
-      <select formControlName="nome">
-        <option *ngFor="let nome of nomes" [value]="nome">{{ nome }}</option>
+      <select formControlName="entidadeId">
+        <option *ngFor="let entidade of entidades" [value]="entidade.id">{{ entidade.nome }}</option>
       </select>
 
       <label>Data:</label>
-      <input type="date" formControlName="data" />
+      <input type="date" formControlName="diasVisita" />
 
       <label>Horário:</label>
       <select formControlName="horario">
@@ -20,8 +20,8 @@
       <div>
         <select formControlName="participanteSelecionado">
           <option [value]="''" disabled selected>Selecione</option>
-          <option *ngFor="let participante of participantes" [value]="participante">
-            {{ participante }}
+          <option *ngFor="let voluntarios of voluntarios" [value]="voluntarios.id">
+            {{ voluntarios.nome }}
           </option>
         </select>
         <button type="button" (click)="adicionarParticipante()">Adicionar</button>
@@ -31,7 +31,7 @@
         <h4>Participantes Selecionados:</h4>
         <ul>
           <li *ngFor="let p of participantesSelecionados; let i = index">
-            {{ p }} <button type="button" (click)="removerParticipante(i)">Remover</button>
+            {{ p.nome }} <button type="button" (click)="removerParticipante(i)">Remover</button>
           </li>
         </ul>
       </div>

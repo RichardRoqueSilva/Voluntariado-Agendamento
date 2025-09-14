@@ -1,16 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Agendamentos } from './agendamentos.model';
 import { catchError, EMPTY, map, Observable } from 'rxjs';
-import { url } from 'inspector';
+import { environment } from '../../../environments/environment';
+import { AgendamentoForm } from './models/agendamentos-form.model';
+import { Agendamentos } from './models/agendamentos.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgendamentosService {
 
-  baseUrl = "http://localhost:3001/agendamentos"
+  baseUrl = `${environment.baseApiUrl}/api/agendamentos`
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
@@ -25,7 +26,7 @@ export class AgendamentosService {
   }
   
 
-  create(agendamentos: Agendamentos): Observable<Agendamentos>{
+  create(agendamentos: AgendamentoForm): Observable<Agendamentos>{
     return this.http.post<Agendamentos>(this.baseUrl, agendamentos).pipe(map(obj => obj),
     catchError(e => this.errorHandler(e))
     );
@@ -45,8 +46,8 @@ export class AgendamentosService {
     return this.http.get<Agendamentos>(url);
   }
 
-  update(agendamentos: Agendamentos): Observable<Agendamentos> {
-    const url = `${this.baseUrl}/${agendamentos.id}`;
+  update(id: number, agendamentos: AgendamentoForm): Observable<Agendamentos> {
+    const url = `${this.baseUrl}/${id}`;
     return this.http.put<Agendamentos>(url, agendamentos);
   }
 

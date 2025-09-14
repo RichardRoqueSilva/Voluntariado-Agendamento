@@ -1,21 +1,19 @@
-import { Agendamentos } from './../agendamentos.model';
-import { AgendamentosService } from '../agendamentos.service';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
-import { AgendamentosDeleteComponent } from '../agendamentos-delete/agendamentos-delete.component';
-import { AgendamentosUpdateComponent } from '../agendamentos-update/agendamentos-update.component';
-import { AgendamentosCreateComponent } from '../agendamentos-create/agendamentos-create.component';
+import { RouterModule } from '@angular/router';
+import { AgendamentosService } from '../agendamentos.service';
 import { ModalAgendamentoComponent } from '../modal-agendamento/modal-agendamento.component';
+import { AgendamentoForm } from '../models/agendamentos-form.model';
+import { Agendamentos } from '../models/agendamentos.model';
 
 @Component({
   selector: 'app-agendamentos-read',
@@ -29,7 +27,15 @@ import { ModalAgendamentoComponent } from '../modal-agendamento/modal-agendament
 export class AgendamentosReadComponent implements OnInit{
 
   agendamento: Agendamentos = {
-    nome: '',
+      entidade: {
+      nome: '',
+      endereco: '',
+      responsavel: '',
+      telefone: '',
+      diasVisita: [],
+      horarioInicioVisita: null,
+      horarioFimVisita: null,
+    },
     diasVisita: "00-00-0000",
     horario: '',
     listaParticipantes:[]
@@ -84,30 +90,20 @@ export class AgendamentosReadComponent implements OnInit{
     this.mostrarModal = false;
   }
 
-  salvarAgendamento(dados: any) {
-    if (dados.id) {
-      this.agendamento.id = dados.id
-      this.agendamento.nome = dados.nome
-      this.agendamento.diasVisita = dados.data
-      this.agendamento.horario = dados.horario
-      this.agendamento.listaParticipantes = dados.participantes
-      this.agendamentosService.update(this.agendamento).subscribe(() =>{
+  salvarAgendamento(dados: AgendamentoForm) {
+    if (this.agendamento.id) {
+      this.agendamentosService.update(this.agendamento.id, dados).subscribe(() =>{
         this.agendamentosService.showMessage('Agendamento atualizado com sucesso!')
+        this.buscarAgendamentos()
       })
     } else {
-      this.agendamento.nome = dados.nome
-      this.agendamento.diasVisita = dados.data
-      this.agendamento.horario = dados.horario
-      this.agendamento.listaParticipantes = dados.participantes
-      console.log('agendamento', this.agendamentos)
-      this.agendamentosService.create(this.agendamento).subscribe(agendamentos =>{
-      this.agendamentosService.showMessage('Agendamento realizado com sucesso')
-    })
+      this.agendamentosService.create(dados).subscribe(() =>{
+        this.agendamentosService.showMessage('Agendamento realizado com sucesso')
+        this.buscarAgendamentos()
+      })
     }
     
     this.mostrarModal = false;
-    window.location.reload();
-    
   }
 
   editarAgendamento(id: any) { 
@@ -115,9 +111,4 @@ export class AgendamentosReadComponent implements OnInit{
    this.agendamento = this.agendamentos[index]
    this.abrirModal()
   }
-
-  salvarEdicao(dados:any) {
-
-  }
-
 }

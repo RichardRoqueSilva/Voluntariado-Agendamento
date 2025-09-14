@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { AgendamentosReadComponent } from "../../components/agendamentos/agendamentos-read/agendamentos-read.component";
-import { AgendamentosRead2Component } from "../../components/agendamentos/agendamentos-read2/agendamentos-read2.component";
-import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { AgendamentosUpdateComponent } from '../../components/agendamentos/agendamentos-update/agendamentos-update.component';
-import { HeaderService } from '../../components/template/header/header.service';
-import { ModalAgendamentoComponent } from '../../components/agendamentos/modal-agendamento/modal-agendamento.component';
-import { CommonModule } from '@angular/common';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSortModule } from '@angular/material/sort';
+import { Router, RouterModule } from '@angular/router';
+import { AgendamentosReadComponent } from "../../components/agendamentos/agendamentos-read/agendamentos-read.component";
 import { AgendamentosService } from '../../components/agendamentos/agendamentos.service';
-import { Agendamentos } from '../../components/agendamentos/agendamentos.model';
+import { ModalAgendamentoComponent } from '../../components/agendamentos/modal-agendamento/modal-agendamento.component';
+import { AgendamentoForm } from '../../components/agendamentos/models/agendamentos-form.model';
+import { Agendamentos } from '../../components/agendamentos/models/agendamentos.model';
+import { HeaderService } from '../../components/template/header/header.service';
 
 
 @Component({
@@ -28,13 +27,24 @@ import { Agendamentos } from '../../components/agendamentos/agendamentos.model';
 })
 export class AgendamentosCrudComponent implements OnInit {
 
-  agendamentos: Agendamentos = {
-      nome: '',
-      diasVisita: "00-00-0000",
-      horario: '',
-      listaParticipantes:[]
-    }
+  @ViewChild(AgendamentosReadComponent, {static: true})
+  agentamentosReadComponent!: AgendamentosReadComponent
 
+  agendamentos: Agendamentos = {
+      entidade: {
+      nome: '',
+      endereco: '',
+      responsavel: '',
+      telefone: '',
+      diasVisita: [],
+      horarioInicioVisita: null,
+      horarioFimVisita: null,
+    },
+    diasVisita: "00-00-0000",
+    horario: '',
+    listaParticipantes:[]
+  }
+  
   mostrarModal = false;
 
   constructor(private router: Router, 
@@ -63,20 +73,13 @@ export class AgendamentosCrudComponent implements OnInit {
     this.mostrarModal = false;
   }
 
-  salvarAgendamento(dados: any) {
-    this.agendamentos.nome = dados.nome
-    this.agendamentos.diasVisita = dados.data
-    this.agendamentos.horario = dados.horario
-    this.agendamentos.listaParticipantes = dados.participantes
-    console.log('agendamento', this.agendamentos)
-    this.agendamentosService.create(this.agendamentos).subscribe(agendamentos =>{
+  salvarAgendamento(dados: AgendamentoForm) {
+    console.log('agendamento', dados)
+    this.agendamentosService.create(dados).subscribe(() =>{
       this.agendamentosService.showMessage('Agendamento realizado com sucesso')
+      this.agentamentosReadComponent.buscarAgendamentos()
     })
     this.mostrarModal = false;
-    window.location.reload();
-    
   }
-
-
 }
 

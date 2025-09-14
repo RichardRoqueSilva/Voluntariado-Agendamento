@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
-import { AgendamentosService } from '../agendamentos.service';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { Agendamentos } from '../agendamentos.model';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router, RouterModule } from '@angular/router';
+import { AgendamentosService } from '../agendamentos.service';
+import { AgendamentoForm } from '../models/agendamentos-form.model';
 
 @Component({
   selector: 'app-agendamentos-create',
@@ -21,10 +21,13 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class AgendamentosCreateComponent implements OnInit{
 
-  agendamentos: Agendamentos = {
-    nome: '',
+  agendamentos: AgendamentoForm = {
+    entidadeId: 0,
     diasVisita: "00-00-0000",
+    horario: '',
+    participantesIds:[]
   }
+
   constructor(private agendamentosService: AgendamentosService,
     private router: Router
   ){}
@@ -32,7 +35,7 @@ export class AgendamentosCreateComponent implements OnInit{
   }
 
   createAgendamentos(): void {
-    this.agendamentosService.create(this.agendamentos).subscribe(agendamentos =>{
+    this.agendamentosService.create(this.agendamentos).subscribe(() =>{
       this.agendamentosService.showMessage('Agendamento realizado com sucesso')
       this.router.navigate(['/agendamentos'])
   })

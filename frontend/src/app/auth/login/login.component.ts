@@ -11,16 +11,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { FooterComponent } from '../../components/template/footer/footer.component';
-import { HeaderComponent } from '../../components/template/header/header.component';
-import { NavComponent } from '../../components/template/nav/nav.component';
 
 @Component({
   selector: 'app-login',
   standalone: true, // <<< Já definido pelo CLI
   imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
-            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, CommonModule, HeaderComponent,
-            NavComponent, FooterComponent],
+            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'] // Ou .scss, etc.
 })

@@ -1,5 +1,9 @@
 /* styles.css (Global - Tentativa com Flexbox para corrigir sobreposição lateral) */
 
+* {
+  box-sizing: border-box;
+}
+
 /* --- Base --- */
 html, body {
   height: 100%;

@@ -2,7 +2,7 @@
     <mat-card-title>Nova Entidade</mat-card-title>
 <form>
     <mat-form-field>
-        <input matInput placeholder="Nome" [(ngModel)]="agendamentos.nome" name="nome" >
+        <input matInput type="hidden" [(ngModel)]="agendamentos.entidadeId" name="id" >
     </mat-form-field>
     <mat-form-field>
         <input matInput placeholder="Dias de Visita" [(ngModel)]="agendamentos.diasVisita" name="visita" > 
