@@ -19,26 +19,6 @@
       "senha": "123456",
       "email": "mariana.costa@exemplo.com",
       "role": "USER"
-    },
-    {
-      "id": 3,
-      "nome": "Richard Roque da Silva",
-      "celular": "(16) 99730-7540",
-      "observacao": "Não posso de sabado",
-      "login": "RichardRoque",
-      "senha": "123456",
-      "email": "richard.roque@admin.com",
-      "role": "ADMIN"
-    },
-    {
-      "id": 4,
-      "nome": "Paulo",
-      "celular": "1699999999",
-      "observacao": "dsf dsfdsfdfdsfs",
-      "login": "Paulo",
-      "senha": "123456",
-      "email": "paulo@exemplo.com",
-      "role": "USER"
     }
   ],
   "entidades": [
@@ -48,10 +28,7 @@
       "endereco": "Padre duarte, 229",
       "responsavel": "Francisco",
       "telefone": "(16)99855-2557",
-      "diasVisita": [
-        "Terça-feira",
-        "Quinta-feira"
-      ],
+      "diasVisita": ["Terça-feira", "Quinta-feira"],
       "horarioInicioVisita": "12:30",
       "horarioFimVisita": "18:00"
     },
@@ -61,22 +38,9 @@
       "endereco": "Padre duarte, 229",
       "responsavel": "Rebeca",
       "telefone": "(16)99855-2557",
-      "diasVisita": [
-        "Segunda-feira",
-        "Sexta-feira"
-      ],
+      "diasVisita": ["Segunda-feira", "Sexta-feira"],
       "horarioInicioVisita": "12:30",
       "horarioFimVisita": "18:00"
-    },
-    {
-      "id": 103,
-      "nome": "Santa Casa",
-      "endereco": "padre duarte, 1555",
-      "responsavel": "beatriz vilela",
-      "telefone": "16996452634",
-      "diasVisita": ["Domingo"],
-      "horarioInicioVisita": "10:30",
-      "horarioFimVisita": "12:00"
     }
   ],
   "agendamentos": [
@@ -85,18 +49,16 @@
       "nome": "Hospital Central",
       "diasVisita": "2025-05-08",
       "horario": "18:00",
-      "listaParticipantes": [
-        "Carlos Oliveira"
-      ]
+      "listaParticipantes": ["Carlos Oliveira"],
+      "status": "CONFIRMADO"
     },
     {
       "id": 202,
       "nome": "Santa Casa de Misericórdia",
       "diasVisita": "2025-05-14",
       "horario": "18:00",
-      "listaParticipantes": [
-        "Carlos Oliveira"
-      ]
+      "listaParticipantes": ["Carlos Oliveira"],
+      "status": "AGUARDANDO_CONFIRMACAO"
     }
   ]
 }

@@ -14,5 +14,5 @@ import java.util.List;
 public class DbJsonData {
     private List<Voluntario> voluntarios;
     private List<Entidade> entidades;
-    private List<AgendamentoJsonDTO> agendamentos; // <<< Agora usa o DTO para JSON
+    private List<AgendamentoJsonDTO> agendamentos; // Agora usa o DTO para JSON com status
 }

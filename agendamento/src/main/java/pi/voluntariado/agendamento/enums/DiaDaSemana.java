@@ -35,7 +35,7 @@ public enum DiaDaSemana {
         throw new IllegalArgumentException("Dia da semana inválido: " + text);
     }
 
-    // <<< Adicione este novo método para converter de java.time.DayOfWeek
+
     public static DiaDaSemana fromDayOfWeek(DayOfWeek dayOfWeek) {
         return switch (dayOfWeek) {
             case MONDAY -> SEGUNDA;
@@ -48,5 +48,5 @@ public enum DiaDaSemana {
             default -> throw new IllegalArgumentException("Dia da semana do Java inválido: " + dayOfWeek);
         };
     }
-    // >>> Fim do novo método
+
 }

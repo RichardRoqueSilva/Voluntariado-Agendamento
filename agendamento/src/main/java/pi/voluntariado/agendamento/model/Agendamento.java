@@ -1,19 +1,13 @@
 package pi.voluntariado.agendamento.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;       // <<< Importação para relacionamento Many-to-One
-import jakarta.persistence.ManyToMany;      // <<< Importação para relacionamento Many-to-Many
-import jakarta.persistence.JoinColumn;      // <<< Importação para @JoinColumn
-import jakarta.persistence.JoinTable;       // <<< Importação para @JoinTable
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pi.voluntariado.agendamento.enums.StatusAgendamento;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -33,7 +27,7 @@ public class Agendamento {
     private Entidade entidade;
 
     private LocalDate diasVisita;
-    private LocalTime horario; // <<< ALTERADO PARA LocalTime
+    private LocalTime horario;
 
     @ManyToMany
     @JoinTable(
@@ -42,4 +36,7 @@ public class Agendamento {
             inverseJoinColumns = @JoinColumn(name = "voluntario_id")
     )
     private List<Voluntario> listaParticipantes;
+
+    @Enumerated(EnumType.STRING) // Define como o ENUM será persistido no banco de dados
+    private StatusAgendamento status; // Novo campo para o status do agendamento
 }

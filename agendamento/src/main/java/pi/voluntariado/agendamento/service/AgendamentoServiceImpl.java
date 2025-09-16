@@ -1,5 +1,7 @@
 package pi.voluntariado.agendamento.service;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import pi.voluntariado.agendamento.dto.agendamento.AgendamentoRequestDTO;
 import pi.voluntariado.agendamento.dto.agendamento.AgendamentoResponseDTO;
 import pi.voluntariado.agendamento.enums.DiaDaSemana;
@@ -66,7 +68,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
             throw new RuntimeException("A entidade '" + entidade.getNome() + "' não permite visitas às " + diaAgendadoEnum.getDescricao() + "s.");
         }
 
-        // 4. Validar o horário do agendamento com a faixa de horário permitida da Entidade <<< NOVA VALIDAÇÃO
+        // 4. Validar o horário do agendamento com a faixa de horário permitida da Entidade
         LocalTime horarioAgendamento = agendamentoDTO.getHorario();
         LocalTime horarioInicioPermitido = entidade.getHorarioInicioVisita();
         LocalTime horarioFimPermitido = entidade.getHorarioFimVisita();
@@ -80,8 +82,9 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         Agendamento agendamento = new Agendamento();
         agendamento.setEntidade(entidade);
         agendamento.setDiasVisita(agendamentoDTO.getDiasVisita());
-        agendamento.setHorario(horarioAgendamento); // Usa o LocalTime validado
+        agendamento.setHorario(horarioAgendamento);
         agendamento.setListaParticipantes(participantes);
+        agendamento.setStatus(agendamentoDTO.getStatus()); // Adiciona o status
 
         Agendamento savedAgendamento = agendamentoRepository.save(agendamento);
         return new AgendamentoResponseDTO(savedAgendamento);
@@ -114,7 +117,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
             throw new RuntimeException("A entidade '" + entidade.getNome() + "' não permite visitas às " + diaAgendadoEnum.getDescricao() + "s.");
         }
 
-        // 4. Validar o horário do agendamento com a faixa de horário permitida da Entidade <<< NOVA VALIDAÇÃO
+        // 4. Validar o horário do agendamento com a faixa de horário permitida da Entidade
         LocalTime horarioAgendamento = agendamentoDTO.getHorario();
         LocalTime horarioInicioPermitido = entidade.getHorarioInicioVisita();
         LocalTime horarioFimPermitido = entidade.getHorarioFimVisita();
@@ -124,11 +127,12 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         }
 
 
-        agendamento.setId(id);
+        agendamento.setId(id); // Garante que o ID esteja presente para a atualização
         agendamento.setEntidade(entidade);
         agendamento.setDiasVisita(agendamentoDTO.getDiasVisita());
         agendamento.setHorario(horarioAgendamento);
         agendamento.setListaParticipantes(participantes);
+        agendamento.setStatus(agendamentoDTO.getStatus()); // Atualiza o status
 
         Agendamento updatedAgendamento = agendamentoRepository.save(agendamento);
         return new AgendamentoResponseDTO(updatedAgendamento);

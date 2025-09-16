@@ -1,5 +1,6 @@
 package pi.voluntariado.agendamento.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import pi.voluntariado.agendamento.dto.agendamento.AgendamentoRequestDTO;
 import pi.voluntariado.agendamento.dto.agendamento.AgendamentoResponseDTO;
 import pi.voluntariado.agendamento.service.AgendamentoService;

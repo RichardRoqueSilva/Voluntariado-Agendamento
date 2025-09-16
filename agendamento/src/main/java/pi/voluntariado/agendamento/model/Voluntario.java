@@ -13,16 +13,15 @@ import pi.voluntariado.agendamento.enums.UserRole;
 public class Voluntario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "voluntario_seq_generator")
-    @SequenceGenerator(name = "voluntario_seq_generator", sequenceName = "voluntario_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // <--- MANTENHA ASSIM
     private Long id;
     private String nome;
     private String celular;
     private String observacao;
-    private String login; // Será o username
+    private String login;
     private String senha;
-    private String email; // <<< NOVO CAMPO
+    private String email;
 
-    @Enumerated(EnumType.STRING) // Armazena o nome do enum (ADMIN, USER) como String no BD
-    private UserRole role; // <<< NOVO CAMPO
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 }

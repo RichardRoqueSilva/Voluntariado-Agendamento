@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotEmpty; // Para a lista de participantes
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pi.voluntariado.agendamento.enums.StatusAgendamento;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,8 +24,12 @@ public class AgendamentoRequestDTO {
 
     @NotNull(message = "O horário do agendamento é obrigatório")
     @Schema(type = "string", format = "HH:mm", example = "14:30")
-    private LocalTime horario; // <<< ALTERADO PARA LocalTime
+    private LocalTime horario;
 
     @NotEmpty(message = "A lista de participantes não pode ser vazia")
     private List<Long> participantesIds;
+
+    @NotNull(message = "O status do agendamento é obrigatório") // Adiciona validação
+    private StatusAgendamento status;
+
 }
