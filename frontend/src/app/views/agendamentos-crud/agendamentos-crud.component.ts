@@ -13,6 +13,7 @@ import { AgendamentosService } from '../../components/agendamentos/agendamentos.
 import { ModalAgendamentoComponent } from '../../components/agendamentos/modal-agendamento/modal-agendamento.component';
 import { AgendamentoForm } from '../../components/agendamentos/models/agendamentos-form.model';
 import { Agendamentos } from '../../components/agendamentos/models/agendamentos.model';
+import { StatusAgendamento } from '../../components/agendamentos/models/status-agendamento-type.model';
 import { HeaderService } from '../../components/template/header/header.service';
 
 
@@ -42,7 +43,8 @@ export class AgendamentosCrudComponent implements OnInit {
     },
     diasVisita: "00-00-0000",
     horario: '',
-    listaParticipantes:[]
+    listaParticipantes:[],
+    status: StatusAgendamento.AGUARDANDO_CONFIRMACAO
   }
   
   mostrarModal = false;

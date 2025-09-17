@@ -43,7 +43,8 @@ export class AgendamentosUpdateComponent implements OnInit {
       diasVisita: this.agendamentos.diasVisita,
       horario: this.agendamentos.horario as string,
       entidadeId: this.agendamentos.id as number,
-      participantesIds: participantesIds 
+      participantesIds: participantesIds,
+      status: this.agendamentos.status
     }
     this.agendamentosService.update(this.agendamentos.id as number, agendamentoForm).subscribe(() =>{
       this.agendamentosService.showMessage('Agendamento atualizado com sucesso!')

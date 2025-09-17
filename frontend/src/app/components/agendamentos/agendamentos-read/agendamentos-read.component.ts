@@ -14,6 +14,7 @@ import { AgendamentosService } from '../agendamentos.service';
 import { ModalAgendamentoComponent } from '../modal-agendamento/modal-agendamento.component';
 import { AgendamentoForm } from '../models/agendamentos-form.model';
 import { Agendamentos } from '../models/agendamentos.model';
+import { StatusAgendamento, StatusAgendamentoType } from '../models/status-agendamento-type.model';
 
 @Component({
   selector: 'app-agendamentos-read',
@@ -38,13 +39,16 @@ export class AgendamentosReadComponent implements OnInit{
     },
     diasVisita: "00-00-0000",
     horario: '',
-    listaParticipantes:[]
+    listaParticipantes:[],
+    status: StatusAgendamento.AGUARDANDO_CONFIRMACAO
   }
 
   agendamentos: Agendamentos[] = []
-  displayedColumns = ['nome', 'visita', 'horario', 'voluntarios', 'action']
+  displayedColumns = ['nome', 'visita', 'horario', 'status', 'voluntarios', 'action']
 
   mostrarModal: boolean = false;
+
+  statusTypes = StatusAgendamento
 
   constructor(private agendamentosService: AgendamentosService){}
 
@@ -110,5 +114,9 @@ export class AgendamentosReadComponent implements OnInit{
    const index =  this.agendamentos.findIndex(agen => agen.id === id)
    this.agendamento = this.agendamentos[index]
    this.abrirModal()
+  }
+
+  getDescricaoStatus(status: StatusAgendamento): string | undefined{
+    return StatusAgendamentoType.getStatus(status)?.descricao
   }
 }

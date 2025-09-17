@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DiaSemanaType } from '../../entidades/models/dia-semana-type.model';
 import { Entidades } from '../../entidades/models/entidades.model';
 import { EntidadesService } from '../../entidades/services/entidades.service';
 import { Voluntarios } from '../../voluntarios/voluntarios.model';
 import { VoluntariosService } from '../../voluntarios/voluntarios.service';
 import { AgendamentoForm } from '../models/agendamentos-form.model';
 import { Agendamentos } from '../models/agendamentos.model';
+import { StatusAgendamento, StatusAgendamentoType } from '../models/status-agendamento-type.model';
 
 @Component({
   standalone: true,
@@ -31,7 +33,8 @@ export class ModalAgendamentoComponent implements OnInit {
     },
     diasVisita: "00-00-0000",
     horario: '',
-    listaParticipantes:[]
+    listaParticipantes:[],
+    status: StatusAgendamento.AGUARDANDO_CONFIRMACAO
   }
 
   @Input() agendamento!: Agendamentos
@@ -48,6 +51,8 @@ export class ModalAgendamentoComponent implements OnInit {
   horarios: string[] = [];
   participantes = [''];
 
+  statusTypes = StatusAgendamentoType.getAllValues()
+
   editando: boolean = false
 
   constructor(private fb: FormBuilder,
@@ -58,9 +63,10 @@ export class ModalAgendamentoComponent implements OnInit {
     this.agendamentos = {...this.agendamento}
     this.agendamentoForm = this.fb.group({
       entidadeId: ['', Validators.required],
-      diasVisita: ['', Validators.required],
+      diasVisita: ['', [Validators.required, this._validatorDiaSemana()]],
       horario: ['', Validators.required],
       participanteSelecionado: [''],
+      status: [StatusAgendamento.AGUARDANDO_CONFIRMACAO, Validators.required]
     });
   }
 
@@ -111,7 +117,8 @@ export class ModalAgendamentoComponent implements OnInit {
       entidadeId: form.entidadeId,
       diasVisita: form.diasVisita,
       horario: form.horario,
-      participantesIds: participantes
+      participantesIds: participantes,
+      status: form.status
     };
 
     this.salvar.emit(dados);
@@ -133,6 +140,10 @@ export class ModalAgendamentoComponent implements OnInit {
       this.agendamentoForm.get('diasVisita')?.setValue(this.agendamento.diasVisita)
       this.agendamentoForm.get('horario')?.setValue(this.agendamento.horario)
 
+      if(this.agendamento.status) {
+        this.agendamentoForm.get('status')?.setValue(this.agendamento.status)
+      }
+
       this._atualizaHorarioDaEntidade(this.agendamento.entidade)
     }
   }
@@ -144,6 +155,51 @@ export class ModalAgendamentoComponent implements OnInit {
 
   public isParticipantesInvalidos() {
     return this.agendamentoForm.get('participanteSelecionado')?.touched && this.participantesSelecionados.length == 0
+  }
+
+  public getDiasSemanaValidosEntidade(): string | undefined  {
+    const entidadeId = this.agendamentoForm.get('entidadeId')?.value
+    const entidadeSelecionada = this.entidades.find(e => e.id == entidadeId)
+
+    return entidadeSelecionada?.diasVisita.join(", ")
+  }
+
+  private _validatorDiaSemana() {
+    return (control: AbstractControl) => {
+
+      const dataStr = control.value as string
+
+      if(!dataStr) {
+        return null
+      }
+
+      const entidadeId = this.agendamentoForm.get('entidadeId')?.value
+      const entidadeSelecionada = this.entidades?.find(e => e.id == entidadeId)
+
+      if(!entidadeSelecionada) {
+        return null
+      }
+
+      const partes = dataStr.split('-')
+
+      if(partes.length < 3) {
+        return null
+      }
+
+      const data = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]))
+     const diaDaSemana = DiaSemanaType.getPorDiaDaSemana(data.getDay())
+
+      
+      if(!diaDaSemana) {
+        return null
+      }
+
+      const diaSelecionadoValido = entidadeSelecionada.diasVisita.includes(diaDaSemana?.descricao)
+
+      return diaSelecionadoValido 
+        ? null
+        : { diaDaSemanaInvalido: true }
+    }
   }
 
   /**

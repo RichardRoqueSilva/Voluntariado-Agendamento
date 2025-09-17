@@ -10,6 +10,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
 import { AgendamentosService } from '../agendamentos.service';
 import { AgendamentoForm } from '../models/agendamentos-form.model';
+import { StatusAgendamento } from '../models/status-agendamento-type.model';
 
 @Component({
   selector: 'app-agendamentos-create',
@@ -25,7 +26,8 @@ export class AgendamentosCreateComponent implements OnInit{
     entidadeId: 0,
     diasVisita: "00-00-0000",
     horario: '',
-    participantesIds:[]
+    participantesIds:[],
+    status: StatusAgendamento.AGUARDANDO_CONFIRMACAO
   }
 
   constructor(private agendamentosService: AgendamentosService,

@@ -17,3 +17,31 @@ table{
 .delete {
   cursor: pointer;
 }
+
+.coluna-tag {
+    width: 250px;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    gap: 0.25rem;
+}
+
+.tag-aguardando {
+    background: #ffedd5;
+    color: #c2410c;
+}
+
+.tag-confirmado {
+    background: #dcfce7;
+    color: #15803d;
+}

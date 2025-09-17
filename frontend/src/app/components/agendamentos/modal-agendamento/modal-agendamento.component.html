@@ -12,12 +12,19 @@
       <label>Data:</label>
       <input class="date-field" type="date" formControlName="diasVisita" />
       <mat-error *ngIf="isCampoComErro('diasVisita', 'required')">É necessário preencher a data que a entidade receberá a visita.</mat-error>
+      <mat-error *ngIf="isCampoComErro('diasVisita', 'diaDaSemanaInvalido')">É necessário selecionar uma data de visita válida para a entidade. Dias válidos: {{ getDiasSemanaValidosEntidade() }}.</mat-error>
 
       <label>Horário:</label>
       <select formControlName="horario">
         <option *ngFor="let hora of horarios" [value]="hora">{{ hora }}</option>
       </select>
       <mat-error *ngIf="isCampoComErro('horario', 'required')">É necessário preencher o horário que a entidade receberá a visita.</mat-error>
+
+      <label>Status:</label>
+      <select formControlName="status">
+        <option *ngFor="let status of statusTypes" [value]="status.valor">{{ status.descricao }}</option>
+      </select>
+      <mat-error *ngIf="isCampoComErro('status', 'required')">É necessário preencher o status atual do agendamento.</mat-error>
 
       <label>Adicionar Participante:</label>
       <div>
