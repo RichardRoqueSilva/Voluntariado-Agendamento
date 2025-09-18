@@ -1,0 +1,25 @@
+networks:
+  privada:
+  publica:
+
+services:
+    
+  voluntariado-ui:
+    build: ./frontend
+    ports:
+      - 4200:80
+    environment:
+      - API_HOST=voluntariado-api
+      - API_PORT=8000
+    networks:
+      - publica
+      - privada
+    depends_on:
+      - voluntariado-api
+
+  voluntariado-api:
+    build: ./agendamento
+    environment:
+      - PORT=8000
+    networks:
+      - privada

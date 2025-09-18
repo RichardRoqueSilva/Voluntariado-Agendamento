@@ -1,0 +1,50 @@
+worker_processes auto;
+pid /tmp/nginx.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include     /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+    keepalive_timeout  65;
+
+    log_format timed_combined 'remote_addr - '
+    '"$request" $status $body_bytes_sent '
+    '"$http_referer" "$http_user_agent" '
+    '$request_time $upstream_response_time $pipe';
+
+
+    server {
+        listen  80;
+        server_name localhost;
+
+        root /usr/share/nginx/html;
+
+        # disable any limits to avoid HTTP 413 for large image uploads
+        client_max_body_size 0;
+
+        # required to avoid HTTP 411:
+        chunked_transfer_encoding on;
+
+        location / {
+            index index.html;  
+            try_files $uri$args $uri$args/ /index.html =404;
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+            root /usr/share/nginx/html;
+        }
+        
+        location /backend {
+            return 302 /backend/;
+        }
+
+        location /backend/ {
+            proxy_pass http://${API_HOST}:${API_PORT}/;
+            proxy_http_version 1.1;
+        }
+    }
+}

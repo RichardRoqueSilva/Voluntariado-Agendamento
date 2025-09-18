@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: `http://localhost:8080`,
+  baseApiUrl: 'backend', // Rota que foi configurada para proxy reverso no NGINX
 };
