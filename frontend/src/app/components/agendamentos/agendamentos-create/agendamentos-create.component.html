@@ -1,22 +1,33 @@
 <mat-card>
-    <mat-card-title>Nova Entidade</mat-card-title>
-<form>
+  <mat-card-title>Nova Entidade</mat-card-title>
+  <form>
     <mat-form-field>
-        <input matInput type="hidden" [(ngModel)]="agendamentos.entidadeId" name="id" >
+      <input
+        matInput
+        type="hidden"
+        [(ngModel)]="agendamentos.entidadeId"
+        name="id"
+      />
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Dias de Visita" [(ngModel)]="agendamentos.diasVisita" name="visita" > 
+      <input
+        matInput
+        placeholder="Dias de Visita"
+        [(ngModel)]="agendamentos.diasVisita"
+        name="visita"
+      />
     </mat-form-field>
+  </form>
 
-</form>
+  <div>
+    <button
+      class="dp-btn-primary"
+      mat-raised-button
+      (click)="createAgendamentos()"
+    >
+      Salvar
+    </button>
 
-<div>
-<button mat-raised-button (click)="createAgendamentos()" color="primary">
-    Salvar
-</button>
-
-<button mat-raised-button (click)="cancel()">
-    Cancelar
-</button>
-</div>
+    <button mat-raised-button (click)="cancel()">Cancelar</button>
+  </div>
 </mat-card>

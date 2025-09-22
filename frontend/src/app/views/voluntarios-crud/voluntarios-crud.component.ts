@@ -1,44 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { VoluntariosReadComponent } from "../../components/voluntarios/voluntarios-read/voluntarios-read.component";
-import { VoluntariosRead2Component } from "../../components/voluntarios/voluntarios-read2/voluntarios-read2.component";
-import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { VoluntariosUpdateComponent } from '../../components/voluntarios/voluntarios-update/voluntarios-update.component';
+import { Router } from '@angular/router';
 import { HeaderService } from '../../components/template/header/header.service';
-
+import { VoluntariosReadComponent } from '../../components/voluntarios/voluntarios-read/voluntarios-read.component';
 
 @Component({
   selector: 'app-voluntarios-crud',
-  imports: [MatSidenavModule, MatCardModule, MatListModule, MatButtonModule, RouterModule,
-    FormsModule, VoluntariosReadComponent, MatSortModule, MatPaginatorModule,
-    MatSortModule, ],
+  imports: [CommonModule, MatButtonModule, VoluntariosReadComponent],
   templateUrl: './voluntarios-crud.component.html',
   styleUrl: './voluntarios-crud.component.css',
   standalone: true,
 })
-export class VoluntariosCrudComponent implements OnInit {
-
-  constructor(private router: Router, private headerService: HeaderService) {
-
+export class VoluntariosCrudComponent {
+  constructor(private router: Router, headerService: HeaderService) {
     headerService.headerData = {
       title: 'Voluntários',
       icon: 'volunteer_activism',
-      routeUrl: '/voluntarios'
-    }  
+      routeUrl: '/voluntarios',
+    };
   }
 
-  ngOnInit(): void {
-
-  }
   navigateToVoluntariosCreate(): void {
-    this.router.navigate(['/voluntarios/create'])
+    this.router.navigate(['/voluntarios/create']);
   }
-
 }
-

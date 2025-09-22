@@ -1,21 +1,33 @@
 <mat-card>
-    <mat-card-title>Alterar Voluntário</mat-card-title>
-<form>
+  <mat-card-title>Alterar Voluntário</mat-card-title>
+  <form>
     <mat-form-field>
-        <input matInput placeholder="nome:" [(ngModel)]="agendamentos.entidade.nome" name="nome" >
+      <input
+        matInput
+        placeholder="nome:"
+        [(ngModel)]="agendamentos.entidade.nome"
+        name="nome"
+      />
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="visita:" [(ngModel)]="agendamentos.diasVisita" name="visita" > 
+      <input
+        matInput
+        placeholder="visita:"
+        [(ngModel)]="agendamentos.diasVisita"
+        name="visita"
+      />
     </mat-form-field>
-</form>
+  </form>
 
-<div>
-<button mat-raised-button (click)="updateAgendamentos()" color="primary">
-    Atualizar
-</button>
+  <div>
+    <button
+      class="dp-btn-primary"
+      mat-raised-button
+      (click)="updateAgendamentos()"
+    >
+      Atualizar
+    </button>
 
-<button mat-raised-button (click)="cancel()">
-    Cancelar
-</button>
-</div>
+    <button mat-raised-button (click)="cancel()">Cancelar</button>
+  </div>
 </mat-card>

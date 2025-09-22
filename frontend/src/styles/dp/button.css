@@ -1,0 +1,77 @@
+.dp-btn-criar {
+  margin-bottom: 1.875rem;
+}
+
+.dp-btn-primary:not(:disabled),
+.dp-btn-primary.mdc-button:not(:disabled) {
+  color: white;
+  background-color: #1565c0;
+}
+
+.dp-btn-primary:not(:disabled):hover,
+.dp-btn-primary.mdc-button:not(:disabled):hover {
+  color: white;
+  background-color: #1565c0;
+  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+}
+
+.dp-btn-alert:disabled,
+.dp-btn-alert.mdc-button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: color-mix(in srgb, #1a1b1f 38%, transparent);
+  background-color: color-mix(in srgb, #1a1b1f 12%, transparent);
+}
+
+.dp-btn-alert:not(:disabled),
+.dp-btn-alert.mdc-button:not(:disabled) {
+  color: white;
+  background-color: #e35e6b;
+}
+
+.dp-btn-alert:not(:disabled):hover,
+.dp-btn-alert.mdc-button:not(:disabled):hover {
+  color: white;
+  background-color: #e35e6b;
+  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+}
+
+.dp-btn-alert:disabled,
+.dp-btn-alert.mdc-button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: color-mix(in srgb, #1a1b1f 38%, transparent);
+  background-color: color-mix(in srgb, #1a1b1f 12%, transparent);
+}
+
+.dp-btn-alert:disabled,
+.dp-btn-alert.mdc-button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: color-mix(in srgb, #1a1b1f 38%, transparent);
+  background-color: color-mix(in srgb, #1a1b1f 12%, transparent);
+}
+
+.dp-btn-warn:not(:disabled),
+.dp-btn-warn.mdc-button:not(:disabled) {
+  color: white;
+  background-color: #eab308;
+}
+
+.dp-btn-warn:not(:disabled):hover,
+.dp-btn-warn.mdc-button:not(:disabled):hover {
+  color: white;
+  background-color: #eab308;
+  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+}
+
+.dp-btn-warn:disabled,
+.dp-btn-warn.mdc-button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: color-mix(in srgb, #1a1b1f 38%, transparent);
+  background-color: color-mix(in srgb, #1a1b1f 12%, transparent);
+}

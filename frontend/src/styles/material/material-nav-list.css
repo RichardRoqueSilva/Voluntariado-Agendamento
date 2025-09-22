@@ -1,0 +1,5 @@
+/* Correção posicionamento listas do mat-nav-list, para tornar o posicionamento relacionado a font-size */
+
+.mat-mdc-nav-list .mdc-list-item.mdc-list-item--with-one-line {
+  height: 3rem;
+}

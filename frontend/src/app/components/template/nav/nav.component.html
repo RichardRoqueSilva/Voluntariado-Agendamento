@@ -1,27 +1,31 @@
 <!-- nav.component.html (CORRETO) -->
+<span class="nav-logo-container">
+  <a class="logo-link" routerLink="/">
+    <img class="logo" src="assets/img/image.png" alt="logo" />
+  </a>
+</span>
 <mat-nav-list class="nav-list">
-    <a mat-list-item routerLink="/">
-        <i class="material-icons">
-            home
-        </i>
-        <span>Inicio</span>
+  <div>
+    <a mat-list-item routerLink="/home">
+      <i class="material-icons"> home </i>
+      <span>Inicio</span>
     </a>
     <a mat-list-item routerLink="/voluntarios">
-        <i class="material-icons">
-            volunteer_activism
-        </i>
-        <span>Voluntários</span>
+      <i class="material-icons"> volunteer_activism </i>
+      <span>Voluntários</span>
     </a>
     <a mat-list-item routerLink="/entidades">
-        <i class="material-icons">
-            local_hospital
-        </i>
-        <span>Entidades</span>
+      <i class="material-icons"> local_hospital </i>
+      <span>Entidades</span>
     </a>
     <a mat-list-item routerLink="/agendamentos">
-        <i class="material-icons">
-            calendar_today
-        </i>
-        <span>Agendamentos</span>
+      <i class="material-icons"> calendar_today </i>
+      <span>Agendamentos</span>
     </a>
+  </div>
+
+  <a mat-list-item routerLink="/">
+    <i class="material-icons"> logout </i>
+    <span>Desconectar</span>
+  </a>
 </mat-nav-list>

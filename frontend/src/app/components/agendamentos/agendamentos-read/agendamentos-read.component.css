@@ -1,47 +1,30 @@
-table{
-    width: 100%;
-}
-
-.edit > i {
-    color: #d9cd26;
-}
-
-.delete > i{
-    color: #e35e6b;
-}
-
-.edit {
-    margin-right: 15px;
-}
-
-.delete {
-  cursor: pointer;
-}
-
 .coluna-tag {
-    width: 250px;
+  min-width: 250px;
+  width: fit-content;
 }
 
 .tag {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    background: #f1f5f9;
-    color: #334155;
-    font-size: 0.875rem;
-    font-weight: 700;
-    padding: 0.25rem 0.5rem;
-    border-radius: 6px;
-    gap: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 0.875rem;
+  line-height: 1.2rem;
+  text-align: center;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  gap: 0.25rem;
 }
 
 .tag-aguardando {
-    background: #ffedd5;
-    color: #c2410c;
+  background: #ffedd5;
+  color: #c2410c;
 }
 
 .tag-confirmado {
-    background: #dcfce7;
-    color: #15803d;
+  background: #dcfce7;
+  color: #15803d;
 }

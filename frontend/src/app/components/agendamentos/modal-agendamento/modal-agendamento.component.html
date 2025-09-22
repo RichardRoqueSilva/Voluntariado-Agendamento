@@ -1,54 +1,163 @@
 <div class="modal-backdrop">
   <div class="modal-container">
-    <h2>Novo Agendamento</h2>
+    <h2>{{ titulo }}</h2>
 
-    <form [formGroup]="agendamentoForm">
-      <label>Nome:</label>
-      <select formControlName="entidadeId">
-        <option *ngFor="let entidade of entidades" [value]="entidade.id">{{ entidade.nome }}</option>
-      </select>
-      <mat-error *ngIf="isCampoComErro('entidadeId', 'required')">É necessário preencher a entidade que receberá a visita.</mat-error>
+    <div class="form-container">
+      <form class="dp-form" [formGroup]="agendamentoForm">
+        <mat-form-field floatLabel="always">
+          <mat-label>Nome</mat-label>
+          <mat-select formControlName="entidadeId" required name="entidadeId">
+            @for (entidade of entidades; track entidade) {
+            <mat-option [value]="entidade.id">{{ entidade.nome }}</mat-option>
+            }
+          </mat-select>
+          <mat-error *ngIf="isCampoComErro('entidadeId', 'required')"
+            >É necessário preencher a entidade que receberá a visita.</mat-error
+          >
+        </mat-form-field>
 
-      <label>Data:</label>
-      <input class="date-field" type="date" formControlName="diasVisita" />
-      <mat-error *ngIf="isCampoComErro('diasVisita', 'required')">É necessário preencher a data que a entidade receberá a visita.</mat-error>
-      <mat-error *ngIf="isCampoComErro('diasVisita', 'diaDaSemanaInvalido')">É necessário selecionar uma data de visita válida para a entidade. Dias válidos: {{ getDiasSemanaValidosEntidade() }}.</mat-error>
+        <mat-form-field floatLabel="always">
+          <mat-label>Data</mat-label>
+          <input
+            matInput
+            formControlName="diasVisita"
+            name="diasVisita"
+            [matDatepicker]="diasVisitaPicker"
+          />
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="diasVisitaPicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #diasVisitaPicker></mat-datepicker>
+          <mat-error *ngIf="isCampoComErro('diasVisita', 'required')"
+            >É necessário preencher a data que a entidade receberá a
+            visita.</mat-error
+          >
+          <mat-error *ngIf="isCampoComErro('diasVisita', 'diaDaSemanaInvalido')"
+            >É necessário selecionar uma data de visita válida para a entidade.
+            Dias válidos: {{ getDiasSemanaValidosEntidade() }}.</mat-error
+          >
+        </mat-form-field>
 
-      <label>Horário:</label>
-      <select formControlName="horario">
-        <option *ngFor="let hora of horarios" [value]="hora">{{ hora }}</option>
-      </select>
-      <mat-error *ngIf="isCampoComErro('horario', 'required')">É necessário preencher o horário que a entidade receberá a visita.</mat-error>
+        <mat-form-field>
+          <mat-label>Horário de término da visita</mat-label>
+          <input
+            matInput
+            placeholder="Horario"
+            formControlName="horario"
+            [matTimepicker]="horarioPicker"
+            [matTimepickerMin]="
+              entidadeSelecionada?.horarioInicioVisita | horarioParaData
+            "
+            [matTimepickerMax]="
+              entidadeSelecionada?.horarioFimVisita | horarioParaData
+            "
+            readonly
+            required
+            name="horario"
+          />
+          <mat-timepicker-toggle matIconSuffix [for]="horarioPicker" />
+          <mat-timepicker interval="15min" #horarioPicker />
+          <mat-error *ngIf="isCampoComErro('horario', 'required')"
+            >É necessário preencher o horário que a entidade receberá a
+            visita.</mat-error
+          >
+          <mat-error
+            *ngIf="
+              isCampoComErro('horario', 'matTimepickerMin') ||
+              isCampoComErro('horario', 'matTimepickerMax')
+            "
+            >O horário de visita selecionado está fora do horário de visita da
+            entidade. Horários da entidade:
+            {{ entidadeSelecionada?.horarioInicioVisita }} até
+            {{ entidadeSelecionada?.horarioFimVisita }}</mat-error
+          >
+        </mat-form-field>
 
-      <label>Status:</label>
-      <select formControlName="status">
-        <option *ngFor="let status of statusTypes" [value]="status.valor">{{ status.descricao }}</option>
-      </select>
-      <mat-error *ngIf="isCampoComErro('status', 'required')">É necessário preencher o status atual do agendamento.</mat-error>
+        <mat-form-field floatLabel="always">
+          <mat-label>Status</mat-label>
 
-      <label>Adicionar Participante:</label>
-      <div>
-        <select formControlName="participanteSelecionado">
-          <option [value]="''" disabled selected>Selecione</option>
-          <option *ngFor="let voluntarios of voluntarios" [value]="voluntarios.id">
-            {{ voluntarios.nome }}
-          </option>
-        </select>
-        <button type="button" (click)="adicionarParticipante()">Adicionar</button>
+          <mat-select formControlName="status" required name="status">
+            @for (status of statusTypes; track status) {
+            <mat-option [value]="status.valor">{{
+              status.descricao
+            }}</mat-option>
+            }
+          </mat-select>
+
+          <mat-error *ngIf="isCampoComErro('status', 'required')"
+            >É necessário preencher o status atual do agendamento.</mat-error
+          >
+        </mat-form-field>
+
+        <div class="campo-participante-container">
+          <h4>Adicionar Participante:</h4>
+          <mat-form-field floatLabel="always">
+            <mat-label>Participante</mat-label>
+
+            <mat-select
+              formControlName="participanteSelecionado"
+              name="participanteSelecionado"
+            >
+              <mat-option [value]="''" disabled>Selecione</mat-option>
+              @for (voluntarios of voluntarios; track voluntarios) {
+              <mat-option [value]="voluntarios.id">{{
+                voluntarios.nome
+              }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <div>
+            <button
+              class="dp-btn-primary"
+              mat-raised-button
+              type="button"
+              (click)="adicionarParticipante()"
+            >
+              Adicionar
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h4>Participantes Selecionados:</h4>
+          <ul>
+            <li *ngFor="let p of participantesSelecionados; let i = index">
+              {{ p.nome }}
+              <button
+                class="dp-btn-alert"
+                mat-raised-button
+                type="button"
+                (click)="removerParticipante(i)"
+              >
+                Remover
+              </button>
+            </li>
+          </ul>
+          <mat-error *ngIf="isParticipantesInvalidos()"
+            >É necessário selecionar os voluntários que irão visitar a
+            entidade.</mat-error
+          >
+        </div>
+      </form>
+      <div class="dp-form-acoes">
+        <button
+          class="dp-btn-primary"
+          mat-raised-button
+          type="button"
+          [disabled]="
+            agendamentoForm.invalid || participantesSelecionados.length == 0
+          "
+          (click)="onSalvar()"
+        >
+          Salvar
+        </button>
+        <button mat-raised-button type="button" (click)="onFechar()">
+          Cancelar
+        </button>
       </div>
-
-      <div>
-        <h4>Participantes Selecionados:</h4>
-        <ul>
-          <li *ngFor="let p of participantesSelecionados; let i = index">
-            {{ p.nome }} <button type="button" (click)="removerParticipante(i)">Remover</button>
-          </li>
-        </ul>
-        <mat-error *ngIf="isParticipantesInvalidos()">É necessário selecionar os voluntários que irão visitar a entidade.</mat-error>
-      </div>
-
-      <button style="margin: 5px;" type="button" [disabled]="agendamentoForm.invalid || participantesSelecionados.length == 0" (click)="onSalvar()">Salvar</button>
-      <button type="button" (click)="onFechar()">Cancelar</button>
-    </form>
+    </div>
   </div>
 </div>

@@ -1,5 +1,4 @@
-import { title } from 'process';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { RouterModule } from '@angular/router';
@@ -9,27 +8,21 @@ import { HeaderService } from './header.service';
   selector: 'app-header',
   imports: [MatToolbarModule, RouterModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css',],
-  standalone: true
+  styleUrls: ['./header.component.css'],
+  standalone: true,
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent {
+  constructor(private headerService: HeaderService) {}
 
-  constructor(private headerService: HeaderService){
-
-  }
-  ngOnInit(): void {
-      
+  get title(): string {
+    return this.headerService.headerData.title;
   }
 
-  get title(): string{
-    return this.headerService.headerData.title
+  get icon(): string {
+    return this.headerService.headerData.icon;
   }
 
-  get icon(): string{
-    return this.headerService.headerData.icon
-  }
-
-  get routeUrl(): string{
-    return this.headerService.headerData.routeUrl
+  get routeUrl(): string {
+    return this.headerService.headerData.routeUrl;
   }
 }

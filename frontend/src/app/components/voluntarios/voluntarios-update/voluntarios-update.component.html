@@ -1,7 +1,8 @@
-<mat-card>
+<mat-card class="dp-card">
   <mat-card-title>Alterar Voluntário</mat-card-title>
-  <form #voluntarioForm="ngForm">
+  <form class="dp-form" #voluntarioForm="ngForm">
     <mat-form-field>
+      <mat-label>Nome</mat-label>
       <input
         #nome="ngModel"
         matInput
@@ -11,10 +12,13 @@
         required
         name="nome"
       />
-      <mat-error *ngIf="nome.hasError('required')">É necessário preencher o nome do voluntário</mat-error>
+      <mat-error *ngIf="nome.hasError('required')"
+        >É necessário preencher o nome do voluntário</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Email</mat-label>
       <input
         #email="ngModel"
         matInput
@@ -24,11 +28,16 @@
         required
         name="email"
       />
-      <mat-error *ngIf="email.hasError('required')">É necessário preencher o email do voluntário.</mat-error>
-      <mat-error *ngIf="email.hasError('email')">Formato de email inválido.</mat-error>
+      <mat-error *ngIf="email.hasError('required')"
+        >É necessário preencher o email do voluntário.</mat-error
+      >
+      <mat-error *ngIf="email.hasError('email')"
+        >Formato de email inválido.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Celular</mat-label>
       <input
         #celular="ngModel"
         matInput
@@ -40,10 +49,13 @@
         required
         name="celular"
       />
-      <mat-error *ngIf="celular.hasError('required')">É necessário preencher o celular do voluntário.</mat-error>
+      <mat-error *ngIf="celular.hasError('required')"
+        >É necessário preencher o celular do voluntário.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Observação</mat-label>
       <input
         matInput
         placeholder="Observação:"
@@ -53,6 +65,7 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Login</mat-label>
       <input
         #login="ngModel"
         matInput
@@ -62,20 +75,35 @@
         required
         name="login"
       />
-      <mat-error *ngIf="login.hasError('required')">É necessário preencher o login do voluntário.</mat-error>
+      <mat-error *ngIf="login.hasError('required')"
+        >É necessário preencher o login do voluntário.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select #role="ngModel" [(ngModel)]="voluntarios.role" required name="tipo">
+      <mat-label>Tipo</mat-label>
+      <mat-select
+        #role="ngModel"
+        [(ngModel)]="voluntarios.role"
+        required
+        name="tipo"
+      >
         <mat-option [value]="roles.ADMIN">Administrador</mat-option>
         <mat-option [value]="roles.USER">Usuário</mat-option>
       </mat-select>
-      <mat-error *ngIf="role.hasError('required')">É necessário preencher o tipo do voluntário.</mat-error>
+      <mat-error *ngIf="role.hasError('required')"
+        >É necessário preencher o tipo do voluntário.</mat-error
+      >
     </mat-form-field>
   </form>
 
-  <div>
-    <button mat-raised-button [disabled]="voluntarioForm.invalid" (click)="updateVoluntarios()" color="primary">
+  <div class="dp-form-acoes">
+    <button
+      class="dp-btn-warn"
+      mat-raised-button
+      [disabled]="voluntarioForm.invalid"
+      (click)="updateVoluntarios()"
+    >
       Atualizar
     </button>
 

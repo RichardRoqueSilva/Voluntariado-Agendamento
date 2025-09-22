@@ -6,35 +6,38 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
   standalone: true, // <<< Já definido pelo CLI
-  imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
-            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule, CommonModule],
+  imports: [
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    RouterModule,
+    MatButtonModule,
+    MatCardModule,
+    CommonModule,
+  ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'] // Ou .scss, etc.
+  styleUrls: ['./login.component.css'], // Ou .scss, etc.
 })
 export class LoginComponent {
-
   credentials = {
     login: '',
-    senha: ''
+    senha: '',
   };
   isLoading = false;
   errorMessage: string | null = null;
-  
+
   private authUrl = `${environment.baseApiUrl}/auth/login`;
 
   constructor(
     private http: HttpClient, // HttpClient agora é injetável globalmente via app.config.ts
-    private router: Router    // Router também é injetável globalmente
-  ) { }
+    private router: Router // Router também é injetável globalmente
+  ) {}
 
   onSubmit(): void {
     if (!this.credentials.login || !this.credentials.senha) {
@@ -62,9 +65,10 @@ export class LoginComponent {
         if (error.status === 401) {
           this.errorMessage = 'Login ou Senha inválidos.';
         } else {
-          this.errorMessage = 'Erro ao tentar conectar. Tente novamente mais tarde.';
+          this.errorMessage =
+            'Erro ao tentar conectar. Tente novamente mais tarde.';
         }
-      }
+      },
     });
   }
 }

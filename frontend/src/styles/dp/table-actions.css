@@ -1,0 +1,22 @@
+.dp-tabela-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9375rem;
+}
+
+.dp-tabela-edit > i,
+.dp-tabela-delete > i {
+  font-size: 1.5rem;
+}
+
+.dp-tabela-edit > i {
+  color: #eab308;
+}
+
+.dp-tabela-delete > i {
+  color: #e35e6b;
+}
+
+.dp-tabela-edit {
+  margin-right: 0.5rem;
+}

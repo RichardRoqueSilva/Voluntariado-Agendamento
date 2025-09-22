@@ -1,44 +1,49 @@
-<div class="login-container">
-    <h2>Login Voluntariado</h2>
-    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-      <div class="form-group">
-        <label for="login">Login:</label>
-        <input
-          type="text"
-          id="login"
-          name="login"
-          [(ngModel)]="credentials.login"
-          required
-          #loginInput="ngModel"
-          placeholder="Digite seu login"
-        >
-        <div *ngIf="loginInput.invalid && (loginInput.dirty || loginInput.touched)" class="error-message">
-          Login é obrigatório.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="senha">Senha:</label>
-        <input
-          type="password"
-          id="senha"
-          name="senha"
-          [(ngModel)]="credentials.senha"
-          required
-          #senhaInput="ngModel"
-          placeholder="Digite sua senha"
-        >
-        <div *ngIf="senhaInput.invalid && (senhaInput.dirty || senhaInput.touched)" class="error-message">
-          Senha é obrigatória.
-        </div>
-      </div>
-  
-      <button type="submit" [disabled]="loginForm.invalid || isLoading">
-        {{ isLoading ? 'Acessando...' : 'Acessar' }}
-      </button>
-  
-      <div *ngIf="errorMessage" class="error-message api-error">
-        {{ errorMessage }}
-      </div>
-    </form>
-  </div>
+<div class="dp-card login-container">
+  <h2>Login Voluntariado</h2>
+  <form class="dp-form" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <mat-form-field floatLabel="always">
+      <mat-label>Login</mat-label>
+      <input
+        #loginInput="ngModel"
+        matInput
+        type="text"
+        id="login"
+        name="login"
+        [(ngModel)]="credentials.login"
+        required
+        placeholder="Digite seu login"
+      />
+      <mat-error *ngIf="loginInput.hasError('required')"
+        >Login é obrigatório.</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always">
+      <mat-label>Senha</mat-label>
+      <input
+        #senhaInput="ngModel"
+        matInput
+        type="password"
+        id="senha"
+        name="senha"
+        [(ngModel)]="credentials.senha"
+        required
+        placeholder="Digite sua senha"
+      />
+      <mat-error *ngIf="senhaInput.hasError('required')"
+        >Senha é obrigatória.</mat-error
+      >
+    </mat-form-field>
+
+    <button
+      class="dp-btn-primary"
+      mat-flat-button
+      type="submit"
+      [disabled]="loginForm.invalid || isLoading"
+    >
+      {{ isLoading ? 'Acessando...' : 'Acessar' }}
+    </button>
+
+    <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+  </form>
+</div>

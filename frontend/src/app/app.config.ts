@@ -1,13 +1,19 @@
 import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import {
+  ApplicationConfig,
+  LOCALE_ID,
+  provideZoneChangeDetection,
+} from '@angular/core';
+import {
+  MAT_DATE_LOCALE,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 
-import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { provideEnvironmentNgxMask, provideNgxMask } from 'ngx-mask';
 
 import { routes } from './app.routes';
-
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,11 +21,20 @@ export const appConfig: ApplicationConfig = {
       provide: LOCALE_ID,
       useValue: 'pt-BR',
     },
-    provideZoneChangeDetection({ eventCoalescing: true }), 
-    provideRouter(routes), 
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'pt-BR',
+    },
+    {
+      provide: Window,
+      useValue: window,
+    },
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(),
     provideEnvironmentNgxMask(),
-    provideNativeDateAdapter()
-  ]
+    provideNativeDateAdapter(),
+    provideNgxMask(),
+  ],
 };

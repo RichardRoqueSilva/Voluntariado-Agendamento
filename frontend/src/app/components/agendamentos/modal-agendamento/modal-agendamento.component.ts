@@ -1,8 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTimepickerModule } from '@angular/material/timepicker';
+import { SharedPipesModule } from '../../../shared/pipes';
+import { DataService } from '../../../shared/services/data';
+import { HorarioService } from '../../../shared/services/horario';
 import { DiaSemanaType } from '../../entidades/models/dia-semana-type.model';
 import { Entidades } from '../../entidades/models/entidades.model';
 import { EntidadesService } from '../../entidades/services/entidades.service';
@@ -10,19 +33,32 @@ import { Voluntarios } from '../../voluntarios/voluntarios.model';
 import { VoluntariosService } from '../../voluntarios/voluntarios.service';
 import { AgendamentoForm } from '../models/agendamentos-form.model';
 import { Agendamentos } from '../models/agendamentos.model';
-import { StatusAgendamento, StatusAgendamentoType } from '../models/status-agendamento-type.model';
+import { ModalAgendamentoModoType } from '../models/modal-agendamento.model';
+import {
+  StatusAgendamento,
+  StatusAgendamentoType,
+} from '../models/status-agendamento-type.model';
 
 @Component({
   standalone: true,
   selector: 'app-modal-agendamento',
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatTimepickerModule,
+    SharedPipesModule,
+  ],
   templateUrl: './modal-agendamento.component.html',
-  styleUrl: './modal-agendamento.component.css'
+  styleUrl: './modal-agendamento.component.css',
 })
-export class ModalAgendamentoComponent implements OnInit {
-
+export class ModalAgendamentoComponent implements OnInit, OnChanges {
   agendamentos: Agendamentos = {
-      entidade: {
+    entidade: {
       nome: '',
       endereco: '',
       responsavel: '',
@@ -31,13 +67,14 @@ export class ModalAgendamentoComponent implements OnInit {
       horarioInicioVisita: null,
       horarioFimVisita: null,
     },
-    diasVisita: "00-00-0000",
+    diasVisita: '00-00-0000',
     horario: '',
-    listaParticipantes:[],
-    status: StatusAgendamento.AGUARDANDO_CONFIRMACAO
-  }
+    listaParticipantes: [],
+    status: StatusAgendamento.AGUARDANDO_CONFIRMACAO,
+  };
 
-  @Input() agendamento!: Agendamentos
+  @Input() agendamento!: Agendamentos;
+  @Input() modo: ModalAgendamentoModoType = ModalAgendamentoModoType.INCLUSAO;
 
   @Output() fechar = new EventEmitter<void>();
   @Output() salvar = new EventEmitter<AgendamentoForm>();
@@ -45,58 +82,71 @@ export class ModalAgendamentoComponent implements OnInit {
   agendamentoForm: FormGroup;
   participantesSelecionados: Voluntarios[] = [];
 
-  entidades: Entidades[] = []
-  voluntarios: Voluntarios[] = []
+  entidadeSelecionada?: Entidades;
+
+  entidades: Entidades[] = [];
+  voluntarios: Voluntarios[] = [];
 
   horarios: string[] = [];
   participantes = [''];
 
-  statusTypes = StatusAgendamentoType.getAllValues()
+  statusTypes = StatusAgendamentoType.getAllValues();
 
-  editando: boolean = false
+  editando: boolean = false;
+  titulo!: string;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private entidadesService: EntidadesService,
     private voluntariosService: VoluntariosService,
-    private _dr: DestroyRef
+    private _dr: DestroyRef,
+    private _dateService: DataService,
+    private _horarioService: HorarioService
   ) {
-    this.agendamentos = {...this.agendamento}
+    this.agendamentos = { ...this.agendamento };
     this.agendamentoForm = this.fb.group({
       entidadeId: ['', Validators.required],
       diasVisita: ['', [Validators.required, this._validatorDiaSemana()]],
       horario: ['', Validators.required],
       participanteSelecionado: [''],
-      status: [StatusAgendamento.AGUARDANDO_CONFIRMACAO, Validators.required]
+      status: [StatusAgendamento.AGUARDANDO_CONFIRMACAO, Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.entidadesService.read().subscribe(Entidades => {
-      this.entidades = Entidades
-      console.log('',this.entidades)
-    })
-    this.voluntariosService.read().subscribe(voluntarios => {
-      this.voluntarios = voluntarios
-      console.log(voluntarios)
-      this.participantes = this.voluntarios.map(voluntario => voluntario.nome);
-    })
+    this.entidadesService.read().subscribe((Entidades) => {
+      this.entidades = Entidades;
+      this._atualizarEntidadeSelecionada(
+        this.agendamentoForm?.get('entidadeId')?.value
+      );
+      console.log('', this.entidades);
+    });
+    this.voluntariosService.read().subscribe((voluntarios) => {
+      this.voluntarios = voluntarios;
+      console.log(voluntarios);
+      this.participantes = this.voluntarios.map(
+        (voluntario) => voluntario.nome
+      );
+    });
 
-    this.receberDados()
-    this._observaMudancaEntidadeSelecionada()
-    // if (this.agendamento) {
-    //   console.log('agen',this.agendamento)
-    //   this.agendamentoForm.get('nome')?.setValue(this.agendamentos.nome)
-    //   this.agendamentoForm.get('data')?.setValue(this.agendamentos.diasVisita)
-    //   this.agendamentoForm.get('horario')?.setValue(this.agendamentos.horario)
-    //   this.participantesSelecionados = this.agendamento.listaParticipantes
-    // }
-    
+    this.receberDados();
+    this._observaMudancaEntidadeSelecionada();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('modo' in changes) {
+      this._atualizarTitulo();
+    }
   }
 
   adicionarParticipante() {
     const idParticipante = this.agendamentoForm.value.participanteSelecionado;
-    const estaComoParticipante = this.participantesSelecionados.some(p => p.id == idParticipante)
-    const participanteSelecionado = this.voluntarios.find(v => v.id == idParticipante)
+    const estaComoParticipante = this.participantesSelecionados.some(
+      (p) => p.id == idParticipante
+    );
+    const participanteSelecionado = this.voluntarios.find(
+      (v) => v.id == idParticipante
+    );
 
     if (idParticipante && !estaComoParticipante && participanteSelecionado) {
       this.participantesSelecionados.push(participanteSelecionado);
@@ -110,15 +160,17 @@ export class ModalAgendamentoComponent implements OnInit {
   }
 
   onSalvar() {
-    const form = <AgendamentoForm>this.agendamentoForm.value
-    const participantes = this.participantesSelecionados.map(p => p.id) as number[]
+    const form = this.agendamentoForm.value;
+    const participantes = this.participantesSelecionados.map(
+      (p) => p.id
+    ) as number[];
 
     const dados: AgendamentoForm = {
       entidadeId: form.entidadeId,
-      diasVisita: form.diasVisita,
-      horario: form.horario,
+      diasVisita: this._dateService.toString(form.diasVisita) ?? '',
+      horario: this._horarioService.toHorario(form.horario),
       participantesIds: participantes,
-      status: form.status
+      status: form.status,
     };
 
     this.salvar.emit(dados);
@@ -128,78 +180,94 @@ export class ModalAgendamentoComponent implements OnInit {
     this.fechar.emit();
   }
 
-  receberDados() {
-    if(this.agendamento) {
-      this.editando = true
-      console.log('agendamento na modal',this.agendamento)
-      this.participantesSelecionados = this.agendamento.listaParticipantes != null
-        ? [...this.agendamento.listaParticipantes]
-        : []
-        
-      this.agendamentoForm.get('entidadeId')?.setValue(this.agendamento.entidade.id)
-      this.agendamentoForm.get('diasVisita')?.setValue(this.agendamento.diasVisita)
-      this.agendamentoForm.get('horario')?.setValue(this.agendamento.horario)
+  toDate(data?: string | null): Date | null {
+    return this._horarioService.toDate(data);
+  }
 
-      if(this.agendamento.status) {
-        this.agendamentoForm.get('status')?.setValue(this.agendamento.status)
+  receberDados() {
+    if (this.agendamento) {
+      this.editando = true;
+      console.log('agendamento na modal', this.agendamento);
+      this.participantesSelecionados =
+        this.agendamento.listaParticipantes != null
+          ? [...this.agendamento.listaParticipantes]
+          : [];
+
+      this.agendamentoForm
+        .get('entidadeId')
+        ?.setValue(this.agendamento.entidade.id);
+      this.agendamentoForm
+        .get('diasVisita')
+        ?.setValue(this._dateService.toDate(this.agendamento.diasVisita));
+      this.agendamentoForm
+        .get('horario')
+        ?.setValue(this._horarioService.toDate(this.agendamento.horario));
+
+      if (this.agendamento.status) {
+        this.agendamentoForm.get('status')?.setValue(this.agendamento.status);
       }
 
-      this._atualizaHorarioDaEntidade(this.agendamento.entidade)
+      this._atualizarEntidadeSelecionada(
+        this.agendamentoForm?.get('entidadeId')?.value
+      );
     }
   }
 
   public isCampoComErro(nomeCampo: string, nomeErro: string) {
-    const campo = this.agendamentoForm.get(nomeCampo)
-    return campo?.hasError(nomeErro) && campo.touched
+    const campo = this.agendamentoForm.get(nomeCampo);
+    return campo?.hasError(nomeErro) && campo.touched;
   }
 
   public isParticipantesInvalidos() {
-    return this.agendamentoForm.get('participanteSelecionado')?.touched && this.participantesSelecionados.length == 0
+    return (
+      this.agendamentoForm.get('participanteSelecionado')?.touched &&
+      this.participantesSelecionados.length == 0
+    );
   }
 
-  public getDiasSemanaValidosEntidade(): string | undefined  {
-    const entidadeId = this.agendamentoForm.get('entidadeId')?.value
-    const entidadeSelecionada = this.entidades.find(e => e.id == entidadeId)
+  public getDiasSemanaValidosEntidade(): string | undefined {
+    const entidadeId = this.agendamentoForm.get('entidadeId')?.value;
+    const entidadeSelecionada = this.entidades.find((e) => e.id == entidadeId);
 
-    return entidadeSelecionada?.diasVisita.join(", ")
+    return entidadeSelecionada?.diasVisita.join(', ');
+  }
+
+  private _atualizarTitulo(): void {
+    this.titulo =
+      this.modo == ModalAgendamentoModoType.EDICAO
+        ? 'Editar Agendamento'
+        : 'Novo Agendamento';
   }
 
   private _validatorDiaSemana() {
     return (control: AbstractControl) => {
+      const data = control.value as Date;
 
-      const dataStr = control.value as string
-
-      if(!dataStr) {
-        return null
+      if (!data) {
+        return null;
       }
 
-      const entidadeId = this.agendamentoForm.get('entidadeId')?.value
-      const entidadeSelecionada = this.entidades?.find(e => e.id == entidadeId)
+      const entidadeId = this.agendamentoForm.get('entidadeId')?.value;
+      const entidadeSelecionada = this.entidades?.find(
+        (e) => e.id == entidadeId
+      );
 
-      if(!entidadeSelecionada) {
-        return null
+      if (!entidadeSelecionada) {
+        return null;
       }
 
-      const partes = dataStr.split('-')
+      const diaDaSemana = DiaSemanaType.getPorDiaDaSemana(data.getDay());
 
-      if(partes.length < 3) {
-        return null
+      if (!diaDaSemana) {
+        return null;
       }
 
-      const data = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]))
-     const diaDaSemana = DiaSemanaType.getPorDiaDaSemana(data.getDay())
+      const diaSelecionadoValido = entidadeSelecionada.diasVisita.includes(
+        diaDaSemana?.descricao
+      );
 
-      
-      if(!diaDaSemana) {
-        return null
-      }
-
-      const diaSelecionadoValido = entidadeSelecionada.diasVisita.includes(diaDaSemana?.descricao)
-
-      return diaSelecionadoValido 
-        ? null
-        : { diaDaSemanaInvalido: true }
-    }
+      return diaSelecionadoValido ? null : { diaDaSemanaInvalido: true };
+    };
   }
 
   /**
@@ -207,118 +275,18 @@ export class ModalAgendamentoComponent implements OnInit {
    * disponíveis para aquela entidade
    */
   private _observaMudancaEntidadeSelecionada(): void {
-    this.agendamentoForm.get('entidadeId')?.valueChanges
-    .pipe(takeUntilDestroyed(this._dr))
-    .subscribe((idEntidadeSelecionada: number) => {
-      const entidadeSelecionada = this.entidades.find(e => e.id == idEntidadeSelecionada)
-
-      this._atualizaHorarioDaEntidade(entidadeSelecionada)
-    })
+    this.agendamentoForm
+      .get('entidadeId')
+      ?.valueChanges.pipe(takeUntilDestroyed(this._dr))
+      .subscribe((idEntidadeSelecionada: number) => {
+        this._atualizarEntidadeSelecionada(idEntidadeSelecionada);
+        this.entidadeSelecionada = this.entidades.find(
+          (e) => e.id == idEntidadeSelecionada
+        );
+      });
   }
 
-  /**
-   * Calcula os horários disponível da entidade a partir das propriedades horarioInicioVisita e horarioFimVisita
-   * @param entidade 
-   * @returns Horários disponíveis pela entidade, com intervalos de 15 minutos.
-   */
-  private _calcularHorariosDisponiveisEntidade(entidade: Entidades | undefined): string[] {
-    if(!entidade) {
-      return []
-    }
-
-    const partesHorarioInicial = entidade.horarioInicioVisita?.split(':')
-    const partesHorarioFinal = entidade.horarioFimVisita?.split(':')
-
-    let horaInicial = partesHorarioInicial != null ? parseInt(partesHorarioInicial[0]) : null
-    let minutoInicial = partesHorarioInicial != null ? parseInt(partesHorarioInicial[1]) : null
-
-    let horaFinal = partesHorarioFinal != null ? parseInt(partesHorarioFinal[0]) : null
-    let minutoFinal = partesHorarioFinal != null ? parseInt(partesHorarioFinal[1]) : null
-
-    if(horaInicial == null || minutoInicial == null || horaFinal == null || minutoFinal == null) {
-      return []
-    }
-
-    if(this._isHorarioMenor(horaFinal, minutoFinal, horaInicial, minutoInicial)) {
-      const horaTemp = horaInicial
-      const minutoTemp = minutoInicial
-
-      horaFinal = horaInicial
-      minutoFinal = minutoInicial
-      horaInicial = horaTemp
-      minutoInicial = minutoTemp
-    }
-
-    let horaCalculada = horaInicial
-    let minutoCalculado = minutoInicial
-    const incrementoEmMinutos = 15
-    const listaHorarios = [this._getHorario(horaCalculada, minutoCalculado)]
-
-    while(this._isHorarioMenor(horaCalculada, minutoCalculado, horaFinal, minutoFinal)) {
-
-      minutoCalculado += incrementoEmMinutos
-
-      if(minutoCalculado >= 60) {
-        minutoCalculado = 0
-        horaCalculada += 1
-      }
-
-      if(horaCalculada >= 24) {
-        horaCalculada = 0
-      }
-
-      listaHorarios.push(this._getHorario(horaCalculada, minutoCalculado))
-    }
-
-    return listaHorarios
-  }
-
-  /**
-   * A partir da entidade, será populado os horários que a entidade tem disponibilidade e, caso o campo de horário esteja preenchido
-   * fora destes horários válidos, ele será limpo
-   * @param entidadeSelecionada Entidade atual
-   */
-  private _atualizaHorarioDaEntidade(entidadeSelecionada: Entidades | undefined): void {
-    if(!entidadeSelecionada) {
-      return
-    }
-
-    this.horarios = this._calcularHorariosDisponiveisEntidade(entidadeSelecionada)
-    const valorHorario = this.agendamentoForm.get('horario')?.value
-
-    // Se o horário que estava selecionado não estiver mais disponível, a seleção serão removida
-    if(!this.horarios.includes(valorHorario)) {
-      this.agendamentoForm.get('horario')?.setValue(null)
-    }
-  }
-
-  /**
-   * Formata o valor de horário no formato da API
-   * @param hora Hora do horário
-   * @param minuto Minuto do horário
-   * @returns Retorna o valor no formato HH:mm:ss
-   */
-  private _getHorario(hora: number, minuto: number): string {
-    return `${hora.toString().padStart(2, "0")}:${minuto.toString().padStart(2, "0")}:00`
-  }
-
-  /**
-   * Valida se o primeiro horário é menor que o segundo horário
-   * @param horaInicial Hora do primeiro horário
-   * @param minutoInicial Minuto do primeiro horário
-   * @param horaFinal Hora do segundo horário
-   * @param minutoFinal Minuto do segundo horário
-   * @returns true se o primeiro horário vem antes do segundo horário, caso contrário, retornará false
-   */
-  private _isHorarioMenor(horaInicial: number, minutoInicial: number, horaFinal: number, minutoFinal: number): boolean {
-    if(horaInicial < horaFinal) {
-      return true
-    }
-
-    if(horaInicial == horaFinal && minutoInicial < minutoFinal) {
-      return true
-    }
-
-    return false
+  private _atualizarEntidadeSelecionada(id?: number | null): void {
+    this.entidadeSelecionada = this.entidades?.find((e) => e.id == id);
   }
 }

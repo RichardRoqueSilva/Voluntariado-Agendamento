@@ -1,7 +1,8 @@
-<mat-card>
+<mat-card class="dp-card">
   <mat-card-title>Nova Entidade</mat-card-title>
-  <form #entidadesForm="ngForm">
+  <form class="dp-form" #entidadesForm="ngForm">
     <mat-form-field>
+      <mat-label>Entidade</mat-label>
       <input
         #nome="ngModel"
         matInput
@@ -11,10 +12,13 @@
         required
         name="nome"
       />
-      <mat-error *ngIf="nome.hasError('required')">É necessário preencher o nome da entidade.</mat-error>
+      <mat-error *ngIf="nome.hasError('required')"
+        >É necessário preencher o nome da entidade.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Endereço</mat-label>
       <input
         #endereco="ngModel"
         matInput
@@ -24,10 +28,13 @@
         required
         name="endereco"
       />
-      <mat-error *ngIf="endereco.hasError('required')">É necessário preencher o endereço da entidade.</mat-error>
+      <mat-error *ngIf="endereco.hasError('required')"
+        >É necessário preencher o endereço da entidade.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Responsável</mat-label>
       <input
         matInput
         type="text"
@@ -38,6 +45,7 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Telefone</mat-label>
       <input
         matInput
         type="text"
@@ -50,6 +58,7 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Dias de Visita</mat-label>
       <mat-select
         #diasVisita="ngModel"
         placeholder="Dias de Visita"
@@ -62,10 +71,13 @@
         <mat-option [value]="dia.descricao">{{ dia.descricao }}</mat-option>
         }
       </mat-select>
-      <mat-error *ngIf="diasVisita.hasError('required')">É necessário preencher os dias de visita da entidade.</mat-error>
+      <mat-error *ngIf="diasVisita.hasError('required')"
+        >É necessário preencher os dias de visita da entidade.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Horário de início da visita</mat-label>
       <input
         #horarioInicioVisita="ngModel"
         matInput
@@ -79,10 +91,14 @@
       />
       <mat-timepicker-toggle matIconSuffix [for]="horarioInicioPicker" />
       <mat-timepicker interval="15min" #horarioInicioPicker />
-      <mat-error *ngIf="horarioInicioVisita.hasError('required')">É necessário preencher o horário de início das visitas da entidade.</mat-error>
+      <mat-error *ngIf="horarioInicioVisita.hasError('required')"
+        >É necessário preencher o horário de início das visitas da
+        entidade.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Horário de término da visita</mat-label>
       <input
         #horarioFimVisita="ngModel"
         matInput
@@ -96,12 +112,20 @@
       />
       <mat-timepicker-toggle matIconSuffix [for]="horarioFimPicker" />
       <mat-timepicker interval="15min" #horarioFimPicker />
-      <mat-error *ngIf="horarioFimVisita.hasError('required')">É necessário preencher o horário de término das visitas da entidade.</mat-error>
+      <mat-error *ngIf="horarioFimVisita.hasError('required')"
+        >É necessário preencher o horário de término das visitas da
+        entidade.</mat-error
+      >
     </mat-form-field>
   </form>
 
-  <div>
-    <button mat-raised-button [disabled]="entidadesForm.invalid" (click)="createEntidades()" color="primary">
+  <div class="dp-form-acoes">
+    <button
+      class="dp-btn-primary"
+      mat-raised-button
+      [disabled]="entidadesForm.invalid"
+      (click)="createEntidades()"
+    >
       Salvar
     </button>
 

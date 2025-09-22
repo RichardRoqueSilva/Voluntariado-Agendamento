@@ -1,7 +1,8 @@
-<mat-card>
+<mat-card class="dp-card">
   <mat-card-title>Excluir Entidade</mat-card-title>
-  <form>
+  <form class="dp-form">
     <mat-form-field>
+      <mat-label>Entidade</mat-label>
       <input
         matInput
         type="text"
@@ -13,6 +14,7 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Endereço</mat-label>
       <input
         matInput
         type="text"
@@ -24,6 +26,7 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Responsável</mat-label>
       <input
         matInput
         type="text"
@@ -35,17 +38,19 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Telefone</mat-label>
       <input
         matInput
         type="text"
         placeholder="Telefone"
-        [value]="entidades.telefone | mask: '(00) 00000-0000'"
+        [value]="entidades.telefone | mask : '(00) 00000-0000'"
         name="telefone"
         disabled
       />
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Dias de Visita</mat-label>
       <mat-select
         placeholder="Dias de Visita"
         [value]="entidades.diasVisita"
@@ -60,6 +65,7 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Horário de início da visita</mat-label>
       <input
         matInput
         placeholder="Horário de início da visita"
@@ -73,6 +79,7 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Horário de término da visita</mat-label>
       <input
         matInput
         placeholder="Horario de término da visita"
@@ -84,11 +91,10 @@
       <mat-timepicker-toggle matIconSuffix [for]="horarioFimPicker" />
       <mat-timepicker interval="15min" #horarioFimPicker />
     </mat-form-field>
-    
   </form>
 
-  <div>
-    <button mat-raised-button (click)="deleteEntidades()" color="warn">
+  <div class="dp-form-acoes">
+    <button class="dp-btn-alert" mat-raised-button (click)="deleteEntidades()">
       Excluir
     </button>
 

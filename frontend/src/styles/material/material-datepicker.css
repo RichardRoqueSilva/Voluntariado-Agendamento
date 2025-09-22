@@ -1,0 +1,13 @@
+.mat-datepicker-toggle .mat-mdc-icon-button {
+  font-size: 1.5rem;
+}
+
+.mat-datepicker-toggle .mat-mdc-icon-button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+mat-datepicker-content.mat-datepicker-content .mat-calendar {
+  width: 18.5rem;
+  height: 22.125rem;
+}

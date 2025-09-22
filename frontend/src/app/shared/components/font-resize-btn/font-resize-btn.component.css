@@ -1,0 +1,50 @@
+:host {
+  position: fixed;
+  top: 20px;
+  bottom: initial;
+  left: initial;
+  right: 20px;
+  border-radius: 50px;
+  z-index: 10000;
+  overflow: hidden;
+}
+
+.font-resize-container {
+  display: flex;
+  background: #e3e3e3;
+  color: #44474e;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.7;
+  transition: all 0.3s ease-in-out;
+}
+
+.font-resize-container:hover {
+  opacity: 1;
+}
+
+.font-resize-container-expandido {
+  color: white;
+  background: #1565c0;
+}
+
+.font-resize-icon {
+  color: inherit;
+  font-size: 25px;
+  width: auto;
+  height: auto;
+  font-weight: 700;
+}
+
+.font-resize-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  color: inherit;
+  width: auto;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  font-weight: 700;
+}

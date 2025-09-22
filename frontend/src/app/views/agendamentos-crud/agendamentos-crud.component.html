@@ -1,12 +1,17 @@
-<button mat-raised-button (click)="abrirModal()" color="primary">
-    Novo Agendamento
+<button
+  class="dp-btn-criar dp-btn-primary"
+  mat-raised-button
+  (click)="abrirModal()"
+>
+  Novo Agendamento
 </button>
 
 <app-modal-agendamento
   *ngIf="mostrarModal"
+  [modo]="modo"
   (fechar)="fecharModal()"
-  (salvar)="salvarAgendamento($event)">
+  (salvar)="salvarAgendamento($event)"
+>
 </app-modal-agendamento>
 
 <app-agendamentos-read></app-agendamentos-read>
-

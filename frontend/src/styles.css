@@ -1,36 +1,48 @@
-/* styles.css (Global - Tentativa com Flexbox para corrigir sobreposição lateral) */
+@import './styles/dp/dp.css';
+@import './styles/material/material.css';
 
+/* styles.css (Global - Tentativa com Flexbox para corrigir sobreposição lateral) */
 * {
   box-sizing: border-box;
 }
 
 /* --- Base --- */
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
   /* Habilita Flexbox para layout vertical principal */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  font-size: 1rem;
+  position: relative;
 }
 
 /* --- Layout Principal com Flexbox --- */
 
 /* Configura o componente raiz para funcionar dentro do body flexível */
 app-root {
-  display: flex;          /* Torna app-root um container flex */
+  display: flex; /* Torna app-root um container flex */
   flex-direction: column; /* Organiza seus filhos (header, container, footer) em coluna */
-  flex: 1;                /* Faz app-root crescer para ocupar o espaço disponível no body */
+  flex: 1; /* Faz app-root crescer para ocupar o espaço disponível no body */
   /* REMOVIDO height: 100% e display: block; */
 }
 
+app-nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 /* Impede que header e footer encolham se o conteúdo for grande */
-app-header, app-footer {
-   flex-shrink: 0;
+app-header,
+app-footer {
+  flex-shrink: 0;
 }
 
 /* Configura o container do Sidenav para preencher o espaço restante */
@@ -42,31 +54,38 @@ mat-sidenav-container {
 
 /* Define a largura padrão da barra lateral (ESSENCIAL para modo 'side') */
 mat-sidenav {
-  width: 450px; /* <<< AJUSTE para a largura desejada */
+  width: fit-content;
   /* Se quiser a cor de fundo azul aqui (em vez de ::ng-deep em nav.component.css): */
-  /* background-color: #3f51b5; */
 }
 
 /* Configura a área de conteúdo principal */
 mat-sidenav-content {
   overflow: auto; /* Adiciona rolagem se conteúdo exceder */
-  padding: 15px; /* Padding padrão nos 4 lados */
+  padding: 0 0.9375rem 0.9375rem 0.9375rem;
   /* REMOVIDO o padding-top específico por enquanto, vamos resolver a sobreposição lateral primeiro */
   box-sizing: border-box;
 }
 
 /* --- Utilitários e Estilos Específicos --- */
 
-.red { color: #e35e6b; }
-.v-middle { vertical-align: middle; }
+.red {
+  color: #e35e6b;
+}
+.v-middle {
+  vertical-align: middle;
+}
 
 /* Estilos de Snackbar */
-.msg-success.mat-snack-bar-container { background-color: green !important; color: white !important; }
-.msg-error.mat-snack-bar-container { background-color: red !important; color: white !important; }
+.msg-success.mat-snack-bar-container {
+  background-color: green !important;
+  color: white !important;
+}
+.msg-error.mat-snack-bar-container {
+  background-color: red !important;
+  color: white !important;
+}
 
 /* Classe para esconder layout na página de login */
-.hide-layout { display: none !important; }
-
-.mat-card {
-  
+.hide-layout {
+  display: none !important;
 }

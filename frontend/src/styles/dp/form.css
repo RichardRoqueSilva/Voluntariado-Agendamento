@@ -1,0 +1,14 @@
+.dp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem 0;
+}
+
+.dp-form-acoes {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.9375rem;
+  padding: 1.25rem 0 0.2rem 0;
+}

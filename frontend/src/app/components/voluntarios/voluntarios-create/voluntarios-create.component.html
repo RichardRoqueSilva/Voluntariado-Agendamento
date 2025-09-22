@@ -1,6 +1,6 @@
-<mat-card>
+<mat-card class="dp-card">
   <mat-card-title>Novo Voluntário</mat-card-title>
-  <form #voluntarioForm="ngForm">
+  <form class="dp-form" #voluntarioForm="ngForm">
     <mat-form-field>
       <mat-label>Nome</mat-label>
       <input
@@ -12,7 +12,9 @@
         required
         name="nome"
       />
-      <mat-error *ngIf="nome.hasError('required')">É necessário preencher o nome do voluntário.</mat-error>
+      <mat-error *ngIf="nome.hasError('required')"
+        >É necessário preencher o nome do voluntário.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
@@ -27,8 +29,12 @@
         email
         name="email"
       />
-      <mat-error *ngIf="email.hasError('required')">É necessário preencher o email do voluntário.</mat-error>
-      <mat-error *ngIf="email.hasError('email')">Formato de email inválido.</mat-error>
+      <mat-error *ngIf="email.hasError('required')"
+        >É necessário preencher o email do voluntário.</mat-error
+      >
+      <mat-error *ngIf="email.hasError('email')"
+        >Formato de email inválido.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
@@ -43,7 +49,9 @@
         required
         name="celular"
       />
-      <mat-error *ngIf="celular.hasError('required')">É necessário preencher o celular do voluntário.</mat-error>
+      <mat-error *ngIf="celular.hasError('required')"
+        >É necessário preencher o celular do voluntário.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
@@ -68,7 +76,9 @@
         required
         name="login"
       />
-      <mat-error *ngIf="login.hasError('required')">É necessário preencher o login do voluntário.</mat-error>
+      <mat-error *ngIf="login.hasError('required')"
+        >É necessário preencher o login do voluntário.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
@@ -83,23 +93,38 @@
         name="senha"
         minlength="6"
       />
-      <mat-error *ngIf="senha.hasError('required')">É necessário preencher a senha do voluntário.</mat-error>
-      <mat-error *ngIf="senha.hasError('minlength')">A senha deve conter no mínimo 6 caracteres.</mat-error>
+      <mat-error *ngIf="senha.hasError('required')"
+        >É necessário preencher a senha do voluntário.</mat-error
+      >
+      <mat-error *ngIf="senha.hasError('minlength')"
+        >A senha deve conter no mínimo 6 caracteres.</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Tipo</mat-label>
-      <mat-select #role="ngModel" [(ngModel)]="voluntarios.role" required name="tipo">
+      <mat-select
+        #role="ngModel"
+        [(ngModel)]="voluntarios.role"
+        required
+        name="tipo"
+      >
         <mat-option [value]="roles.ADMIN">Administrador</mat-option>
         <mat-option [value]="roles.USER">Usuário</mat-option>
       </mat-select>
-      <mat-error *ngIf="role.hasError('required')">É necessário preencher o tipo do voluntário.</mat-error>
+      <mat-error *ngIf="role.hasError('required')"
+        >É necessário preencher o tipo do voluntário.</mat-error
+      >
     </mat-form-field>
-
   </form>
-  
-  <div>
-    <button mat-raised-button [disabled]="voluntarioForm.invalid" (click)="createVoluntarios()" color="primary">
+
+  <div class="dp-form-acoes">
+    <button
+      class="dp-btn-primary"
+      mat-raised-button
+      [disabled]="voluntarioForm.invalid"
+      (click)="createVoluntarios()"
+    >
       Salvar
     </button>
 

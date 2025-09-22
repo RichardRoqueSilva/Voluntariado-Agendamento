@@ -4,12 +4,15 @@
   position: fixed;
   top: 50%;
   left: 50%;
+  display: flex;
+  flex-direction: column;
   transform: translate(-50%, -50%);
   background: #ffffff;
   padding: 2rem;
   width: 90%;
-  max-width: 500px;
-  border-radius: 12px;
+  max-width: 31.25rem;
+  max-height: 90dvh;
+  border-radius: 0.75rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
@@ -20,53 +23,21 @@
   color: #333;
 }
 
-.modal-container label {
+.modal-container h4 {
   display: block;
   margin-top: 1rem;
   font-weight: 600;
   color: #444;
 }
 
-.modal-container select,
-.modal-container input[type="date"] {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.3rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
+.modal-container .form-container {
+  overflow: auto;
+  height: 100%;
 }
 
-.modal-container button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: #1976d2;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:disabled {
-    color: #1a1b1f;
-    background-color: rgba(26, 27, 31, 0.2);
-    cursor: auto;
-  }
-}
-
-.modal-container button:not(:disabled):hover {
-  background-color: #1565c0;
-}
-
-.modal-container .date-field {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.modal-container mat-error {
-  display: block;
-  margin-top: 5px;
-  font-size: 1rem;
-  color: #ba1a1a;
+.modal-container .campo-participante-container {
+  display: flex;
+  flex-direction: column;
 }
 
 ul {
@@ -82,15 +53,4 @@ ul li {
   padding: 0.5rem;
   border-radius: 4px;
   margin-top: 0.3rem;
-}
-
-ul li button {
-  background: #e53935;
-  padding: 0.3rem 0.6rem;
-  font-size: 0.8rem;
-  border-radius: 4px;
-}
-
-ul li button:hover {
-  background: #c62828;
 }

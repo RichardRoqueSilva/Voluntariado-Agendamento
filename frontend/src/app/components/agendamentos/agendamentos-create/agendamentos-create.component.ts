@@ -14,37 +14,43 @@ import { StatusAgendamento } from '../models/status-agendamento-type.model';
 
 @Component({
   selector: 'app-agendamentos-create',
-  imports: [MatInputModule, MatFormFieldModule, FormsModule, RouterModule, MatSnackBarModule, 
-            MatButtonModule, MatSidenavModule, MatListModule, MatCardModule],
+  imports: [
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    RouterModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule,
+  ],
   templateUrl: './agendamentos-create.component.html',
   styleUrl: './agendamentos-create.component.css',
   standalone: true,
 })
-export class AgendamentosCreateComponent implements OnInit{
-
+export class AgendamentosCreateComponent implements OnInit {
   agendamentos: AgendamentoForm = {
     entidadeId: 0,
-    diasVisita: "00-00-0000",
+    diasVisita: '00-00-0000',
     horario: '',
-    participantesIds:[],
-    status: StatusAgendamento.AGUARDANDO_CONFIRMACAO
-  }
+    participantesIds: [],
+    status: StatusAgendamento.AGUARDANDO_CONFIRMACAO,
+  };
 
-  constructor(private agendamentosService: AgendamentosService,
+  constructor(
+    private agendamentosService: AgendamentosService,
     private router: Router
-  ){}
-    ngOnInit(): void{
-  }
+  ) {}
+  ngOnInit(): void {}
 
   createAgendamentos(): void {
-    this.agendamentosService.create(this.agendamentos).subscribe(() =>{
-      this.agendamentosService.showMessage('Agendamento realizado com sucesso')
-      this.router.navigate(['/agendamentos'])
-  })
-}
+    this.agendamentosService.create(this.agendamentos).subscribe(() => {
+      this.agendamentosService.showMessage('Agendamento realizado com sucesso');
+      this.router.navigate(['/agendamentos']);
+    });
+  }
   cancel(): void {
-    this.router.navigate(['/agendamentos'])
+    this.router.navigate(['/agendamentos']);
   }
 }
-
-

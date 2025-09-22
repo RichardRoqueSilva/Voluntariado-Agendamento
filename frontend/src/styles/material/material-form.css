@@ -1,0 +1,14 @@
+/* Correção posicionamento dos campos mat-form-field, para tornar o posicionamento relacionado a font-size */
+
+mat-form-field .mat-mdc-form-field-flex .mat-mdc-form-field-infix {
+  min-height: 3.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+mat-form-field
+  .mat-mdc-text-field-wrapper
+  .mat-mdc-form-field-flex
+  .mat-mdc-floating-label {
+  top: calc(var(--mat-form-field-container-height, 3.5rem) / 2);
+}

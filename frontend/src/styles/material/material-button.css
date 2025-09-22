@@ -1,0 +1,22 @@
+button.mdc-button,
+button.mat-mdc-unelevated-button {
+  height: 2.5rem;
+  padding: 0 1.5rem;
+}
+
+button.mat-mdc-icon-button,
+a.mat-mdc-icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+button.mat-mdc-icon-button .mat-mdc-button-persistent-ripple .material-icons,
+button.mat-mdc-icon-button .mat-mdc-button-persistent-ripple mat-icon,
+a.mat-mdc-icon-button .mat-mdc-button-persistent-ripple .material-icons,
+a.mat-mdc-icon-button .mat-mdc-button-persistent-ripple mat-icon {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
