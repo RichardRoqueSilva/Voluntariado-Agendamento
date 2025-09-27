@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
 import { AgendamentosReadComponent } from '../../components/agendamentos/agendamentos-read/agendamentos-read.component';
 import { AgendamentosService } from '../../components/agendamentos/agendamentos.service';
 import { ModalAgendamentoComponent } from '../../components/agendamentos/modal-agendamento/modal-agendamento.component';
@@ -49,8 +48,7 @@ export class AgendamentosCrudComponent {
 
   constructor(
     headerService: HeaderService,
-    private agendamentosService: AgendamentosService,
-    private dialog: MatDialog
+    private agendamentosService: AgendamentosService
   ) {
     headerService.headerData = {
       title: 'Cadastro de Agendamentos',

@@ -11,9 +11,9 @@ export class HorarioService {
    * @param data Objeto de data do timepicker
    * @returns String no formato HH:mm:ss ou nulo, caso a data esteja nula
    */
-  public toHorario(data: Date | null | undefined): string {
+  public toHorario(data: Date | null | undefined): string | null {
     if (data == null) {
-      return '';
+      return null;
     }
 
     return data.toLocaleTimeString();
@@ -31,8 +31,31 @@ export class HorarioService {
 
     const parts = horario.split(':');
 
+    if (parts.length < 3) {
+      return null;
+    }
+
+    const horas = parseInt(parts[0]);
+    const minutos = parseInt(parts[1]);
+    const segundos = parseInt(parts[2]);
+
+    if (isNaN(horas) || isNaN(minutos) || isNaN(segundos)) {
+      return null;
+    }
+
+    if (
+      horas < 0 ||
+      horas > 23 ||
+      minutos < 0 ||
+      minutos >= 60 ||
+      segundos < 0 ||
+      segundos >= 60
+    ) {
+      return null;
+    }
+
     const hoje = new Date();
-    hoje.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
+    hoje.setHours(horas, minutos, segundos);
     return hoje;
   }
 }

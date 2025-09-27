@@ -1,41 +1,40 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, EMPTY, map, Observable } from 'rxjs';
+import { catchError, EMPTY, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Entidades } from '../models/entidades.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EntidadesService {
+  baseUrl = `${environment.baseApiUrl}/api/entidades`;
 
-  baseUrl = `${environment.baseApiUrl}/api/entidades`
-
-  constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
+  constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
 
   showMessage(msg: string, isError: boolean = false): void {
     console.log('Snackbar class:', isError ? ['msg-error'] : ['msg-success']);
     this.snackBar.open(msg, 'X', {
       duration: 3000,
-      horizontalPosition: "right",
-      verticalPosition: "top",
-      panelClass: isError ? ['msg-error'] : ['msg-success']
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: isError ? ['msg-error'] : ['msg-success'],
     });
   }
-  
-  create(entidades: Entidades): Observable<Entidades>{
-    return this.http.post<Entidades>(this.baseUrl, entidades).pipe(map(obj => obj),
-    catchError(e => this.errorHandler(e))
-    );
+
+  create(entidades: Entidades): Observable<Entidades> {
+    return this.http
+      .post<Entidades>(this.baseUrl, entidades)
+      .pipe(catchError((e) => this.errorHandler(e)));
   }
 
-  errorHandler(e: any): Observable<any>{
+  errorHandler(e: any): Observable<any> {
     this.showMessage('Ocorreu um erro!', true);
-    return EMPTY
+    return EMPTY;
   }
 
-  read(): Observable<Entidades[]>{
+  read(): Observable<Entidades[]> {
     return this.http.get<Entidades[]>(this.baseUrl);
   }
 
@@ -49,9 +48,8 @@ export class EntidadesService {
     return this.http.put<Entidades>(url, entidades);
   }
 
-  delete(id: number): Observable<Entidades>{
+  delete(id: number): Observable<Entidades> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.delete<Entidades>(url);
   }
-
 }

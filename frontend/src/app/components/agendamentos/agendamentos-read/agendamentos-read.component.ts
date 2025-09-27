@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ConfirmDialogService } from '../../../shared/components/confirm-dialog';
 import { AgendamentosService } from '../agendamentos.service';
 import { ModalAgendamentoComponent } from '../modal-agendamento/modal-agendamento.component';
 import { AgendamentoForm } from '../models/agendamentos-form.model';
@@ -61,13 +62,13 @@ export class AgendamentosReadComponent implements OnInit {
 
   statusTypes = StatusAgendamento;
 
-  constructor(private agendamentosService: AgendamentosService) {}
+  constructor(
+    private agendamentosService: AgendamentosService,
+    private _confirmDialogService: ConfirmDialogService
+  ) {}
 
   ngOnInit(): void {
-    this.agendamentosService.read().subscribe((agendamentos) => {
-      this.agendamentos = agendamentos;
-      console.log(agendamentos);
-    });
+    this.buscarAgendamentos();
   }
 
   buscarAgendamentos() {
@@ -77,28 +78,29 @@ export class AgendamentosReadComponent implements OnInit {
     });
   }
 
-  // deleteAgendamentos(id: any): void {
-  //   this.agendamentosService.delete(id ?? 0).subscribe(() => {
-  //     this.agendamentosService.showMessage('Entidade excluida com sucesso!')
-  //     this.buscarAgendamentos()
-  //   });
-
-  // }
-
   deleteAgendamentos(id: any): void {
-    if (confirm('Tem certeza que deseja excluir este agendamento?')) {
-      this.agendamentosService.delete(id ?? 0).subscribe(
-        () => {
-          this.agendamentosService.showMessage(
-            'Entidade excluída com sucesso!'
-          );
-          this.buscarAgendamentos();
+    this._confirmDialogService.confirm(
+      'Tem certeza que deseja excluir este agendamento?',
+      {
+        callbackOnConfirm: () => {
+          this.agendamentosService.delete(id ?? 0).subscribe({
+            next: () => {
+              this.agendamentosService.showMessage(
+                'Entidade excluída com sucesso!'
+              );
+              this.buscarAgendamentos();
+            },
+            error: (error) => {
+              console.error('Erro ao excluir o agendamento:', error);
+              this.agendamentosService.showMessage(
+                'Erro ao excluir o agendamento!',
+                true
+              );
+            },
+          });
         },
-        (error) => {
-          console.error('Erro ao excluir o agendamento:', error);
-        }
-      );
-    }
+      }
+    );
   }
 
   abrirModal() {

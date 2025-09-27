@@ -114,8 +114,8 @@ export class ModalAgendamentoComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.entidadesService.read().subscribe((Entidades) => {
-      this.entidades = Entidades;
+    this.entidadesService.read().subscribe((entidades) => {
+      this.entidades = entidades;
       this._atualizarEntidadeSelecionada(
         this.agendamentoForm?.get('entidadeId')?.value
       );
@@ -178,10 +178,6 @@ export class ModalAgendamentoComponent implements OnInit, OnChanges {
 
   onFechar() {
     this.fechar.emit();
-  }
-
-  toDate(data?: string | null): Date | null {
-    return this._horarioService.toDate(data);
   }
 
   receberDados() {

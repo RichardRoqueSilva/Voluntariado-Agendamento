@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,7 +28,7 @@ import { VoluntariosService } from '../voluntarios.service';
   standalone: true,
 })
 export class VoluntariosCreateComponent {
-  protected voluntarios: Voluntarios = {
+  public voluntarios: Voluntarios = {
     nome: '',
     celular: '',
     email: '',
@@ -46,13 +46,10 @@ export class VoluntariosCreateComponent {
   ) {}
 
   createVoluntarios(): void {
-    new FormControl();
-    this.voluntariosService
-      .create(this.voluntarios)
-      .subscribe((voluntarios) => {
-        this.voluntariosService.showMessage('Voluntário Cadastrado');
-        this.router.navigate(['/voluntarios']);
-      });
+    this.voluntariosService.create(this.voluntarios).subscribe(() => {
+      this.voluntariosService.showMessage('Voluntário Cadastrado');
+      this.router.navigate(['/voluntarios']);
+    });
   }
 
   cancel(): void {

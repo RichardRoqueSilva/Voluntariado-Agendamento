@@ -3,7 +3,7 @@ import { StatusAgendamento } from './status-agendamento-type.model';
 export interface AgendamentoForm {
   entidadeId: number;
   diasVisita: string;
-  horario: string;
-  participantesIds?: number[];
+  horario: string | null;
+  participantesIds: number[];
   status: StatusAgendamento;
 }

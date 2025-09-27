@@ -66,6 +66,7 @@
 
   <div class="dp-form-acoes">
     <button
+      id="btn-excluir"
       class="dp-btn-alert"
       mat-raised-button
       (click)="deleteVoluntarios()"
@@ -73,6 +74,8 @@
       Excluir
     </button>
 
-    <button mat-raised-button (click)="cancel()">Cancelar</button>
+    <button id="btn-cancelar" mat-raised-button (click)="cancel()">
+      Cancelar
+    </button>
   </div>
 </mat-card>

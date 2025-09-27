@@ -5,23 +5,24 @@ import { LocalStorageKey } from './local-storage-key';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor() {}
+  constructor(private _localStorage: Storage) {}
 
-  public lerDoLocalStorage<T>(chave: LocalStorageKey): T | null {
-    const valor = localStorage.getItem(chave);
-
+  public lerDoLocalStorage(chave: LocalStorageKey): string | null {
+    const valor = this._localStorage.getItem(chave);
     if (valor == null || valor.trim().length == 0) {
       return null;
     }
 
-    return JSON.parse(valor);
+    return valor;
   }
 
-  public salvarNoLocalStorage(chave: LocalStorageKey, value: any): void {
+  public salvarNoLocalStorage(chave: LocalStorageKey, valor: any): void {
     if (chave == null) {
       throw new Error('Não é permitido salvar conteúdo com chave nula!');
     }
 
-    localStorage.setItem(chave, value);
+    const valorStr = typeof valor == 'string' ? valor : JSON.stringify(valor);
+
+    this._localStorage.setItem(chave, valorStr);
   }
 }

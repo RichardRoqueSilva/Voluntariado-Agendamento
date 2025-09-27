@@ -29,6 +29,10 @@ export const appConfig: ApplicationConfig = {
       provide: Window,
       useValue: window,
     },
+    {
+      provide: Storage,
+      useValue: localStorage,
+    },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),

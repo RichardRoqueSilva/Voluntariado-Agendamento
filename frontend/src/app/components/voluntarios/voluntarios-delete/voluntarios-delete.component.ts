@@ -28,7 +28,7 @@ import { VoluntariosService } from '../voluntarios.service';
   standalone: true,
 })
 export class VoluntariosDeleteComponent implements OnInit {
-  protected voluntarios: Voluntarios = {
+  public voluntarios: Voluntarios = {
     nome: '',
     celular: '',
     email: '',
@@ -52,6 +52,7 @@ export class VoluntariosDeleteComponent implements OnInit {
       this.voluntarios = voluntarios;
     });
   }
+
   deleteVoluntarios(): void {
     this.voluntariosService.delete(this.voluntarios.id ?? 0).subscribe(() => {
       this.voluntariosService.showMessage('Voluntário excluido com sucesso!');

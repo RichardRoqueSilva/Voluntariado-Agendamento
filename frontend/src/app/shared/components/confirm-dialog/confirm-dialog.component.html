@@ -1,0 +1,15 @@
+<div class="confirm-dialog-container">
+  <div class="confirm-dialog-mensagem">
+    <p>{{ mensagem() }}</p>
+  </div>
+
+  <div class="confirm-dialog-acoes">
+    <button class="dp-btn-primary" mat-raised-button (click)="confirm()">
+      Confirmar
+    </button>
+
+    <button id="btn-cancelar" mat-raised-button (click)="cancel()">
+      Cancelar
+    </button>
+  </div>
+</div>

@@ -28,7 +28,7 @@ import { VoluntariosService } from '../voluntarios.service';
   standalone: true,
 })
 export class VoluntariosUpdateComponent implements OnInit {
-  protected voluntarios: Voluntarios = {
+  public voluntarios: Voluntarios = {
     nome: '',
     celular: '',
     email: '',

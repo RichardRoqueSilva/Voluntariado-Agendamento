@@ -1,5 +1,6 @@
 <div [ngClass]="classesContainer()">
   <button
+    id="btn-alterar-tamanho-fonte"
     class="font-resize-btn"
     mat-icon-button
     matTooltip="Alterar tamanho da fonte."
@@ -11,6 +12,7 @@
 
   <div *ngIf="controlesExpandidos()">
     <button
+      id="btn-aumentar-tamanho-fonte"
       class="font-resize-btn"
       mat-icon-button
       matTooltip="Aumentar o tamanho da fonte da página."
@@ -21,6 +23,7 @@
       <mat-icon class="font-resize-icon" fontIcon="text_increase"></mat-icon>
     </button>
     <button
+      id="btn-diminuir-tamanho-fonte"
       class="font-resize-btn"
       mat-icon-button
       matTooltip="Diminuir o tamanho da fonte da página."
@@ -31,6 +34,7 @@
       <mat-icon class="font-resize-icon" fontIcon="text_decrease"></mat-icon>
     </button>
     <button
+      id="btn-restaurar-tamanho-fonte"
       class="font-resize-btn"
       mat-icon-button
       matTooltip="Restaurar o tamanho da fonte da página para o tamanho padrão."

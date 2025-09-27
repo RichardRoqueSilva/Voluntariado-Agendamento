@@ -1,0 +1,12 @@
+.confirm-dialog-container {
+  background: #ffffff;
+  padding: 2rem;
+}
+
+.confirm-dialog-acoes {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.9375rem;
+  padding: 1.25rem 0 0.2rem 0;
+}

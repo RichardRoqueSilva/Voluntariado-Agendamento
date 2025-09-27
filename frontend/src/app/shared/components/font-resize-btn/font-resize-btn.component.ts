@@ -61,7 +61,7 @@ export class FontResizeBtnComponent implements OnInit {
   public aumentarFontSize(): void {
     const novoValor =
       this.currentFontSizeEmRem + FontResizeBtnComponent.INCREMENTO_TAMANHO;
-    if (novoValor >= FontResizeBtnComponent.LIMITE_TAMANHO_MAXIMO) {
+    if (novoValor > FontResizeBtnComponent.LIMITE_TAMANHO_MAXIMO) {
       return;
     }
     this.currentFontSizeEmRem = novoValor;
@@ -71,7 +71,7 @@ export class FontResizeBtnComponent implements OnInit {
   public diminuirFontSize(): void {
     const novoValor =
       this.currentFontSizeEmRem - FontResizeBtnComponent.INCREMENTO_TAMANHO;
-    if (novoValor <= FontResizeBtnComponent.LIMITE_TAMANHO_MINIMO) {
+    if (novoValor < FontResizeBtnComponent.LIMITE_TAMANHO_MINIMO) {
       return;
     }
 
@@ -102,9 +102,16 @@ export class FontResizeBtnComponent implements OnInit {
   }
 
   private _getTamanhoFonteLocalStorage(): number | null {
-    return this._localStorageService.lerDoLocalStorage<number>(
+    const tamanhoStr = this._localStorageService.lerDoLocalStorage(
       LocalStorageKey.TAMANHO_FONTE
     );
+
+    if (tamanhoStr == null || tamanhoStr.length == 0) {
+      return null;
+    }
+
+    const tamanho = parseFloat(tamanhoStr);
+    return isNaN(tamanho) ? null : tamanho;
   }
 
   private _getTamanhoFonteBody(): number {
@@ -114,10 +121,6 @@ export class FontResizeBtnComponent implements OnInit {
     const fontSizeEmPx = computedStyle.fontSize;
 
     const valorFontSize = parseFloat(fontSizeEmPx.replace('px', ''));
-
-    if (isNaN(valorFontSize)) {
-      return 1;
-    }
 
     return isNaN(valorFontSize) ? 1 : valorFontSize / 16; // 16px é o valor padrão para 1rem
   }
