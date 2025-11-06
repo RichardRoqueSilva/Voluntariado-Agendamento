@@ -1,4 +1,10 @@
-<button
+<div class="perfil-container">
+  <p>
+    <strong>Seu perfil:</strong>
+    <span>{{ this.descricaoPerfil }}</span>
+  </p>
+</div>
+<button *ngIf="this.perfilAdm"
   id="btn-criar-agendamento"
   class="dp-btn-criar dp-btn-primary"
   mat-raised-button

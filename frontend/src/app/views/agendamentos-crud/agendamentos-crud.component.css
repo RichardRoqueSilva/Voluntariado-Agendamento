@@ -1,0 +1,17 @@
+.perfil-container p {
+  font-size: 1.1rem;
+  color: #333;
+  background-color: #f8f8f8;
+  padding: 10px 15px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.perfil-container strong {
+  color: #007bff;
+  margin-right: 5px;
+}
+
+.perfil-container span {
+  font-weight: 500;
+}

@@ -53,6 +53,10 @@ export class LoginComponent {
       next: (response) => {
         this.isLoading = false;
         console.log('Login bem-sucedido!', response);
+
+         const userRole = response.role;
+         localStorage.setItem('userRole', userRole);
+
         // --- Ação Pós-Login ---
         // Guardar token/info (ex: localStorage.setItem('authToken', response.token);)
         // Navegar para a próxima página

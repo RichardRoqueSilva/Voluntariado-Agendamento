@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { AgendamentosReadComponent } from '../../components/agendamentos/agendamentos-read/agendamentos-read.component';
 import { AgendamentosService } from '../../components/agendamentos/agendamentos.service';
@@ -22,7 +22,7 @@ import { HeaderService } from '../../components/template/header/header.service';
   templateUrl: './agendamentos-crud.component.html',
   styleUrl: './agendamentos-crud.component.css',
 })
-export class AgendamentosCrudComponent {
+export class AgendamentosCrudComponent implements OnInit {
   @ViewChild(AgendamentosReadComponent, { static: true })
   agentamentosReadComponent!: AgendamentosReadComponent;
 
@@ -46,6 +46,9 @@ export class AgendamentosCrudComponent {
 
   modo = ModalAgendamentoModoType.INCLUSAO;
 
+  perfilAdm: boolean = false
+  descricaoPerfil: string = ''
+
   constructor(
     headerService: HeaderService,
     private agendamentosService: AgendamentosService
@@ -55,6 +58,17 @@ export class AgendamentosCrudComponent {
       icon: 'storefront',
       routeUrl: '/agendamentos',
     };
+  }
+
+  ngOnInit(): void {
+    const role = localStorage.getItem('userRole');
+    if (role === 'ADMIN') {
+      this.perfilAdm = true
+      this.descricaoPerfil = 'Administrador'
+    } else {
+      this.perfilAdm = false
+      this.descricaoPerfil = 'Usuário'
+    }
   }
 
   abrirModal() {

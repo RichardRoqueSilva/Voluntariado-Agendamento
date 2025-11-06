@@ -62,6 +62,8 @@ export class AgendamentosReadComponent implements OnInit {
 
   statusTypes = StatusAgendamento;
 
+  public perfilAdm: boolean = false
+
   constructor(
     private agendamentosService: AgendamentosService,
     private _confirmDialogService: ConfirmDialogService
@@ -69,6 +71,10 @@ export class AgendamentosReadComponent implements OnInit {
 
   ngOnInit(): void {
     this.buscarAgendamentos();
+    const role = localStorage.getItem('userRole');
+    if (role === 'ADMIN') {
+      this.perfilAdm = true
+    }
   }
 
   buscarAgendamentos() {
@@ -142,4 +148,6 @@ export class AgendamentosReadComponent implements OnInit {
   getDescricaoStatus(status: StatusAgendamento): string | undefined {
     return StatusAgendamentoType.getStatus(status)?.descricao;
   }
+
+  
 }

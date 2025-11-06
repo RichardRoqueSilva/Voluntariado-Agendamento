@@ -58,7 +58,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Ações</th>
       <td mat-cell *matCellDef="let row">
-        <div class="dp-tabela-acoes">
+        <div class="dp-tabela-acoes" *ngIf="this.perfilAdm">
           <a
             mat-icon-button
             matTooltip="Editar o agendamento"
