@@ -6,6 +6,7 @@ import { routes } from '../../../app.routes';
 import { ConfirmDialogService } from '../../../shared/components/confirm-dialog';
 import { TestingModule } from '../../../shared/tests';
 import { AGENDAMENTO_FORM_MOCK } from '../../../views/agendamentos-crud/mock/agendamento-form-mock';
+import { VoluntarioRole } from '../../voluntarios/voluntarios.model';
 import { AgendamentosService } from '../agendamentos.service';
 import {
   AGENDAMENTOS_AGENDAMENTO_MOCK,
@@ -224,6 +225,45 @@ describe(AgendamentosReadComponent.name, () => {
     const subject = new Subject<Agendamentos[]>();
     spyOn(agendamentosService, 'read').and.returnValue(subject.asObservable());
 
+    localStorage.setItem('userRole', VoluntarioRole.ADMIN);
+
+    fixture.detectChanges();
+    subject.next(AGENDAMENTOS_READ_MOCK);
+    fixture.detectChanges();
+
+    const celulasCabecalhoTabela = fixture.debugElement.queryAll(
+      By.css('thead tr th')
+    );
+    const celulasConteudoTabela = fixture.debugElement.queryAll(
+      By.css('tbody tr td')
+    );
+
+    const indiceColuna = component.displayedColumns.indexOf('action');
+    const botoes = celulasConteudoTabela[indiceColuna].queryAll(By.css('a'));
+
+    localStorage.setItem('userRole', '');
+
+    expect(
+      (<HTMLTableCellElement>celulasCabecalhoTabela[indiceColuna].nativeElement)
+        .textContent
+    )
+      .withContext(`Cabeçalho da coluna 'Ações' está incorreto`)
+      .toContain('Ações');
+
+    expect(botoes[0])
+      .withContext(`Botão de edição da coluna 'Ações' não está presente`)
+      .toBeTruthy();
+
+    expect(botoes[1])
+      .withContext(`Botão de exclusão da coluna 'Ações' não está presente`)
+      .toBeTruthy();
+  });
+
+  it(`(D) NÃO DEVE renderizar o botão de edição de agendamento
+    QUANDO componente receber a listagem dos agendamentos e usuário não for administrador.`, () => {
+    const subject = new Subject<Agendamentos[]>();
+    spyOn(agendamentosService, 'read').and.returnValue(subject.asObservable());
+
     fixture.detectChanges();
     subject.next(AGENDAMENTOS_READ_MOCK);
     fixture.detectChanges();
@@ -246,18 +286,19 @@ describe(AgendamentosReadComponent.name, () => {
       .toContain('Ações');
 
     expect(botoes[0])
-      .withContext(`Botão de edição da coluna 'Ações' não está presente`)
-      .toBeTruthy();
+      .withContext(`Botão de edição da coluna 'Ações' está presente`)
+      .toBeFalsy();
 
     expect(botoes[1])
-      .withContext(`Botão de exclusão da coluna 'Ações' não está presente`)
-      .toBeTruthy();
+      .withContext(`Botão de exclusão da coluna 'Ações' está presente`)
+      .toBeFalsy();
   });
 
   it(`(D) DEVE exibir modal de edição do agendamento
     QUANDO clicar no botão de edição de agendamento.`, () => {
     const subject = new Subject<Agendamentos[]>();
     spyOn(agendamentosService, 'read').and.returnValue(subject.asObservable());
+    localStorage.setItem('userRole', VoluntarioRole.ADMIN);
 
     fixture.detectChanges();
     subject.next(AGENDAMENTOS_READ_MOCK);
@@ -274,6 +315,7 @@ describe(AgendamentosReadComponent.name, () => {
     fixture.detectChanges();
 
     const modal = fixture.debugElement.query(By.css('app-modal-agendamento'));
+    localStorage.setItem('userRole', '');
 
     expect(component.mostrarModal).toBeTrue();
     expect(component.agendamento).toBe(AGENDAMENTOS_READ_MOCK[0]);
@@ -284,6 +326,7 @@ describe(AgendamentosReadComponent.name, () => {
     QUANDO chamado.`, () => {
     const subject = new Subject<Agendamentos[]>();
     spyOn(agendamentosService, 'read').and.returnValue(subject.asObservable());
+    localStorage.setItem('userRole', VoluntarioRole.ADMIN);
 
     fixture.detectChanges();
     subject.next(AGENDAMENTOS_READ_MOCK);
@@ -302,6 +345,7 @@ describe(AgendamentosReadComponent.name, () => {
     fixture.detectChanges();
 
     const modal = fixture.debugElement.query(By.css('app-modal-agendamento'));
+    localStorage.setItem('userRole', '');
 
     expect(component.mostrarModal).toBeFalse();
     expect(modal).toBeFalsy();
@@ -327,7 +371,7 @@ describe(AgendamentosReadComponent.name, () => {
       done();
 
       return new Observable((sub) => {
-        sub.next();
+        sub.next(AGENDAMENTOS_AGENDAMENTO_MOCK);
         sub.complete();
       });
     });
@@ -339,7 +383,7 @@ describe(AgendamentosReadComponent.name, () => {
        QUANDO chamado com os dados de agendamento, sem id de agendamento.`, (done) => {
     spyOn(agendamentosService, 'create').and.callFake((_) => {
       return new Observable((sub) => {
-        sub.next();
+        sub.next(AGENDAMENTOS_AGENDAMENTO_MOCK);
         sub.complete();
       });
     });
@@ -356,7 +400,7 @@ describe(AgendamentosReadComponent.name, () => {
        QUANDO chamado com os dados de agendamento.`, () => {
     spyOn(agendamentosService, 'create').and.callFake((_) => {
       return new Observable((sub) => {
-        sub.next();
+        sub.next(AGENDAMENTOS_AGENDAMENTO_MOCK);
         sub.complete();
       });
     });
@@ -387,7 +431,7 @@ describe(AgendamentosReadComponent.name, () => {
       done();
 
       return new Observable((sub) => {
-        sub.next();
+        sub.next(AGENDAMENTOS_AGENDAMENTO_MOCK);
         sub.complete();
       });
     });

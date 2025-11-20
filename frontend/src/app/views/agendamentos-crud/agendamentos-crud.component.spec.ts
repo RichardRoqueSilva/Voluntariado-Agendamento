@@ -4,7 +4,9 @@ import { provideRouter } from '@angular/router';
 import { Observable } from 'rxjs';
 import { routes } from '../../app.routes';
 import { AgendamentosService } from '../../components/agendamentos/agendamentos.service';
+import { AGENDAMENTOS_AGENDAMENTO_MOCK } from '../../components/agendamentos/mock/agendamentos-read-mock';
 import { HeaderService } from '../../components/template/header/header.service';
+import { VoluntarioRole } from '../../components/voluntarios/voluntarios.model';
 import { TestingModule } from '../../shared/tests';
 import { AgendamentosCrudComponent } from './agendamentos-crud.component';
 import { AGENDAMENTO_FORM_MOCK } from './mock/agendamento-form-mock';
@@ -47,7 +49,9 @@ describe(AgendamentosCrudComponent.name, () => {
 
   it(`(D) DEVE exibir modal de agendamentos
      QUANDO clicar em botão de criação de agendamento.`, () => {
+    localStorage.setItem('userRole', VoluntarioRole.ADMIN);
     fixture.detectChanges();
+
     const btn = fixture.debugElement.query(By.css('#btn-criar-agendamento'))
       .nativeElement as HTMLButtonElement;
     btn.click();
@@ -56,12 +60,14 @@ describe(AgendamentosCrudComponent.name, () => {
 
     const modal = fixture.debugElement.query(By.css('app-modal-agendamento'));
 
+    localStorage.setItem('userRole', '');
     expect(component.mostrarModal).toBeTrue();
     expect(modal).toBeTruthy();
   });
 
   it(`(D) #${AgendamentosCrudComponent.prototype.fecharModal.name} DEVE ocultar modal de agendamentos
      QUANDO chamado.`, () => {
+    localStorage.setItem('userRole', VoluntarioRole.ADMIN);
     fixture.detectChanges();
     const btn = fixture.debugElement.query(By.css('#btn-criar-agendamento'))
       .nativeElement as HTMLButtonElement;
@@ -71,6 +77,7 @@ describe(AgendamentosCrudComponent.name, () => {
     fixture.detectChanges();
 
     const modal = fixture.debugElement.query(By.css('app-modal-agendamento'));
+    localStorage.setItem('userRole', '');
 
     expect(component.mostrarModal).toBeFalse();
     expect(modal).toBeFalsy();
@@ -92,7 +99,7 @@ describe(AgendamentosCrudComponent.name, () => {
       done();
 
       return new Observable((sub) => {
-        sub.next();
+        sub.next(AGENDAMENTOS_AGENDAMENTO_MOCK);
         sub.complete();
       });
     });
@@ -104,7 +111,7 @@ describe(AgendamentosCrudComponent.name, () => {
      QUANDO chamado com os dados de agendamento.`, (done) => {
     spyOn(agendamentoService, 'create').and.callFake((_) => {
       return new Observable((sub) => {
-        sub.next();
+        sub.next(AGENDAMENTOS_AGENDAMENTO_MOCK);
         sub.complete();
       });
     });
@@ -120,7 +127,7 @@ describe(AgendamentosCrudComponent.name, () => {
      QUANDO chamado com os dados de agendamento.`, () => {
     spyOn(agendamentoService, 'create').and.callFake((_) => {
       return new Observable((sub) => {
-        sub.next();
+        sub.next(AGENDAMENTOS_AGENDAMENTO_MOCK);
         sub.complete();
       });
     });
