@@ -21,6 +21,6 @@ services:
     build: ./agendamento
     environment:
       - API_PORT=8000
-      - API_ORIGENS_PERMITIDAS=voluntariado-ui:4200
+      - API_ORIGENS_PERMITIDAS=http://localhost:4200
     networks:
       - privada

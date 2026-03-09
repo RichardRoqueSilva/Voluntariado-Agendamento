@@ -2,10 +2,13 @@ FROM node:18.20.4-alpine as build-app
 
 WORKDIR /app-build
 
+COPY package.json package.json
+
+RUN npm i
+
 COPY . .
 
-RUN npm i \
-    && npx ng build --configuration=production
+RUN npx ng build --configuration=production
 
 FROM nginx:stable-alpine3.19-slim
 

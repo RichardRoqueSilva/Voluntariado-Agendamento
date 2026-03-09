@@ -2,6 +2,10 @@ FROM maven:3.9.11-eclipse-temurin-17 as builder
 
 WORKDIR /app-builder
 
+COPY pom.xml pom.xml
+
+RUN mvn dependency:go-offline -B
+
 COPY . .
 
 RUN mvn clean package
