@@ -1,0 +1,19 @@
+<mat-form-field floatLabel="always">
+    <mat-label>Mês de análise</mat-label>
+    <input
+        matInput
+        name="mesAnalise"
+        [formControl]="data"
+        [matDatepicker]="mesAnalise"
+    />
+    <mat-hint>MM/AAAA</mat-hint>
+    <mat-datepicker-toggle
+        matIconSuffix
+        [for]="mesAnalise"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #mesAnalise
+        startView="multi-year"
+        (monthSelected)="setMesAnalise($event, mesAnalise)"
+        panelClass="example-month-picker"
+    ></mat-datepicker>
+</mat-form-field>

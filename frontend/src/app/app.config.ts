@@ -13,6 +13,7 @@ import { provideRouter } from '@angular/router';
 
 import { provideEnvironmentNgxMask, provideNgxMask } from 'ngx-mask';
 
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -40,5 +41,6 @@ export const appConfig: ApplicationConfig = {
     provideEnvironmentNgxMask(),
     provideNativeDateAdapter(),
     provideNgxMask(),
+    provideCharts(withDefaultRegisterables()),
   ],
 };

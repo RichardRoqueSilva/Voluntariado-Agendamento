@@ -26,6 +26,17 @@ describe(NavComponent.name, () => {
     expect(component).toBeTruthy();
   });
 
+  it(`(D) DEVE navegar para tela de dashboard
+    QUANDO clicar no link 'Dashboard'`, waitForAsync(async () => {
+    fixture.detectChanges();
+    const linkDashboard = fixture.debugElement.query(By.css('#a-dashboard'))
+      .nativeElement as HTMLAnchorElement;
+
+    linkDashboard.click();
+    await fixture.whenStable();
+    expect(location.path()).toBe('/dashboard');
+  }));
+
   it(`(D) DEVE navegar para tela de home
     QUANDO clicar no link 'Inicio'`, waitForAsync(async () => {
     fixture.detectChanges();

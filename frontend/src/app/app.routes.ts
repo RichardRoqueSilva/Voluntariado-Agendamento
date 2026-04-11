@@ -47,6 +47,13 @@ export const routes: Routes = [
         (r) => r.agendamentosRoutes
       ),
   },
+  {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./views/dashboard/dashboard.routes').then(
+        (r) => r.dashboardRoutes
+      ),
+  },
 
   // Opcional: Adicionar uma rota curinga no final para capturar URLs inválidas
   // { path: '**', redirectTo: '/login' } // Redireciona qualquer outra coisa para login

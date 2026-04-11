@@ -68,6 +68,10 @@
   font-size: 1rem;
 }
 
+.nav-list .icons{
+  width: 2.35rem;
+}
+
 .nav-logo-container .logo-link {
   display: inline-block;
   width: 11.5rem;
