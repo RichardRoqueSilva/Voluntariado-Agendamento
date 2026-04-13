@@ -1,8 +1,9 @@
 {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.addMissingImports.ts": "always",
-        "source.organizeImports": "always",
-        "source.removeUnusedImports": "always"
-    }
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports.ts": "always",
+    "source.organizeImports": "always",
+    "source.removeUnusedImports": "always"
+  },
+  "js/ts.tsdk.path": "node_modules\\typescript\\lib"
 }

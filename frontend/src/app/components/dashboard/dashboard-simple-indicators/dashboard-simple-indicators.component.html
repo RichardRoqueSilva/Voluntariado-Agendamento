@@ -1,0 +1,32 @@
+<div class="simple-indicators-container">
+  <app-simple-indicator
+    id="qtdeEntidadesVisitadas"
+    [value]="qtdeEntidadesVisitadas$ | async"
+    [valueIfNull]="'-'"
+    [title]="'Quantidade de entidades visitadas'"
+  ></app-simple-indicator>
+  <app-simple-indicator
+    id="qtdeParticipantesVisitas"
+    [value]="qtdeParticipantesVisitas$ | async"
+    [valueIfNull]="'-'"
+    [title]="'Voluntários participantes das visitas'"
+  ></app-simple-indicator>
+  <app-simple-indicator
+    id="qtdeNaoParticipantesVisitas"
+    [value]="qtdeNaoParticipantesVisitas$ | async"
+    [valueIfNull]="'-'"
+    [title]="'Voluntários não participantes das visitas'"
+  ></app-simple-indicator>
+  <app-simple-indicator
+    id="taxaParticipacao"
+    [value]="taxaParticipacao$ | async | percent: '.2' : 'pt-br'"
+    [valueIfNull]="'-'"
+    [title]="'Taxa de participação'"
+  ></app-simple-indicator>
+  <app-simple-indicator
+    id="horasVisitas"
+    [value]="horasVisitas$ | async | msParaHhmmss"
+    [valueIfNull]="'-'"
+    [title]="'Horas de visitas'"
+  ></app-simple-indicator>
+</div>
