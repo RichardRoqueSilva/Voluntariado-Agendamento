@@ -10,6 +10,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FontSizeService } from '../../services/font-size';
 import {
   LocalStorageKey,
   LocalStorageService,
@@ -35,11 +36,13 @@ export class FontResizeBtnComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private _document: Document,
     private _window: Window,
-    private _localStorageService: LocalStorageService
+    private _localStorageService: LocalStorageService,
+    private _fontSizeService: FontSizeService
   ) {}
 
   public ngOnInit(): void {
     this.currentFontSizeEmRem = this._getTamanhoFonteAtualEmRem();
+    this._notifyFontChange();
     this._atualizaTamanhoFonte();
     this.classesContainer = computed(() => {
       return {
@@ -55,6 +58,7 @@ export class FontResizeBtnComponent implements OnInit {
 
   public restaurarFontSize(): void {
     this.currentFontSizeEmRem = 1;
+    this._notifyFontChange();
     this._atualizaTamanhoFonte();
   }
 
@@ -65,6 +69,7 @@ export class FontResizeBtnComponent implements OnInit {
       return;
     }
     this.currentFontSizeEmRem = novoValor;
+    this._notifyFontChange();
     this._atualizaTamanhoFonte();
   }
 
@@ -76,6 +81,7 @@ export class FontResizeBtnComponent implements OnInit {
     }
 
     this.currentFontSizeEmRem = novoValor;
+    this._notifyFontChange();
     this._atualizaTamanhoFonte();
   }
 
@@ -123,5 +129,9 @@ export class FontResizeBtnComponent implements OnInit {
     const valorFontSize = parseFloat(fontSizeEmPx.replace('px', ''));
 
     return isNaN(valorFontSize) ? 1 : valorFontSize / 16; // 16px é o valor padrão para 1rem
+  }
+
+  private _notifyFontChange(): void {
+    this._fontSizeService.notifyFontSizeChange(this.currentFontSizeEmRem);
   }
 }

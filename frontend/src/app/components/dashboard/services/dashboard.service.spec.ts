@@ -4,6 +4,7 @@ import { HttpTestingController } from '@angular/common/http/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../../../environments/environment';
 import { TestingModule } from '../../../shared/tests';
+import { DashboardHorizontalChartBarData } from '../models';
 import { DashboardService } from './dashboard.service';
 
 describe(DashboardService.name, () => {
@@ -261,6 +262,96 @@ describe(DashboardService.name, () => {
 
     const req = httpTestingController.expectOne(
       `${environment.baseApiUrl}/api/voluntarios/visitas/totais/horas?ano=2026&mes=4`
+    );
+
+    const error = new ProgressEvent('error');
+    req.error(error);
+  });
+
+  it(`#${DashboardService.prototype.getVisitasPorEntidade} DEVE enviar requisição HTTP GET para /api/entidades/visitas
+      QUANDO chamado com filtros do dashboard.`, (done) => {
+    const retorno: DashboardHorizontalChartBarData[] = [
+      {
+        label: 'Label 1',
+        value: 100,
+      },
+    ];
+
+    service
+      .getVisitasPorEntidade({ ano: 2026, mes: 4 })
+      .subscribe((qtdeEntidades) => {
+        expect(qtdeEntidades[0].label).toBe('Label 1');
+        expect(qtdeEntidades[0].value).toBe(100);
+        done();
+      });
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/entidades/visitas?ano=2026&mes=4`
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(retorno);
+  });
+
+  it(`#${DashboardService.prototype.getVisitasPorEntidade} DEVE exibir mensagem de erro
+      QUANDO ocorrer erro de chamada remota.`, (done) => {
+    spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
+      expect(msg).toBe('Ocorreu um erro!');
+      expect((<string[]>opcoes?.panelClass)[0]).toBe('msg-error');
+      done();
+
+      return null as any;
+    });
+
+    service.getVisitasPorEntidade({ ano: 2026, mes: 4 }).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/entidades/visitas?ano=2026&mes=4`
+    );
+
+    const error = new ProgressEvent('error');
+    req.error(error);
+  });
+
+  it(`#${DashboardService.prototype.getVisitasPorVoluntario} DEVE enviar requisição HTTP GET para /api/voluntarios/visitas
+      QUANDO chamado com filtros do dashboard.`, (done) => {
+    const retorno: DashboardHorizontalChartBarData[] = [
+      {
+        label: 'Label 1',
+        value: 100,
+      },
+    ];
+
+    service
+      .getVisitasPorVoluntario({ ano: 2026, mes: 4 })
+      .subscribe((qtdeEntidades) => {
+        expect(qtdeEntidades[0].label).toBe('Label 1');
+        expect(qtdeEntidades[0].value).toBe(100);
+        done();
+      });
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/voluntarios/visitas?ano=2026&mes=4`
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(retorno);
+  });
+
+  it(`#${DashboardService.prototype.getVisitasPorVoluntario} DEVE exibir mensagem de erro
+      QUANDO ocorrer erro de chamada remota.`, (done) => {
+    spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
+      expect(msg).toBe('Ocorreu um erro!');
+      expect((<string[]>opcoes?.panelClass)[0]).toBe('msg-error');
+      done();
+
+      return null as any;
+    });
+
+    service.getVisitasPorVoluntario({ ano: 2026, mes: 4 }).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/voluntarios/visitas?ano=2026&mes=4`
     );
 
     const error = new ProgressEvent('error');

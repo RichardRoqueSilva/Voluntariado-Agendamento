@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, EMPTY, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { DashboardHorizontalChartBarData } from '../models';
 import { DashboardFilters } from '../models/dashboard-filters';
 
 @Injectable({
@@ -62,6 +63,32 @@ export class DashboardService {
       .get<number>(`${this.baseUrl}/voluntarios/visitas/totais/horas`, {
         params: this.filtroParaHttpParams(filtrosDashboard),
       })
+      .pipe(catchError((e) => this.errorHandler(e)));
+  }
+
+  getVisitasPorEntidade(
+    filtrosDashboard: DashboardFilters
+  ): Observable<DashboardHorizontalChartBarData[]> {
+    return this.http
+      .get<DashboardHorizontalChartBarData[]>(
+        `${this.baseUrl}/entidades/visitas`,
+        {
+          params: this.filtroParaHttpParams(filtrosDashboard),
+        }
+      )
+      .pipe(catchError((e) => this.errorHandler(e)));
+  }
+
+  getVisitasPorVoluntario(
+    filtrosDashboard: DashboardFilters
+  ): Observable<DashboardHorizontalChartBarData[]> {
+    return this.http
+      .get<DashboardHorizontalChartBarData[]>(
+        `${this.baseUrl}/voluntarios/visitas`,
+        {
+          params: this.filtroParaHttpParams(filtrosDashboard),
+        }
+      )
       .pipe(catchError((e) => this.errorHandler(e)));
   }
 

@@ -45,6 +45,17 @@ describe(SimpleIndicatorComponent.name, () => {
     fixture.detectChanges();
     const valueEl = fixture.debugElement.query(By.css('.content-title'));
 
-    expect((<HTMLElement>valueEl.nativeElement).innerText).toContain('Título teste');
+    expect((<HTMLElement>valueEl.nativeElement).innerText).toContain(
+      'Título teste'
+    );
+  });
+
+  it(`(D) DEVE exibir spinner
+      QUANDO (@Input loading) for alterado para true.`, () => {
+    component.loading = true;
+    fixture.detectChanges();
+    const valueEl = fixture.debugElement.query(By.css('app-spinner-indicator'));
+
+    expect(<HTMLElement>valueEl.nativeElement).toBeTruthy();
   });
 });
