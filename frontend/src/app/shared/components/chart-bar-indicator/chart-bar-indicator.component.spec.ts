@@ -3,22 +3,22 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FontSpec } from 'chart.js';
-import { HorizontalChartBarData } from '../../models/horizontal-chart-bar-indicator';
+import { ChartBarData, ChartBarOrientation } from '../../models/chart';
 import { FontSizeService } from '../../services/font-size';
 import { TestingModule } from '../../tests';
-import { HorizontalChartBarIndicatorComponent } from './horizontal-chart-bar-indicator.component';
+import { ChartBarIndicatorComponent } from './chart-bar-indicator.component';
 
-describe(HorizontalChartBarIndicatorComponent.name, () => {
-  let component: HorizontalChartBarIndicatorComponent;
-  let fixture: ComponentFixture<HorizontalChartBarIndicatorComponent>;
+describe(ChartBarIndicatorComponent.name, () => {
+  let component: ChartBarIndicatorComponent;
+  let fixture: ComponentFixture<ChartBarIndicatorComponent>;
   let fontSizeService: FontSizeService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HorizontalChartBarIndicatorComponent, TestingModule],
+      imports: [ChartBarIndicatorComponent, TestingModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HorizontalChartBarIndicatorComponent);
+    fixture = TestBed.createComponent(ChartBarIndicatorComponent);
     fontSizeService = TestBed.inject(FontSizeService);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -26,6 +26,46 @@ describe(HorizontalChartBarIndicatorComponent.name, () => {
 
   it(`DEVE renderizar o componente principal`, () => {
     expect(component).toBeTruthy();
+  });
+
+  it(`DEVE estar com gráfico na orientação vertical
+      QUANDO inicializado`, () => {
+    fixture.detectChanges();
+
+    expect(component.orientation).toBe(ChartBarOrientation.VERTICAL);
+    expect(component.barChartOptions?.indexAxis).toBe('x');
+  });
+
+  it(`DEVE estar com gráfico na orientação horizontal
+      QUANDO (@Input orientation) for passado como ${ChartBarOrientation.HORIZONTAL}.`, () => {
+    const valueChanges = new SimpleChange(
+      null,
+      ChartBarOrientation.HORIZONTAL,
+      false
+    );
+    component.orientation = ChartBarOrientation.HORIZONTAL;
+    component.ngOnChanges({
+      orientation: valueChanges,
+    });
+
+    expect(component.orientation).toBe(ChartBarOrientation.HORIZONTAL);
+    expect(component.barChartOptions?.indexAxis).toBe('y');
+  });
+
+  it(`DEVE estar com gráfico na orientação vertical
+      QUANDO (@Input orientation) for passado como ${ChartBarOrientation.VERTICAL}.`, () => {
+    const valueChanges = new SimpleChange(
+      null,
+      ChartBarOrientation.VERTICAL,
+      false
+    );
+    component.orientation = ChartBarOrientation.VERTICAL;
+    component.ngOnChanges({
+      orientation: valueChanges,
+    });
+
+    expect(component.orientation).toBe(ChartBarOrientation.VERTICAL);
+    expect(component.barChartOptions?.indexAxis).toBe('x');
   });
 
   it(`(D) DEVE exibir título 'Título teste'
@@ -76,7 +116,7 @@ describe(HorizontalChartBarIndicatorComponent.name, () => {
 
   it(`DEVE montar labels para o formatdo do Chartjs
       QUANDO (@Input value) for passado com as descrições.`, () => {
-    const value: HorizontalChartBarData[] = [
+    const value: ChartBarData[] = [
       {
         label: 'Label 1',
         value: 100,
@@ -101,7 +141,7 @@ describe(HorizontalChartBarIndicatorComponent.name, () => {
 
   it(`DEVE montar valores para o formatdo do Chartjs
       QUANDO (@Input value) for passado com os valores.`, () => {
-    const value: HorizontalChartBarData[] = [
+    const value: ChartBarData[] = [
       {
         label: 'Label 1',
         value: 100,

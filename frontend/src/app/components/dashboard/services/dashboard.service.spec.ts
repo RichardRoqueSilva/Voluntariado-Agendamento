@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../../../environments/environment';
 import { TestingModule } from '../../../shared/tests';
 import { DashboardHorizontalChartBarData } from '../models';
+import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
 import { DashboardService } from './dashboard.service';
 
 describe(DashboardService.name, () => {
@@ -352,6 +353,51 @@ describe(DashboardService.name, () => {
 
     const req = httpTestingController.expectOne(
       `${environment.baseApiUrl}/api/voluntarios/visitas?ano=2026&mes=4`
+    );
+
+    const error = new ProgressEvent('error');
+    req.error(error);
+  });
+
+  it(`#${DashboardService.prototype.getVisitasPorDiaDaSemana} DEVE enviar requisição HTTP GET para /api/dias-da-semana/visitas
+      QUANDO chamado com filtros do dashboard.`, (done) => {
+    const retorno: DashboardVerticalChartBarData[] = [
+      {
+        label: 'Segunda',
+        value: 100,
+      },
+    ];
+
+    service
+      .getVisitasPorDiaDaSemana({ ano: 2026, mes: 4 })
+      .subscribe((qtdeEntidades) => {
+        expect(qtdeEntidades[0].label).toBe('Segunda');
+        expect(qtdeEntidades[0].value).toBe(100);
+        done();
+      });
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/dias-da-semana/visitas?ano=2026&mes=4`
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(retorno);
+  });
+
+  it(`#${DashboardService.prototype.getVisitasPorDiaDaSemana} DEVE exibir mensagem de erro
+      QUANDO ocorrer erro de chamada remota.`, (done) => {
+    spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
+      expect(msg).toBe('Ocorreu um erro!');
+      expect((<string[]>opcoes?.panelClass)[0]).toBe('msg-error');
+      done();
+
+      return null as any;
+    });
+
+    service.getVisitasPorDiaDaSemana({ ano: 2026, mes: 4 }).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/dias-da-semana/visitas?ano=2026&mes=4`
     );
 
     const error = new ProgressEvent('error');

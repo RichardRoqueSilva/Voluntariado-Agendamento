@@ -37,15 +37,24 @@
 </div>
 
 <div class="chart-indicators-container">
-  <app-horizontal-chart-bar-indicator
+  <app-chart-bar-indicator
     title="Visitas por entidade"
     [value]="visitasPorEntidade$ | async"
     [loading]="visitasPorEntidadeLoading()"
-  ></app-horizontal-chart-bar-indicator>
+    [orientation]="chartBarOrientation.HORIZONTAL"
+  ></app-chart-bar-indicator>
 
-  <app-horizontal-chart-bar-indicator
+  <app-chart-bar-indicator
     title="Visitas por voluntário"
     [value]="visitasPorVoluntario$ | async"
     [loading]="visitasPorVoluntarioLoading()"
-  ></app-horizontal-chart-bar-indicator>
+    [orientation]="chartBarOrientation.HORIZONTAL"
+  ></app-chart-bar-indicator>
+
+  <app-chart-bar-indicator
+    title="Visitas por dia da semana"
+    [value]="visitasPorDiaDaSemana$ | async"
+    [loading]="visitasPorDiaDaSemanaLoading()"
+    [orientation]="chartBarOrientation.VERTICAL"
+  ></app-chart-bar-indicator>
 </div>

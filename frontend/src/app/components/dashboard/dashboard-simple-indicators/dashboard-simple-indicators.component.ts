@@ -8,10 +8,12 @@ import {
 } from '@angular/core';
 import { finalize, Observable, of } from 'rxjs';
 import { SharedModule } from '../../../shared';
-import { HorizontalChartBarIndicatorComponent } from '../../../shared/components/horizontal-chart-bar-indicator/horizontal-chart-bar-indicator.component';
+import { ChartBarIndicatorComponent } from '../../../shared/components/chart-bar-indicator/chart-bar-indicator.component';
 import { SimpleIndicatorComponent } from '../../../shared/components/simple-indicator/simple-indicator.component';
+import { ChartBarOrientation } from '../../../shared/models/chart';
 import { DashboardHorizontalChartBarData } from '../models';
 import { DashboardFilters } from '../models/dashboard-filters';
+import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
 import { DashboardService } from '../services/dashboard.service';
 
 @Component({
@@ -20,7 +22,7 @@ import { DashboardService } from '../services/dashboard.service';
   imports: [
     CommonModule,
     SimpleIndicatorComponent,
-    HorizontalChartBarIndicatorComponent,
+    ChartBarIndicatorComponent,
     SharedModule,
   ],
   templateUrl: './dashboard-simple-indicators.component.html',
@@ -31,21 +33,30 @@ export class DashboardSimpleIndicatorsComponent implements OnChanges {
   filters!: DashboardFilters;
 
   qtdeEntidadesVisitadas$: Observable<number> = of(0);
-  qtdeParticipantesVisitas$: Observable<number> = of(0);
-  qtdeNaoParticipantesVisitas$: Observable<number> = of(0);
-  taxaParticipacao$: Observable<number> = of(0);
-  horasVisitas$: Observable<number> = of(0);
-  visitasPorEntidade$: Observable<DashboardHorizontalChartBarData[]> = of([]);
-
   qtdeEntidadesVisitadasLoading = signal(true);
+
+  qtdeParticipantesVisitas$: Observable<number> = of(0);
   qtdeParticipantesVisitasLoading = signal(true);
+
+  qtdeNaoParticipantesVisitas$: Observable<number> = of(0);
   qtdeNaoParticipantesVisitasLoading = signal(true);
+
+  taxaParticipacao$: Observable<number> = of(0);
   taxaParticipacaoLoading = signal(true);
+
+  horasVisitas$: Observable<number> = of(0);
   horasVisitasLoading = signal(true);
+
+  visitasPorEntidade$: Observable<DashboardHorizontalChartBarData[]> = of([]);
   visitasPorEntidadeLoading = signal(true);
 
   visitasPorVoluntario$: Observable<DashboardHorizontalChartBarData[]> = of([]);
   visitasPorVoluntarioLoading = signal(true);
+
+  visitasPorDiaDaSemana$: Observable<DashboardVerticalChartBarData[]> = of([]);
+  visitasPorDiaDaSemanaLoading = signal(true);
+
+  chartBarOrientation = ChartBarOrientation;
 
   constructor(private dashboardService: DashboardService) {}
 
@@ -63,6 +74,7 @@ export class DashboardSimpleIndicatorsComponent implements OnChanges {
     this.buscaHorasVisitas();
     this.buscaVisitarPorEntidade();
     this.buscaVisitarPorVoluntario();
+    this.buscaVisitarPorDiaDaSemana();
   }
 
   buscaQtdeEntidadesVisitadas(): void {
@@ -117,5 +129,12 @@ export class DashboardSimpleIndicatorsComponent implements OnChanges {
       .pipe(finalize(() => this.visitasPorVoluntarioLoading.set(false)));
 
     this.visitasPorVoluntarioLoading.set(true);
+  }
+
+  buscaVisitarPorDiaDaSemana(): void {
+    this.visitasPorDiaDaSemana$ = this.dashboardService
+      .getVisitasPorDiaDaSemana(this.filters)
+      .pipe(finalize(() => this.visitasPorDiaDaSemanaLoading.set(false)));
+    this.visitasPorDiaDaSemanaLoading.set(true);
   }
 }

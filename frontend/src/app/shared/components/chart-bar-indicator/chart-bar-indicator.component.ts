@@ -11,7 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { ChartConfiguration, DefaultDataPoint } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { HorizontalChartBarData } from '../../models/horizontal-chart-bar-indicator';
+import { ChartBarData, ChartBarOrientation } from '../../models/chart';
 import { FontSizeService } from '../../services/font-size';
 import { SpinnerIndicatorComponent } from '../spinner-indicator/spinner-indicator.component';
 
@@ -20,7 +20,7 @@ interface ChartOptions {
 }
 
 @Component({
-  selector: 'app-horizontal-chart-bar-indicator',
+  selector: 'app-chart-bar-indicator',
   imports: [
     CommonModule,
     MatCardModule,
@@ -28,24 +28,27 @@ interface ChartOptions {
     SpinnerIndicatorComponent,
   ],
   standalone: true,
-  templateUrl: './horizontal-chart-bar-indicator.component.html',
-  styleUrl: './horizontal-chart-bar-indicator.component.css',
+  templateUrl: './chart-bar-indicator.component.html',
+  styleUrl: './chart-bar-indicator.component.css',
 })
-export class HorizontalChartBarIndicatorComponent implements OnInit, OnChanges {
+export class ChartBarIndicatorComponent implements OnInit, OnChanges {
   @Input()
   public title!: string;
 
   @Input()
-  public value!: HorizontalChartBarData[] | null;
+  public value!: ChartBarData[] | null;
 
   @Input()
   public loading!: boolean;
+
+  @Input()
+  public orientation: ChartBarOrientation = ChartBarOrientation.VERTICAL;
 
   public barChartData: ChartConfiguration<
     'bar',
     DefaultDataPoint<'bar'>,
     string
-  >['data'] = this.getBarChartData();
+  >['data'] = this._getBarChartData();
 
   public barChartOptions: ChartConfiguration<
     'bar',
@@ -64,7 +67,11 @@ export class HorizontalChartBarIndicatorComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('value' in changes) {
-      this.barChartData = this.getBarChartData();
+      this.barChartData = this._getBarChartData();
+    }
+
+    if ('orientation' in changes) {
+      this.barChartOptions = this._getChartOptions();
     }
   }
 
@@ -78,7 +85,7 @@ export class HorizontalChartBarIndicatorComponent implements OnInit, OnChanges {
       });
   }
 
-  private getBarChartData(): ChartConfiguration<
+  private _getBarChartData(): ChartConfiguration<
     'bar',
     DefaultDataPoint<'bar'>,
     string
@@ -114,9 +121,11 @@ export class HorizontalChartBarIndicatorComponent implements OnInit, OnChanges {
     options?: ChartOptions
   ): ChartConfiguration<'bar', DefaultDataPoint<'bar'>, string>['options'] {
     const fontSize = options?.fontSize ?? 16;
+    const indexAxis =
+      this.orientation === ChartBarOrientation.HORIZONTAL ? 'y' : 'x';
 
     return {
-      indexAxis: 'y',
+      indexAxis: indexAxis,
       maintainAspectRatio: false,
       font: {
         size: fontSize,

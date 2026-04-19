@@ -5,6 +5,7 @@ import { catchError, EMPTY, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { DashboardHorizontalChartBarData } from '../models';
 import { DashboardFilters } from '../models/dashboard-filters';
+import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +86,19 @@ export class DashboardService {
     return this.http
       .get<DashboardHorizontalChartBarData[]>(
         `${this.baseUrl}/voluntarios/visitas`,
+        {
+          params: this.filtroParaHttpParams(filtrosDashboard),
+        }
+      )
+      .pipe(catchError((e) => this.errorHandler(e)));
+  }
+
+  getVisitasPorDiaDaSemana(
+    filtrosDashboard: DashboardFilters
+  ): Observable<DashboardVerticalChartBarData[]> {
+    return this.http
+      .get<DashboardVerticalChartBarData[]>(
+        `${this.baseUrl}/dias-da-semana/visitas`,
         {
           params: this.filtroParaHttpParams(filtrosDashboard),
         }
