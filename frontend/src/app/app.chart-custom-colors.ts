@@ -11,25 +11,26 @@ interface ColorsDescriptor {
   borderColor?: unknown;
 }
 
-const BORDER_COLORS = [
-  'rgb(249, 115, 22)',
-  'rgb(132, 204, 22)',
-  'rgb(168, 85, 247)',
-  'rgb(236, 72, 153)',
-  'rgb(99, 102, 241)',
-  'rgb(94, 234, 212)',
-  'rgb(107, 114, 128)',
-  'rgb(245, 158, 11)',
-  'rgb(52, 211, 153)',
+export const GLOBAL_COLORS = [
+  'rgb(255, 205, 86)',
+  'rgb(255, 99, 132)',
+  'rgb(54, 162, 235)',
+  'rgb(201, 203, 207)',
+  'rgb(55, 108, 114)',
+  'rgb(153, 102, 255)',
+  'rgb(255, 159, 64)',
+  'rgb(75, 192, 192)',
+  'rgb(190, 208, 97)',
+  'rgb(205, 80, 138)',
 ];
 
 // Border colors with 50% transparency
-const BACKGROUND_COLORS = BORDER_COLORS.map((color) =>
+const BACKGROUND_COLORS = GLOBAL_COLORS.map((color) =>
   color.replace('rgb(', 'rgba(').replace(')', ', 1)')
 );
 
 function getBorderColor(i: number) {
-  return BORDER_COLORS[i % BORDER_COLORS.length];
+  return GLOBAL_COLORS[i % GLOBAL_COLORS.length];
 }
 
 function getBackgroundColor(i: number) {

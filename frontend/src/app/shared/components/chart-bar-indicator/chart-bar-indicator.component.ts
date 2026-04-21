@@ -11,6 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { ChartConfiguration, DefaultDataPoint } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { GLOBAL_COLORS } from '../../../app.chart-custom-colors';
 import { ChartBarData, ChartBarOrientation } from '../../models/chart';
 import { FontSizeService } from '../../services/font-size';
 import { SpinnerIndicatorComponent } from '../spinner-indicator/spinner-indicator.component';
@@ -99,18 +100,7 @@ export class ChartBarIndicatorComponent implements OnInit, OnChanges {
         {
           label: 'Dados',
           data: data,
-          backgroundColor: [
-            '#ff6384',
-            '#ff9f40',
-            '#ffcd56',
-            '#4bc0c0',
-            '#36a2eb',
-            '#9966ff',
-            '#c9cbcf',
-            '#bed061',
-            '#376c72',
-            '#cd508a',
-          ],
+          backgroundColor: GLOBAL_COLORS,
           borderRadius: 5,
         },
       ],

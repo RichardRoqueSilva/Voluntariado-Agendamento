@@ -177,6 +177,7 @@ export class ChartLineIndicatorComponent implements OnInit, OnChanges {
           },
         },
         tooltip: {
+          usePointStyle: true,
           titleFont: {
             size: fontSize,
           },
