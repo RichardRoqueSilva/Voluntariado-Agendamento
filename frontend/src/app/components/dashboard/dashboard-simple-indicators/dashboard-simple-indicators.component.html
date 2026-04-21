@@ -58,6 +58,12 @@
     [callbacks]="visitasAcumuladasPorDiaUltimosMesesCallbacks"
   ></app-chart-line-indicator>
 
+  <app-chart-doughnut-indicator
+    title="Visitas por período"
+    [value]="visitasPorPeriodo$ | async"
+    [loading]="visitasPorPeriodoLoading()"
+  ></app-chart-doughnut-indicator>
+
   <app-chart-bar-indicator
     title="Visitas por dia da semana"
     [value]="visitasPorDiaDaSemana$ | async"

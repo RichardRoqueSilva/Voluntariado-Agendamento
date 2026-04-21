@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { TestingModule } from '../../../shared/tests';
 import { DashboardHorizontalChartBarData } from '../models';
 import { DashboardAccumulatedVisitsPerMonth } from '../models/dashboard-accumulated-visits';
+import { DashboardDoughnutData } from '../models/dashboard-doughnut-data';
 import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
 import { DashboardService } from './dashboard.service';
 
@@ -452,6 +453,61 @@ describe(DashboardService.name, () => {
 
     const req = httpTestingController.expectOne(
       `${environment.baseApiUrl}/api/dias/visitas/ultimos/3/meses?ano=2026&mes=4`
+    );
+
+    const error = new ProgressEvent('error');
+    req.error(error);
+  });
+
+  it(`#${DashboardService.prototype.getVisitasPorPeriodo.name} DEVE enviar requisição HTTP GET para /api/dias/visitas/periodo
+      QUANDO chamado com filtros do dashboard.`, (done) => {
+    const retorno: DashboardDoughnutData[] = [
+      {
+        label: 'Manhã',
+        value: 57,
+      },
+      {
+        label: 'Tarde',
+        value: 9,
+      },
+      {
+        label: 'Noite',
+        value: 231,
+      },
+    ];
+
+    service.getVisitasPorPeriodo({ ano: 2026, mes: 4 }).subscribe((r) => {
+      expect(r[0].label).toBe('Manhã');
+      expect(r[0].value).toBe(57);
+      expect(r[1].label).toBe('Tarde');
+      expect(r[1].value).toBe(9);
+      expect(r[2].label).toBe('Noite');
+      expect(r[2].value).toBe(231);
+      done();
+    });
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/dias/visitas/periodo?ano=2026&mes=4`
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(retorno);
+  });
+
+  it(`#${DashboardService.prototype.getVisitasPorPeriodo.name} DEVE exibir mensagem de erro
+      QUANDO ocorrer erro de chamada remota.`, (done) => {
+    spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
+      expect(msg).toBe('Ocorreu um erro!');
+      expect((<string[]>opcoes?.panelClass)[0]).toBe('msg-error');
+      done();
+
+      return null as any;
+    });
+
+    service.getVisitasPorPeriodo({ ano: 2026, mes: 4 }).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/dias/visitas/periodo?ano=2026&mes=4`
     );
 
     const error = new ProgressEvent('error');

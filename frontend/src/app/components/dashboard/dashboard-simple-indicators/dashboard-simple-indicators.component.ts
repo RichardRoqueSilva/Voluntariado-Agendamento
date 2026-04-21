@@ -10,12 +10,14 @@ import { TooltipItem } from 'chart.js';
 import { finalize, Observable, of, tap } from 'rxjs';
 import { SharedModule } from '../../../shared';
 import { ChartBarIndicatorComponent } from '../../../shared/components/chart-bar-indicator/chart-bar-indicator.component';
+import { ChartDoughnutIndicatorComponent } from '../../../shared/components/chart-doughnut-indicator/chart-doughnut-indicator.component';
 import { ChartLineIndicatorComponent } from '../../../shared/components/chart-line-indicator/chart-line-indicator.component';
 import { SimpleIndicatorComponent } from '../../../shared/components/simple-indicator/simple-indicator.component';
 import { ChartBarOrientation } from '../../../shared/models/chart';
 import { ChartLineCallbacks } from '../../../shared/models/chart/char-line-callbacks';
 import { ChartLineData } from '../../../shared/models/chart/chart-line-data';
 import { DashboardHorizontalChartBarData } from '../models';
+import { DashboardDoughnutData } from '../models/dashboard-doughnut-data';
 import { DashboardFilters } from '../models/dashboard-filters';
 import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
 import { DashboardService } from '../services/dashboard.service';
@@ -28,6 +30,7 @@ import { DashboardService } from '../services/dashboard.service';
     SimpleIndicatorComponent,
     ChartBarIndicatorComponent,
     ChartLineIndicatorComponent,
+    ChartDoughnutIndicatorComponent,
     SharedModule,
   ],
   templateUrl: './dashboard-simple-indicators.component.html',
@@ -65,6 +68,9 @@ export class DashboardSimpleIndicatorsComponent implements OnChanges {
     of(null);
   visitasAcumuladasPorDiaUltimosMesesLoading = signal(true);
 
+  visitasPorPeriodo$: Observable<DashboardDoughnutData[] | null> = of(null);
+  visitasPorPeriodoLoading = signal(true);
+
   chartBarOrientation = ChartBarOrientation;
 
   visitasAcumuladasPorDiaUltimosMesesCallbacks =
@@ -88,6 +94,7 @@ export class DashboardSimpleIndicatorsComponent implements OnChanges {
     this.buscaVisitarPorVoluntario();
     this.buscaVisitarPorDiaDaSemana();
     this.buscaVisitasAcumuladasPorDiaUltimos3Meses();
+    this.buscaVisitasPorPeriodo();
   }
 
   buscaQtdeEntidadesVisitadas(): void {
@@ -161,6 +168,16 @@ export class DashboardSimpleIndicatorsComponent implements OnChanges {
         )
       );
     this.visitasAcumuladasPorDiaUltimosMesesLoading.set(true);
+  }
+
+  buscaVisitasPorPeriodo(): void {
+    this.visitasPorPeriodo$ = this.dashboardService
+      .getVisitasPorPeriodo(this.filters)
+      .pipe(
+        tap((v) => console.log(v)),
+        finalize(() => this.visitasPorPeriodoLoading.set(false))
+      );
+    this.visitasPorPeriodoLoading.set(true);
   }
 
   getVisitasAcumuladasPorDiaUltimosMesesCallbacks(): ChartLineCallbacks {

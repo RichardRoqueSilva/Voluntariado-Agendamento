@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { ChartLineData } from '../../../shared/models/chart/chart-line-data';
 import { DashboardHorizontalChartBarData } from '../models';
 import { DashboardAccumulatedVisitsPerMonth } from '../models/dashboard-accumulated-visits';
+import { DashboardDoughnutData } from '../models/dashboard-doughnut-data';
 import { DashboardFilters } from '../models/dashboard-filters';
 import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
 import { DashboardResponseMapperService } from './dashboard-response-mapper.service';
@@ -128,6 +129,16 @@ export class DashboardService {
         ),
         catchError((e) => this.errorHandler(e))
       );
+  }
+
+  getVisitasPorPeriodo(
+    filtrosDashboard: DashboardFilters
+  ): Observable<DashboardDoughnutData[]> {
+    return this.http
+      .get<DashboardDoughnutData[]>(`${this.baseUrl}/dias/visitas/periodo`, {
+        params: this.filtroParaHttpParams(filtrosDashboard),
+      })
+      .pipe(catchError((e) => this.errorHandler(e)));
   }
 
   errorHandler(e: any): Observable<any> {
