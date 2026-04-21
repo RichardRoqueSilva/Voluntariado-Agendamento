@@ -104,7 +104,7 @@ export class DashboardService {
   ): Observable<DashboardVerticalChartBarData[]> {
     return this.http
       .get<DashboardVerticalChartBarData[]>(
-        `${this.baseUrl}/dias-da-semana/visitas`,
+        `${this.baseUrl}/dias/semana/visitas`,
         {
           params: this.filtroParaHttpParams(filtrosDashboard),
         }

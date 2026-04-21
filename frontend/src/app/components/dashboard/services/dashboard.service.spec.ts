@@ -362,7 +362,7 @@ describe(DashboardService.name, () => {
     req.error(error);
   });
 
-  it(`#${DashboardService.prototype.getVisitasPorDiaDaSemana.name} DEVE enviar requisição HTTP GET para /api/dias-da-semana/visitas
+  it(`#${DashboardService.prototype.getVisitasPorDiaDaSemana.name} DEVE enviar requisição HTTP GET para /api/dias/semana/visitas
       QUANDO chamado com filtros do dashboard.`, (done) => {
     const retorno: DashboardVerticalChartBarData[] = [
       {
@@ -380,7 +380,7 @@ describe(DashboardService.name, () => {
       });
 
     const req = httpTestingController.expectOne(
-      `${environment.baseApiUrl}/api/dias-da-semana/visitas?ano=2026&mes=4`
+      `${environment.baseApiUrl}/api/dias/semana/visitas?ano=2026&mes=4`
     );
 
     expect(req.request.method).toBe('GET');
@@ -400,7 +400,7 @@ describe(DashboardService.name, () => {
     service.getVisitasPorDiaDaSemana({ ano: 2026, mes: 4 }).subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.baseApiUrl}/api/dias-da-semana/visitas?ano=2026&mes=4`
+      `${environment.baseApiUrl}/api/dias/semana/visitas?ano=2026&mes=4`
     );
 
     const error = new ProgressEvent('error');
