@@ -4,8 +4,7 @@
   gap: 1rem;
 }
 
-.simple-indicators-container,
-.chart-indicators-container {
+.simple-indicators-container {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -14,12 +13,4 @@
 .simple-indicators-container > * {
   flex: 1;
   flex-basis: 18.75rem;
-}
-
-.chart-indicators-container > * {
-  flex: 1;
-  flex-basis: 31.2rem;
-  width: 100%;
-  min-height: 25rem;
-  overflow: hidden;
 }

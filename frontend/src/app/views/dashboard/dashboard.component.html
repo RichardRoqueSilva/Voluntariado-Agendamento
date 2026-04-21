@@ -1,25 +1,30 @@
 <div class="filter-container">
-    <mat-form-field floatLabel="always">
-        <mat-label>Mês de análise</mat-label>
-        <input
-            matInput
-            name="monthAnalysis"
-            readonly
-            [(ngModel)]="dateMonthAnalysis"
-            [matDatepicker]="monthAnalysis"
-        />
-        <mat-datepicker-toggle
-            matIconSuffix
-            [for]="monthAnalysis"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #monthAnalysis
-            startView="multi-year"
-            (monthSelected)="setMonthAnalysis($event, monthAnalysis)"
-            panelClass="example-month-picker"
-        ></mat-datepicker>
-    </mat-form-field>
+  <mat-form-field floatLabel="always">
+    <mat-label>Mês de análise</mat-label>
+    <input
+      matInput
+      name="monthAnalysis"
+      readonly
+      [(ngModel)]="dateMonthAnalysis"
+      [matDatepicker]="monthAnalysis"
+    />
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="monthAnalysis"
+    ></mat-datepicker-toggle>
+    <mat-datepicker
+      #monthAnalysis
+      startView="multi-year"
+      (monthSelected)="setMonthAnalysis($event, monthAnalysis)"
+      panelClass="example-month-picker"
+    ></mat-datepicker>
+  </mat-form-field>
 </div>
 
 <app-dashboard-simple-indicators
-    [filters]="filters"
+  [filters]="filters"
 ></app-dashboard-simple-indicators>
+
+<app-dashboard-chart-indicators
+  [filters]="filters"
+></app-dashboard-chart-indicators>

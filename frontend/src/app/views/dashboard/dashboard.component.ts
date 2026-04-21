@@ -12,6 +12,7 @@ import {
 } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { DashboardChartIndicatorsComponent } from '../../components/dashboard/dashboard-chart-indicators/dashboard-chart-indicators.component';
 import { DashboardSimpleIndicatorsComponent } from '../../components/dashboard/dashboard-simple-indicators/dashboard-simple-indicators.component';
 import { DashboardFilters } from '../../components/dashboard/models/dashboard-filters';
 import { HeaderService } from '../../components/template/header/header.service';
@@ -37,6 +38,7 @@ export const FORMATO_DATA: MatDateFormats = {
     MatInputModule,
 
     DashboardSimpleIndicatorsComponent,
+    DashboardChartIndicatorsComponent,
   ],
   providers: [provideNativeDateAdapter(FORMATO_DATA)],
   templateUrl: './dashboard.component.html',

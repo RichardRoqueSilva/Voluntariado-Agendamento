@@ -1,0 +1,54 @@
+<div class="chart-indicators-container">
+  <app-chart-bar-indicator
+    id="visitas-por-entidade"
+    title="Visitas por entidade"
+    [value]="visitasPorEntidade$ | async"
+    [loading]="visitasPorEntidadeLoading()"
+    [orientation]="chartBarOrientation.HORIZONTAL"
+  />
+
+  <app-chart-bar-indicator
+    id="visitas-por-voluntario"
+    title="Visitas por voluntário"
+    [value]="visitasPorVoluntario$ | async"
+    [loading]="visitasPorVoluntarioLoading()"
+    [orientation]="chartBarOrientation.HORIZONTAL"
+  />
+
+  <app-chart-line-indicator
+    id="visitas-acumuladas-por-dia-ultimos-3-meses"
+    title="Visitas acumuladas por dia nos últimos 3 meses"
+    [value]="visitasAcumuladasPorDiaUltimosMeses$ | async"
+    [loading]="visitasAcumuladasPorDiaUltimosMesesLoading()"
+    [callbacks]="visitasAcumuladasPorDiaUltimosMesesCallbacks"
+  />
+
+  <app-chart-doughnut-indicator
+    id="visitas-por-periodo"
+    title="Visitas por período"
+    [value]="visitasPorPeriodo$ | async"
+    [loading]="visitasPorPeriodoLoading()"
+  />
+
+  <app-chart-bar-indicator
+    id="visitas-por-dia-semana"
+    title="Visitas por dia da semana"
+    [value]="visitasPorDiaDaSemana$ | async"
+    [loading]="visitasPorDiaDaSemanaLoading()"
+    [orientation]="chartBarOrientation.VERTICAL"
+  />
+
+  <app-chart-pizza-indicator
+    id="qtde-voluntarios-que-fizeram-visitas-no-mes"
+    title="Quantidade de voluntários que fizeram visitas no mês"
+    [value]="qtdeVoluntariosFizeramVisitasNoMes$ | async"
+    [loading]="qtdeVoluntariosFizeramVisitasNoMesLoading()"
+  />
+
+  <app-chart-pizza-indicator
+    id="qtde-entidades-visitadas-no-mes"
+    title="Quantidade de entidades visitadas no mês"
+    [value]="qtdeEntidadesVisitadasNoMes$ | async"
+    [loading]="qtdeEntidadesVisitadasNoMesLoading()"
+  />
+</div>
