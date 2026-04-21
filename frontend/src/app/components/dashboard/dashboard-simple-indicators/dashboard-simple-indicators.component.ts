@@ -7,11 +7,12 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { TooltipItem } from 'chart.js';
-import { finalize, Observable, of, tap } from 'rxjs';
+import { finalize, Observable, of } from 'rxjs';
 import { SharedModule } from '../../../shared';
 import { ChartBarIndicatorComponent } from '../../../shared/components/chart-bar-indicator/chart-bar-indicator.component';
 import { ChartDoughnutIndicatorComponent } from '../../../shared/components/chart-doughnut-indicator/chart-doughnut-indicator.component';
 import { ChartLineIndicatorComponent } from '../../../shared/components/chart-line-indicator/chart-line-indicator.component';
+import { ChartPizzaIndicatorComponent } from '../../../shared/components/chart-pizza-indicator/chart-pizza-indicator.component';
 import { SimpleIndicatorComponent } from '../../../shared/components/simple-indicator/simple-indicator.component';
 import { ChartBarOrientation } from '../../../shared/models/chart';
 import { ChartLineCallbacks } from '../../../shared/models/chart/char-line-callbacks';
@@ -19,6 +20,7 @@ import { ChartLineData } from '../../../shared/models/chart/chart-line-data';
 import { DashboardHorizontalChartBarData } from '../models';
 import { DashboardDoughnutData } from '../models/dashboard-doughnut-data';
 import { DashboardFilters } from '../models/dashboard-filters';
+import { DashboardPizzaData } from '../models/dashboard-pizza-data';
 import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
 import { DashboardService } from '../services/dashboard.service';
 
@@ -31,6 +33,7 @@ import { DashboardService } from '../services/dashboard.service';
     ChartBarIndicatorComponent,
     ChartLineIndicatorComponent,
     ChartDoughnutIndicatorComponent,
+    ChartPizzaIndicatorComponent,
     SharedModule,
   ],
   templateUrl: './dashboard-simple-indicators.component.html',
@@ -71,6 +74,14 @@ export class DashboardSimpleIndicatorsComponent implements OnChanges {
   visitasPorPeriodo$: Observable<DashboardDoughnutData[] | null> = of(null);
   visitasPorPeriodoLoading = signal(true);
 
+  qtdeVoluntariosFizeramVisitasNoMes$: Observable<DashboardPizzaData[] | null> =
+    of(null);
+  qtdeVoluntariosFizeramVisitasNoMesLoading = signal(true);
+
+  qtdeEntidadesVisitadasNoMes$: Observable<DashboardPizzaData[] | null> =
+    of(null);
+  qtdeEntidadesVisitadasNoMesLoading = signal(true);
+
   chartBarOrientation = ChartBarOrientation;
 
   visitasAcumuladasPorDiaUltimosMesesCallbacks =
@@ -95,6 +106,8 @@ export class DashboardSimpleIndicatorsComponent implements OnChanges {
     this.buscaVisitarPorDiaDaSemana();
     this.buscaVisitasAcumuladasPorDiaUltimos3Meses();
     this.buscaVisitasPorPeriodo();
+    this.buscaQtdeVoluntariosFizeramVisitasNoMes();
+    this.buscaQtdeEntidadesVisitadasNoMes();
   }
 
   buscaQtdeEntidadesVisitadas(): void {
@@ -162,7 +175,6 @@ export class DashboardSimpleIndicatorsComponent implements OnChanges {
     this.visitasAcumuladasPorDiaUltimosMeses$ = this.dashboardService
       .getVisitasAcumuladasPorDiaUltimos3Meses(this.filters)
       .pipe(
-        tap((v) => console.log(v)),
         finalize(() =>
           this.visitasAcumuladasPorDiaUltimosMesesLoading.set(false)
         )
@@ -173,11 +185,26 @@ export class DashboardSimpleIndicatorsComponent implements OnChanges {
   buscaVisitasPorPeriodo(): void {
     this.visitasPorPeriodo$ = this.dashboardService
       .getVisitasPorPeriodo(this.filters)
-      .pipe(
-        tap((v) => console.log(v)),
-        finalize(() => this.visitasPorPeriodoLoading.set(false))
-      );
+      .pipe(finalize(() => this.visitasPorPeriodoLoading.set(false)));
     this.visitasPorPeriodoLoading.set(true);
+  }
+
+  buscaQtdeVoluntariosFizeramVisitasNoMes(): void {
+    this.qtdeVoluntariosFizeramVisitasNoMes$ = this.dashboardService
+      .getQtdeVoluntariosFizeramVisitasNoMes(this.filters)
+      .pipe(
+        finalize(() =>
+          this.qtdeVoluntariosFizeramVisitasNoMesLoading.set(false)
+        )
+      );
+    this.qtdeVoluntariosFizeramVisitasNoMesLoading.set(true);
+  }
+
+  buscaQtdeEntidadesVisitadasNoMes(): void {
+    this.qtdeEntidadesVisitadasNoMes$ = this.dashboardService
+      .getQtdeEntidadesVisitadasNoMes(this.filters)
+      .pipe(finalize(() => this.qtdeEntidadesVisitadasNoMesLoading.set(false)));
+    this.qtdeEntidadesVisitadasNoMesLoading.set(true);
   }
 
   getVisitasAcumuladasPorDiaUltimosMesesCallbacks(): ChartLineCallbacks {

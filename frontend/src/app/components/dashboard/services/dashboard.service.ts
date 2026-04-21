@@ -8,6 +8,7 @@ import { DashboardHorizontalChartBarData } from '../models';
 import { DashboardAccumulatedVisitsPerMonth } from '../models/dashboard-accumulated-visits';
 import { DashboardDoughnutData } from '../models/dashboard-doughnut-data';
 import { DashboardFilters } from '../models/dashboard-filters';
+import { DashboardPizzaData } from '../models/dashboard-pizza-data';
 import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
 import { DashboardResponseMapperService } from './dashboard-response-mapper.service';
 
@@ -138,6 +139,32 @@ export class DashboardService {
       .get<DashboardDoughnutData[]>(`${this.baseUrl}/dias/visitas/periodo`, {
         params: this.filtroParaHttpParams(filtrosDashboard),
       })
+      .pipe(catchError((e) => this.errorHandler(e)));
+  }
+
+  getQtdeVoluntariosFizeramVisitasNoMes(
+    filtrosDashboard: DashboardFilters
+  ): Observable<DashboardPizzaData[]> {
+    return this.http
+      .get<DashboardPizzaData[]>(
+        `${this.baseUrl}/voluntarios/visitas/quantidades/totais`,
+        {
+          params: this.filtroParaHttpParams(filtrosDashboard),
+        }
+      )
+      .pipe(catchError((e) => this.errorHandler(e)));
+  }
+
+  getQtdeEntidadesVisitadasNoMes(
+    filtrosDashboard: DashboardFilters
+  ): Observable<DashboardPizzaData[]> {
+    return this.http
+      .get<DashboardPizzaData[]>(
+        `${this.baseUrl}/entidades/visitas/quantidades/totais`,
+        {
+          params: this.filtroParaHttpParams(filtrosDashboard),
+        }
+      )
       .pipe(catchError((e) => this.errorHandler(e)));
   }
 

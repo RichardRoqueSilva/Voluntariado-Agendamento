@@ -7,6 +7,7 @@ import { TestingModule } from '../../../shared/tests';
 import { DashboardHorizontalChartBarData } from '../models';
 import { DashboardAccumulatedVisitsPerMonth } from '../models/dashboard-accumulated-visits';
 import { DashboardDoughnutData } from '../models/dashboard-doughnut-data';
+import { DashboardPizzaData } from '../models/dashboard-pizza-data';
 import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
 import { DashboardService } from './dashboard.service';
 
@@ -508,6 +509,110 @@ describe(DashboardService.name, () => {
 
     const req = httpTestingController.expectOne(
       `${environment.baseApiUrl}/api/dias/visitas/periodo?ano=2026&mes=4`
+    );
+
+    const error = new ProgressEvent('error');
+    req.error(error);
+  });
+
+  it(`#${DashboardService.prototype.getQtdeVoluntariosFizeramVisitasNoMes.name} DEVE enviar requisição HTTP GET para /api/voluntarios/visitas/quantidades/totais
+      QUANDO chamado com filtros do dashboard.`, (done) => {
+    const retorno: DashboardPizzaData[] = [
+      {
+        label: 'Não visitou nenhuma entidade',
+        value: 34,
+      },
+      {
+        label: 'Visitou alguma entidade',
+        value: 67,
+      },
+    ];
+
+    service
+      .getQtdeVoluntariosFizeramVisitasNoMes({ ano: 2026, mes: 4 })
+      .subscribe((r) => {
+        expect(r[0].label).toBe('Não visitou nenhuma entidade');
+        expect(r[0].value).toBe(34);
+        expect(r[1].label).toBe('Visitou alguma entidade');
+        expect(r[1].value).toBe(67);
+        done();
+      });
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/voluntarios/visitas/quantidades/totais?ano=2026&mes=4`
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(retorno);
+  });
+
+  it(`#${DashboardService.prototype.getQtdeVoluntariosFizeramVisitasNoMes.name} DEVE exibir mensagem de erro
+      QUANDO ocorrer erro de chamada remota.`, (done) => {
+    spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
+      expect(msg).toBe('Ocorreu um erro!');
+      expect((<string[]>opcoes?.panelClass)[0]).toBe('msg-error');
+      done();
+
+      return null as any;
+    });
+
+    service
+      .getQtdeVoluntariosFizeramVisitasNoMes({ ano: 2026, mes: 4 })
+      .subscribe();
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/voluntarios/visitas/quantidades/totais?ano=2026&mes=4`
+    );
+
+    const error = new ProgressEvent('error');
+    req.error(error);
+  });
+
+  it(`#${DashboardService.prototype.getQtdeEntidadesVisitadasNoMes.name} DEVE enviar requisição HTTP GET para /api/entidades/visitas/quantidades/totais
+      QUANDO chamado com filtros do dashboard.`, (done) => {
+    const retorno: DashboardPizzaData[] = [
+      {
+        label: 'Não recebeu nenhuma visita',
+        value: 44,
+      },
+      {
+        label: 'Recebeu alguma entidade',
+        value: 21,
+      },
+    ];
+
+    service
+      .getQtdeEntidadesVisitadasNoMes({ ano: 2026, mes: 4 })
+      .subscribe((r) => {
+        expect(r[0].label).toBe('Não recebeu nenhuma visita');
+        expect(r[0].value).toBe(44);
+        expect(r[1].label).toBe('Recebeu alguma entidade');
+        expect(r[1].value).toBe(21);
+        done();
+      });
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/entidades/visitas/quantidades/totais?ano=2026&mes=4`
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(retorno);
+  });
+
+  it(`#${DashboardService.prototype.getQtdeEntidadesVisitadasNoMes.name} DEVE exibir mensagem de erro
+      QUANDO ocorrer erro de chamada remota.`, (done) => {
+    spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
+      expect(msg).toBe('Ocorreu um erro!');
+      expect((<string[]>opcoes?.panelClass)[0]).toBe('msg-error');
+      done();
+
+      return null as any;
+    });
+
+    service.getQtdeEntidadesVisitadasNoMes({ ano: 2026, mes: 4 }).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/entidades/visitas/quantidades/totais?ano=2026&mes=4`
     );
 
     const error = new ProgressEvent('error');

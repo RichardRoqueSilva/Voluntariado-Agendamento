@@ -70,4 +70,16 @@
     [loading]="visitasPorDiaDaSemanaLoading()"
     [orientation]="chartBarOrientation.VERTICAL"
   ></app-chart-bar-indicator>
+
+  <app-chart-pizza-indicator
+    title="Quantidade de voluntários que fizeram visitas no mês"
+    [value]="qtdeVoluntariosFizeramVisitasNoMes$ | async"
+    [loading]="qtdeVoluntariosFizeramVisitasNoMesLoading()"
+  />
+
+  <app-chart-pizza-indicator
+    title="Quantidade de entidades visitadas no mês"
+    [value]="qtdeEntidadesVisitadasNoMes$ | async"
+    [loading]="qtdeEntidadesVisitadasNoMesLoading()"
+  />
 </div>
