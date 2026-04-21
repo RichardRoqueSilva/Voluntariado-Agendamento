@@ -51,6 +51,13 @@
     [orientation]="chartBarOrientation.HORIZONTAL"
   ></app-chart-bar-indicator>
 
+  <app-chart-line-indicator
+    title="Visitas acumuladas por dia nos últimos 3 meses"
+    [value]="visitasAcumuladasPorDiaUltimosMeses$ | async"
+    [loading]="visitasAcumuladasPorDiaUltimosMesesLoading()"
+    [callbacks]="visitasAcumuladasPorDiaUltimosMesesCallbacks"
+  ></app-chart-line-indicator>
+
   <app-chart-bar-indicator
     title="Visitas por dia da semana"
     [value]="visitasPorDiaDaSemana$ | async"

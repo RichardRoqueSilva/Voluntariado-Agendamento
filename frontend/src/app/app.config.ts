@@ -13,8 +13,12 @@ import { provideRouter } from '@angular/router';
 
 import { provideEnvironmentNgxMask, provideNgxMask } from 'ngx-mask';
 
+import { Chart } from 'chart.js';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import CustomColors from './app.chart-custom-colors';
 import { routes } from './app.routes';
+
+Chart.register(CustomColors);
 
 export const appConfig: ApplicationConfig = {
   providers: [

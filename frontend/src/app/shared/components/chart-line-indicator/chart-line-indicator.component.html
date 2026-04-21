@@ -1,0 +1,29 @@
+<mat-card class="indicator-card" appearance="outlined">
+  <mat-card-content class="indicador-content">
+    <div class="content-title">{{ title }}</div>
+    <div class="content-data-container">
+      <app-spinner-indicator *ngIf="loading"></app-spinner-indicator>
+      <div
+        *ngIf="
+          value != null && value.datasets != null && value.datasets.length > 0
+        "
+        class="content-chart"
+      >
+        <canvas
+          baseChart
+          [data]="lineChartData"
+          [options]="lineChartOptions"
+          [type]="'line'"
+        ></canvas>
+      </div>
+      <div
+        *ngIf="
+          value == null || value.datasets == null || value.datasets.length == 0
+        "
+        class="content-empty-message"
+      >
+        <span>Nenhum dado encontrado!</span>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

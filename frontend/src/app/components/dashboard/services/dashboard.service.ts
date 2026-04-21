@@ -1,11 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, EMPTY, Observable } from 'rxjs';
+import { catchError, EMPTY, map, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { ChartLineData } from '../../../shared/models/chart/chart-line-data';
 import { DashboardHorizontalChartBarData } from '../models';
+import { DashboardAccumulatedVisitsPerMonth } from '../models/dashboard-accumulated-visits';
 import { DashboardFilters } from '../models/dashboard-filters';
 import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
+import { DashboardResponseMapperService } from './dashboard-response-mapper.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +18,8 @@ export class DashboardService {
 
   constructor(
     private snackBar: MatSnackBar,
-    private http: HttpClient
+    private http: HttpClient,
+    private _responseMapperService: DashboardResponseMapperService
   ) {}
 
   getQuantidadeEntidadesVisitadas(
@@ -104,6 +108,26 @@ export class DashboardService {
         }
       )
       .pipe(catchError((e) => this.errorHandler(e)));
+  }
+
+  getVisitasAcumuladasPorDiaUltimos3Meses(
+    filtrosDashboard: DashboardFilters
+  ): Observable<ChartLineData> {
+    return this.http
+      .get<DashboardAccumulatedVisitsPerMonth[]>(
+        `${this.baseUrl}/dias/visitas/ultimos/${3}/meses`,
+        {
+          params: this.filtroParaHttpParams(filtrosDashboard),
+        }
+      )
+      .pipe(
+        map((dados) =>
+          this._responseMapperService.mapDashboardAcummulatedVisitsPerMonthToChartLine(
+            dados
+          )
+        ),
+        catchError((e) => this.errorHandler(e))
+      );
   }
 
   errorHandler(e: any): Observable<any> {

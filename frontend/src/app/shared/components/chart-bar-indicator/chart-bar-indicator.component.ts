@@ -15,7 +15,7 @@ import { ChartBarData, ChartBarOrientation } from '../../models/chart';
 import { FontSizeService } from '../../services/font-size';
 import { SpinnerIndicatorComponent } from '../spinner-indicator/spinner-indicator.component';
 
-interface ChartOptions {
+interface BarChartOptions {
   fontSize?: number;
 }
 
@@ -118,7 +118,7 @@ export class ChartBarIndicatorComponent implements OnInit, OnChanges {
   }
 
   private _getChartOptions(
-    options?: ChartOptions
+    options?: BarChartOptions
   ): ChartConfiguration<'bar', DefaultDataPoint<'bar'>, string>['options'] {
     const fontSize = options?.fontSize ?? 16;
     const indexAxis =

@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../../../environments/environment';
 import { TestingModule } from '../../../shared/tests';
 import { DashboardHorizontalChartBarData } from '../models';
+import { DashboardAccumulatedVisitsPerMonth } from '../models/dashboard-accumulated-visits';
 import { DashboardVerticalChartBarData } from '../models/dashboard-vertical-chart-bar-data';
 import { DashboardService } from './dashboard.service';
 
@@ -68,7 +69,7 @@ describe(DashboardService.name, () => {
     expect(queryParams.get('mes')).toBe('4');
   });
 
-  it(`#${DashboardService.prototype.getQuantidadeEntidadesVisitadas} DEVE enviar requisição HTTP GET para /api/entidades/visitas/quantidades
+  it(`#${DashboardService.prototype.getQuantidadeEntidadesVisitadas.name} DEVE enviar requisição HTTP GET para /api/entidades/visitas/quantidades
       QUANDO chamado com filtros do dashboard.`, (done) => {
     const qtdeEntidades = 50;
 
@@ -108,7 +109,7 @@ describe(DashboardService.name, () => {
     req.error(error);
   });
 
-  it(`#${DashboardService.prototype.getQuantidadeVoluntariosVisitas} DEVE enviar requisição HTTP GET para /api/voluntarios/visitas/quantidades
+  it(`#${DashboardService.prototype.getQuantidadeVoluntariosVisitas.name} DEVE enviar requisição HTTP GET para /api/voluntarios/visitas/quantidades
       QUANDO chamado com filtros do dashboard.`, (done) => {
     const qtdeVoluntarios = 100;
 
@@ -127,7 +128,7 @@ describe(DashboardService.name, () => {
     req.flush(qtdeVoluntarios);
   });
 
-  it(`#${DashboardService.prototype.getQuantidadeVoluntariosVisitas} DEVE exibir mensagem de erro
+  it(`#${DashboardService.prototype.getQuantidadeVoluntariosVisitas.name} DEVE exibir mensagem de erro
       QUANDO ocorrer erro de chamada remota.`, (done) => {
     spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
       expect(msg).toBe('Ocorreu um erro!');
@@ -148,7 +149,7 @@ describe(DashboardService.name, () => {
     req.error(error);
   });
 
-  it(`#${DashboardService.prototype.getQuantidadeVoluntariosNaoParticipantesVisitas} DEVE enviar requisição HTTP GET para /api/voluntarios/nao-participantes-visitas/quantidades
+  it(`#${DashboardService.prototype.getQuantidadeVoluntariosNaoParticipantesVisitas.name} DEVE enviar requisição HTTP GET para /api/voluntarios/nao-participantes-visitas/quantidades
       QUANDO chamado com filtros do dashboard.`, (done) => {
     const qtdeVoluntariosNaoParticipantes = 100;
 
@@ -167,7 +168,7 @@ describe(DashboardService.name, () => {
     req.flush(qtdeVoluntariosNaoParticipantes);
   });
 
-  it(`#${DashboardService.prototype.getQuantidadeVoluntariosNaoParticipantesVisitas} DEVE exibir mensagem de erro
+  it(`#${DashboardService.prototype.getQuantidadeVoluntariosNaoParticipantesVisitas.name} DEVE exibir mensagem de erro
       QUANDO ocorrer erro de chamada remota.`, (done) => {
     spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
       expect(msg).toBe('Ocorreu um erro!');
@@ -190,7 +191,7 @@ describe(DashboardService.name, () => {
     req.error(error);
   });
 
-  it(`#${DashboardService.prototype.getTaxaParticipacao} DEVE enviar requisição HTTP GET para /api/voluntarios/taxa-participacao
+  it(`#${DashboardService.prototype.getTaxaParticipacao.name} DEVE enviar requisição HTTP GET para /api/voluntarios/taxa-participacao
       QUANDO chamado com filtros do dashboard.`, (done) => {
     const taxaParticipacao = 20.76;
 
@@ -209,7 +210,7 @@ describe(DashboardService.name, () => {
     req.flush(taxaParticipacao);
   });
 
-  it(`#${DashboardService.prototype.getTaxaParticipacao} DEVE exibir mensagem de erro
+  it(`#${DashboardService.prototype.getTaxaParticipacao.name} DEVE exibir mensagem de erro
       QUANDO ocorrer erro de chamada remota.`, (done) => {
     spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
       expect(msg).toBe('Ocorreu um erro!');
@@ -230,7 +231,7 @@ describe(DashboardService.name, () => {
     req.error(error);
   });
 
-  it(`#${DashboardService.prototype.getHorasVisitas} DEVE enviar requisição HTTP GET para /api/voluntarios/visitas/totais/horas
+  it(`#${DashboardService.prototype.getHorasVisitas.name} DEVE enviar requisição HTTP GET para /api/voluntarios/visitas/totais/horas
       QUANDO chamado com filtros do dashboard.`, (done) => {
     const horas = 20.76;
 
@@ -249,7 +250,7 @@ describe(DashboardService.name, () => {
     req.flush(horas);
   });
 
-  it(`#${DashboardService.prototype.getHorasVisitas} DEVE exibir mensagem de erro
+  it(`#${DashboardService.prototype.getHorasVisitas.name} DEVE exibir mensagem de erro
       QUANDO ocorrer erro de chamada remota.`, (done) => {
     spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
       expect(msg).toBe('Ocorreu um erro!');
@@ -269,7 +270,7 @@ describe(DashboardService.name, () => {
     req.error(error);
   });
 
-  it(`#${DashboardService.prototype.getVisitasPorEntidade} DEVE enviar requisição HTTP GET para /api/entidades/visitas
+  it(`#${DashboardService.prototype.getVisitasPorEntidade.name} DEVE enviar requisição HTTP GET para /api/entidades/visitas
       QUANDO chamado com filtros do dashboard.`, (done) => {
     const retorno: DashboardHorizontalChartBarData[] = [
       {
@@ -294,7 +295,7 @@ describe(DashboardService.name, () => {
     req.flush(retorno);
   });
 
-  it(`#${DashboardService.prototype.getVisitasPorEntidade} DEVE exibir mensagem de erro
+  it(`#${DashboardService.prototype.getVisitasPorEntidade.name} DEVE exibir mensagem de erro
       QUANDO ocorrer erro de chamada remota.`, (done) => {
     spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
       expect(msg).toBe('Ocorreu um erro!');
@@ -314,7 +315,7 @@ describe(DashboardService.name, () => {
     req.error(error);
   });
 
-  it(`#${DashboardService.prototype.getVisitasPorVoluntario} DEVE enviar requisição HTTP GET para /api/voluntarios/visitas
+  it(`#${DashboardService.prototype.getVisitasPorVoluntario.name} DEVE enviar requisição HTTP GET para /api/voluntarios/visitas
       QUANDO chamado com filtros do dashboard.`, (done) => {
     const retorno: DashboardHorizontalChartBarData[] = [
       {
@@ -339,7 +340,7 @@ describe(DashboardService.name, () => {
     req.flush(retorno);
   });
 
-  it(`#${DashboardService.prototype.getVisitasPorVoluntario} DEVE exibir mensagem de erro
+  it(`#${DashboardService.prototype.getVisitasPorVoluntario.name} DEVE exibir mensagem de erro
       QUANDO ocorrer erro de chamada remota.`, (done) => {
     spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
       expect(msg).toBe('Ocorreu um erro!');
@@ -359,7 +360,7 @@ describe(DashboardService.name, () => {
     req.error(error);
   });
 
-  it(`#${DashboardService.prototype.getVisitasPorDiaDaSemana} DEVE enviar requisição HTTP GET para /api/dias-da-semana/visitas
+  it(`#${DashboardService.prototype.getVisitasPorDiaDaSemana.name} DEVE enviar requisição HTTP GET para /api/dias-da-semana/visitas
       QUANDO chamado com filtros do dashboard.`, (done) => {
     const retorno: DashboardVerticalChartBarData[] = [
       {
@@ -384,7 +385,7 @@ describe(DashboardService.name, () => {
     req.flush(retorno);
   });
 
-  it(`#${DashboardService.prototype.getVisitasPorDiaDaSemana} DEVE exibir mensagem de erro
+  it(`#${DashboardService.prototype.getVisitasPorDiaDaSemana.name} DEVE exibir mensagem de erro
       QUANDO ocorrer erro de chamada remota.`, (done) => {
     spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
       expect(msg).toBe('Ocorreu um erro!');
@@ -398,6 +399,59 @@ describe(DashboardService.name, () => {
 
     const req = httpTestingController.expectOne(
       `${environment.baseApiUrl}/api/dias-da-semana/visitas?ano=2026&mes=4`
+    );
+
+    const error = new ProgressEvent('error');
+    req.error(error);
+  });
+
+  it(`#${DashboardService.prototype.getVisitasAcumuladasPorDiaUltimos3Meses.name} DEVE enviar requisição HTTP GET para /api/dias/visitas/ultimos/3/meses
+      QUANDO chamado com filtros do dashboard.`, (done) => {
+    const retorno: DashboardAccumulatedVisitsPerMonth[] = [
+      {
+        month: 'Janeiro',
+        visitsPerDay: [
+          {
+            day: 1,
+            visits: 10,
+          },
+        ],
+      },
+    ];
+
+    service
+      .getVisitasAcumuladasPorDiaUltimos3Meses({ ano: 2026, mes: 4 })
+      .subscribe((r) => {
+        expect(r.xLabels[0]).toBe('1');
+        expect(r.datasets[0].yData[0]).toBe(10);
+        expect(r.datasets[0].label).toBe('Janeiro');
+        done();
+      });
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/dias/visitas/ultimos/3/meses?ano=2026&mes=4`
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(retorno);
+  });
+
+  it(`#${DashboardService.prototype.getVisitasAcumuladasPorDiaUltimos3Meses.name} DEVE exibir mensagem de erro
+      QUANDO ocorrer erro de chamada remota.`, (done) => {
+    spyOn(snackBar, 'open').and.callFake((msg, _, opcoes) => {
+      expect(msg).toBe('Ocorreu um erro!');
+      expect((<string[]>opcoes?.panelClass)[0]).toBe('msg-error');
+      done();
+
+      return null as any;
+    });
+
+    service
+      .getVisitasAcumuladasPorDiaUltimos3Meses({ ano: 2026, mes: 4 })
+      .subscribe();
+
+    const req = httpTestingController.expectOne(
+      `${environment.baseApiUrl}/api/dias/visitas/ultimos/3/meses?ano=2026&mes=4`
     );
 
     const error = new ProgressEvent('error');
