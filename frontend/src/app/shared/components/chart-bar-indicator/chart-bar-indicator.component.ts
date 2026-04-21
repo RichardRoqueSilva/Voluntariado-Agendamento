@@ -129,6 +129,7 @@ export class ChartBarIndicatorComponent implements OnInit, OnChanges {
       maintainAspectRatio: false,
       font: {
         size: fontSize,
+        family: 'Roboto, "Helvetica Neue", sans-serif',
       },
       scales: {
         y: {
