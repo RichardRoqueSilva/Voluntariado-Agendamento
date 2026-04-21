@@ -2,13 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { FontSpec } from 'chart.js';
 import { ChartLineData } from '../../models/chart/chart-line-data';
+import { FontSizeService } from '../../services/font-size';
 import { TestingModule } from '../../tests';
 import { ChartLineIndicatorComponent } from './chart-line-indicator.component';
 
 describe(ChartLineIndicatorComponent.name, () => {
   let component: ChartLineIndicatorComponent;
   let fixture: ComponentFixture<ChartLineIndicatorComponent>;
+  let fontSizeService: FontSizeService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,6 +19,7 @@ describe(ChartLineIndicatorComponent.name, () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChartLineIndicatorComponent);
+    fontSizeService = TestBed.inject(FontSizeService);
     component = fixture.componentInstance;
   });
 
@@ -139,5 +143,57 @@ describe(ChartLineIndicatorComponent.name, () => {
     fixture.detectChanges();
 
     expect(component.lineChartData.datasets?.[0]?.label).toBe('Label 1');
+  });
+
+  it(`DEVE alterar tamanho da fonte do eixo X para 32px
+        QUANDO for alterado o tamanho da fonte da tela para 2rem.`, () => {
+    fixture.detectChanges();
+
+    fontSizeService.notifyFontSizeChange(2);
+    const labelX = component.lineChartOptions?.scales?.['x']?.ticks
+      ?.font as Partial<FontSpec>;
+
+    expect(labelX?.size).toBe(32);
+  });
+
+  it(`DEVE alterar tamanho da fonte do eixo Y para 32px
+        QUANDO for alterado o tamanho da fonte da tela para 2rem.`, () => {
+    fixture.detectChanges();
+
+    fontSizeService.notifyFontSizeChange(2);
+    const labelY = component.lineChartOptions?.scales?.['y']?.ticks
+      ?.font as Partial<FontSpec>;
+
+    expect(labelY?.size).toBe(32);
+  });
+
+  it(`DEVE alterar tamanho da fonte do título do tooltip para 32px
+        QUANDO for alterado o tamanho da fonte da tela para 2rem.`, () => {
+    fixture.detectChanges();
+
+    fontSizeService.notifyFontSizeChange(2);
+    const tituloTooltip = component.lineChartOptions?.plugins?.tooltip
+      ?.titleFont as Partial<FontSpec>;
+    expect(tituloTooltip?.size).toBe(32);
+  });
+
+  it(`DEVE alterar tamanho da fonte do corpo do tooltip para 32px
+        QUANDO for alterado o tamanho da fonte da tela para 2rem.`, () => {
+    fixture.detectChanges();
+
+    fontSizeService.notifyFontSizeChange(2);
+    const corpoTooltip = component.lineChartOptions?.plugins?.tooltip
+      ?.bodyFont as Partial<FontSpec>;
+    expect(corpoTooltip?.size).toBe(32);
+  });
+
+  it(`DEVE alterar tamanho da fonte do rodapé do tooltip para 32px
+        QUANDO for alterado o tamanho da fonte da tela para 2rem.`, () => {
+    fixture.detectChanges();
+
+    fontSizeService.notifyFontSizeChange(2);
+    const rodapeTooltip = component.lineChartOptions?.plugins?.tooltip
+      ?.footerFont as Partial<FontSpec>;
+    expect(rodapeTooltip?.size).toBe(32);
   });
 });
