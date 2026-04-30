@@ -4,6 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import pi.voluntariado.agendamento.dto.voluntario.VoluntarioRequestDTO;
 import pi.voluntariado.agendamento.dto.voluntario.VoluntarioResponseDTO;
 import pi.voluntariado.agendamento.model.Voluntario;
+import pi.voluntariado.agendamento.repository.AgendamentoRepository;
 import pi.voluntariado.agendamento.repository.VoluntarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,5 +77,15 @@ public class VoluntarioServiceImpl implements VoluntarioService {
             throw new RuntimeException("Voluntário não encontrado com ID: " + id);
         }
         voluntarioRepository.deleteById(id);
+    }
+
+    @Autowired private AgendamentoRepository agendamentoRepository;
+    @Override
+    public Long countParticipantes(int ano, int mes) {
+        return agendamentoRepository.countVoluntariosParticipantes(ano, mes);
+    }
+    @Override
+    public Long countNaoParticipantes(int ano, int mes) {
+        return voluntarioRepository.count() - agendamentoRepository.countVoluntariosParticipantes(ano, mes);
     }
 }

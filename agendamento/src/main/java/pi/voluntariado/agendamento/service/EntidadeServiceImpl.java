@@ -3,6 +3,7 @@ package pi.voluntariado.agendamento.service;
 import pi.voluntariado.agendamento.dto.entidade.EntidadeRequestDTO;
 import pi.voluntariado.agendamento.dto.entidade.EntidadeResponseDTO;
 import pi.voluntariado.agendamento.model.Entidade;
+import pi.voluntariado.agendamento.repository.AgendamentoRepository;
 import pi.voluntariado.agendamento.repository.EntidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,5 +81,11 @@ public class EntidadeServiceImpl implements EntidadeService {
             throw new RuntimeException("Entidade não encontrada com ID: " + id);
         }
         entidadeRepository.deleteById(id);
+    }
+
+    @Autowired private AgendamentoRepository agendamentoRepository;
+    @Override
+    public Long countVisitadas(int ano, int mes) {
+        return agendamentoRepository.countEntidadesVisitadas(ano, mes);
     }
 }

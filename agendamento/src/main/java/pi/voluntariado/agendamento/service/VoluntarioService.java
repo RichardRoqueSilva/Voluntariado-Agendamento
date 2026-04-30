@@ -11,4 +11,6 @@ public interface VoluntarioService {
     VoluntarioResponseDTO create(VoluntarioRequestDTO voluntarioDTO);
     VoluntarioResponseDTO update(Long id, VoluntarioRequestDTO voluntarioDTO);
     void delete(Long id);
+    Long countParticipantes(int ano, int mes);
+    Long countNaoParticipantes(int ano, int mes);
 }

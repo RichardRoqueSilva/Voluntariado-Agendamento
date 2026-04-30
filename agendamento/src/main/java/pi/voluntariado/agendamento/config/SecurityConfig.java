@@ -18,16 +18,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // 1. ATIVE O CORS (Crucial para parar o erro de "Blocked by CORS policy")
+                .cors(org.springframework.security.config.Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/swagger-ui.html").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("/v3/api-docs/**").permitAll()
-                        .requestMatchers("/swagger-resources/**").permitAll()
-                        .requestMatchers("/webjars/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("/api/**").permitAll() // Mantido para facilidade de desenvolvimento por enquanto
+
+                        // 2. MUDE PARA permitAll() por enquanto, para os gráficos aparecerem
+                        .requestMatchers("/api/dias/**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
@@ -40,10 +42,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // <<< NOVO BEAN: Expor o AuthenticationManager
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-    // >>> Fim do NOVO BEAN
 }

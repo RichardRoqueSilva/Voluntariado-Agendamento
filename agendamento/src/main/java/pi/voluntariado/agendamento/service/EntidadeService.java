@@ -11,4 +11,5 @@ public interface EntidadeService {
     EntidadeResponseDTO create(EntidadeRequestDTO entidadeDTO);
     EntidadeResponseDTO update(Long id, EntidadeRequestDTO entidadeDTO);
     void delete(Long id);
+    Long countVisitadas(int ano, int mes);
 }
