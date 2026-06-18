@@ -176,6 +176,8 @@ Este projeto foi construído com as seguintes ferramentas/tecnologias:
 
 -   **[Angular](https://angular.io/)**
 -   **[Angular Material](https://material.angular.dev/)**
+-   **[Chart.js](https://www.chartjs.org/)**
 -   **[Java](https://www.java.com/)**
+-   **[Ng2-charts](https://valor-software.com/ng2-charts/)**
 -   **[Spring Boot](https://spring.io/projects/spring-boot)**
 -   **[VLibras](https://www.gov.br/governodigital/pt-br/acessibilidade-e-usuario/vlibras)**
